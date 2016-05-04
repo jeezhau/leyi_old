@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import me.jeekhan.leyi.model.User;
+import me.jeekhan.leyi.model.UserFullInfo;
 import me.jeekhan.leyi.service.UserService;
 
 @Controller
@@ -20,7 +20,7 @@ public class HelloWorld {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping("/jee")
 	public String hello(Map map){
-		User user = userService.getUser(1);
+		UserFullInfo user = userService.getUserFullInfo(1);
 		map.put("user", user);
 		return "hello";
 	}

@@ -3,16 +3,30 @@ package me.jeekhan.leyi.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import me.jeekhan.leyi.dao.UserMapper;
-import me.jeekhan.leyi.model.User;
+import me.jeekhan.leyi.dao.UserBaseInfoMapper;
+import me.jeekhan.leyi.dao.UserFullInfoMapper;
+import me.jeekhan.leyi.model.UserBaseInfo;
+import me.jeekhan.leyi.model.UserFullInfo;
 import me.jeekhan.leyi.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService{
 	@Autowired
-	private UserMapper userMapper;
+	private UserBaseInfoMapper userBaseInfoMapper;
+	@Autowired
+	private UserFullInfoMapper userFullInfoMapper;
 	@Override
-	public User getUser(int id){
-		return userMapper.selectByPrimaryKey(id);
+	public UserBaseInfo getUserBaseInfo(int id){
+		return userBaseInfoMapper.selectByPrimaryKey(id);
 	}
+	@Override
+	public boolean authentification(UserBaseInfo userBaseInfo, String passwd) {
+		
+		return false;
+	}
+	@Override
+	public UserFullInfo getUserFullInfo(int id) {
+		return userFullInfoMapper.selectByPrimaryKey(id);
+	}
+	
 }

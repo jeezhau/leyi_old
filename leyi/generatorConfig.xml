@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration >
 	<!-- 数据库驱动-->  
-    <classPathEntry  location="F:/E-books/JAVA/lib/mysql-connector-java-5.1.37-bin.jar"/>  
+    <classPathEntry  location="F:/E-books/JAVASE/lib/mysql-connector-java-5.1.37-bin.jar"/>  
     <context id="leyi"  targetRuntime="MyBatis3">  
         <commentGenerator>  
             <property name="suppressDate" value="true"/>  
@@ -20,6 +20,11 @@
         <sqlMapGenerator targetPackage="mapping" targetProject="leyi/src/main/resources" />  
         <!-- 生成DAO的包名和位置-->  
         <javaClientGenerator type="XMLMAPPER" targetPackage="me.jeekhan.leyi.dao" targetProject="leyi/src/main/java" />  
-        <table tableName="tb_user" domainObjectName="User" />
+        <table tableName="tb_user_base_info" domainObjectName="UserBaseInfo" />
+        <table tableName="tb_user_full_info" domainObjectName="UserFullInfo" />
+        <table tableName="tb_theme_class" domainObjectName="ThemeClass" />
+        <table tableName="tb_article_brief" domainObjectName="ArticleBrief" />
+        <table tableName="tb_article_detail" domainObjectName="Article" />
+        
     </context>
 </generatorConfiguration>
