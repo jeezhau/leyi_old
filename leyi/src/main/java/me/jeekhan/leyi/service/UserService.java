@@ -9,5 +9,9 @@ public interface UserService {
 	public boolean authentification(UserBaseInfo userBaseInfo,String passwd);
 	
 	public UserFullInfo getUserFullInfo(int id);
+	
+	public int addUser(UserFullInfo userFullInfo);
+	
+	public int logOffUser(int id);
 
 }

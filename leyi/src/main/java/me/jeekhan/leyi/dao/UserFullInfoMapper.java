@@ -33,4 +33,6 @@ public interface UserFullInfoMapper {
     int updateByPrimaryKeyWithBLOBs(UserFullInfo record);
 
     int updateByPrimaryKey(UserFullInfo record);
+    
+    int logOffUserById(int id);
 }

@@ -22,6 +22,7 @@ public class HelloWorld {
 	public String hello(Map map){
 		UserFullInfo user = userService.getUserFullInfo(1);
 		map.put("user", user);
+		userService.logOffUser(user.getId());
 		return "hello";
 	}
 }

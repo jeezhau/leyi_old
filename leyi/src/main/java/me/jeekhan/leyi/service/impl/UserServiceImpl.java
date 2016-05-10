@@ -19,6 +19,11 @@ public class UserServiceImpl implements UserService{
 	public UserBaseInfo getUserBaseInfo(int id){
 		return userBaseInfoMapper.selectByPrimaryKey(id);
 	}
+	/**
+	 * 用户身份验证
+	 * @param	userBaseInfo	用户基本信息
+	 * @param	passwd			用户密码（明文）
+	 */
 	@Override
 	public boolean authentification(UserBaseInfo userBaseInfo, String passwd) {
 		
@@ -29,4 +34,16 @@ public class UserServiceImpl implements UserService{
 		return userFullInfoMapper.selectByPrimaryKey(id);
 	}
 	
+	@Override 
+	public int addUser(UserFullInfo userFullInfo){
+		return userFullInfoMapper.insert(userFullInfo);
+	}
+	/**
+	 * 注销用户
+	 * @param id
+	 * @return
+	 */
+	public int logOffUser(int id){
+		return userFullInfoMapper.logOffUserById(id);
+	}
 }

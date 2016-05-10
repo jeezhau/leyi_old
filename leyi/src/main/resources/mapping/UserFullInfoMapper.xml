@@ -408,4 +408,11 @@
       enabled = #{enabled,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <update id="logOffUserById" parameterType="integer">
+  	update tb_user_full_info
+  	set enabled = '1'
+  	where id = #{id}
+  </update>
+  		
+  		
 </mapper>
