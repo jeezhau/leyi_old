@@ -1,6 +1,6 @@
 package me.jeekhan.leyi.model;
 
-public class Article {
+public class ArticleContent {
     private Integer articleId;
 
     private String content;

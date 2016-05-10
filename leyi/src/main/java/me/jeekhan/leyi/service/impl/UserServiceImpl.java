@@ -15,6 +15,10 @@ public class UserServiceImpl implements UserService{
 	private UserBaseInfoMapper userBaseInfoMapper;
 	@Autowired
 	private UserFullInfoMapper userFullInfoMapper;
+	/**
+	 * 提取用户基本信息
+	 * @param	用户ID
+	 */
 	@Override
 	public UserBaseInfo getUserBaseInfo(int id){
 		return userBaseInfoMapper.selectByPrimaryKey(id);
@@ -29,11 +33,19 @@ public class UserServiceImpl implements UserService{
 		
 		return false;
 	}
+	/**
+	 * 获取用户的详细信息
+	 * @param	用户ID
+	 */
 	@Override
 	public UserFullInfo getUserFullInfo(int id) {
 		return userFullInfoMapper.selectByPrimaryKey(id);
 	}
 	
+	/**
+	 * 添加用户
+	 * @param	用户详细信息
+	 */
 	@Override 
 	public int addUser(UserFullInfo userFullInfo){
 		return userFullInfoMapper.insert(userFullInfo);

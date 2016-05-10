@@ -40,12 +40,12 @@ CREATE TABLE `tb_article_brief` (
 -- ----------------------------
 -- Table structure for tb_article_detail
 -- ----------------------------
-DROP TABLE IF EXISTS `tb_article_detail`;
-CREATE TABLE `tb_article_detail` (
+DROP TABLE IF EXISTS `tb_article_content`;
+CREATE TABLE `tb_article_content` (
   `article_id` int(11) NOT NULL COMMENT '文章ID',
   `content` text NOT NULL COMMENT '文章内容',
   PRIMARY KEY (`article_id`),
-  CONSTRAINT `fk_articleDetail_articleId` FOREIGN KEY (`article_id`) REFERENCES `tb_article_brief` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `fk_articleContent_articleId` FOREIGN KEY (`article_id`) REFERENCES `tb_article_brief` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章详细信息';
 
 -- ----------------------------

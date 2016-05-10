@@ -24,7 +24,7 @@
         <table tableName="tb_user_full_info" domainObjectName="UserFullInfo" />
         <table tableName="tb_theme_class" domainObjectName="ThemeClass" />
         <table tableName="tb_article_brief" domainObjectName="ArticleBrief" />
-        <table tableName="tb_article_detail" domainObjectName="Article" />
+        <table tableName="tb_article_content" domainObjectName="ArticleContent" />
         
     </context>
 </generatorConfiguration>
