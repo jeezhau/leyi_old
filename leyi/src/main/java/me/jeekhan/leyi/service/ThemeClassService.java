@@ -1,0 +1,56 @@
+package me.jeekhan.leyi.service;
+
+import java.util.List;
+
+import me.jeekhan.leyi.model.ThemeClass;
+/**
+ *  主题分类服务类
+ * @author Jee Khan
+ *
+ */
+public interface ThemeClassService {
+	/**
+	 * 保存主题分类
+	 * @param theme
+	 * @return 主题ID
+	 */
+	public Integer saveThemeClass(ThemeClass theme);
+	/**
+	 * 删除主题分类
+	 * @param themeId
+	 * @return 父主题ID
+	 */
+	public Integer deleteThemeClass(int themeClassId);
+	/**
+	 * 获取指定的主题分类
+	 * @param ThemeClassId
+	 * @return
+	 */
+	public ThemeClass getThemeClass(int themeClassId);
+	public ThemeClass getThemeClass(String themeName);
+	/**
+	 * 获取指定用户所有的主题分类
+	 * @return
+	 */
+	public List<ThemeClass> getUserThemes(int userId);
+	
+	/**
+	 * 获取指定用户所有顶层主题分类
+	 * @return
+	 */
+	public List<ThemeClass> getUserTopThemes(int userId);
+	
+	/**
+	 * 获取指定主题下的所有的子主题分类
+	 * @return
+	 */
+	public List<ThemeClass> getChildThemes(int parentId);
+	/**
+	 * 向上获取主题分类属
+	 * @param themeId
+	 * @return
+	 */
+	public List<ThemeClass> getThemeTreeUp(int themeId);
+	
+	
+}
