@@ -1,30 +1,27 @@
 package me.jeekhan.leyi.dao;
 
 import java.util.List;
-import me.jeekhan.leyi.model.ArticleBrief;
-import me.jeekhan.leyi.model.ArticleBriefExample;
+
 import org.apache.ibatis.annotations.Param;
 
-public interface ArticleBriefMapper {
-    int countByExample(ArticleBriefExample example);
+import me.jeekhan.leyi.common.PageCond;
+import me.jeekhan.leyi.model.ArticleBrief;
 
-    int deleteByExample(ArticleBriefExample example);
+public interface ArticleBriefMapper {
 
     int deleteByPrimaryKey(Integer id);
 
     int insert(ArticleBrief record);
 
-    int insertSelective(ArticleBrief record);
-
-    List<ArticleBrief> selectByExample(ArticleBriefExample example);
-
     ArticleBrief selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") ArticleBrief record, @Param("example") ArticleBriefExample example);
-
-    int updateByExample(@Param("record") ArticleBrief record, @Param("example") ArticleBriefExample example);
-
-    int updateByPrimaryKeySelective(ArticleBrief record);
-
     int updateByPrimaryKey(ArticleBrief record);
+    
+    List<ArticleBrief> selectArticlesByUser(@Param("userId") int userId,@Param("pageCond") PageCond pageCond);
+    
+    List<ArticleBrief> selectArticles(@Param("pageCond") PageCond pageCond);
+    
+    List<ArticleBrief> selectArticlesByTheme(@Param("themeId") int themeId,@Param("pageCond") PageCond pageCond);
+    
+
 }

@@ -12,126 +12,30 @@
     <result column="favourite" property="favourite" jdbcType="VARCHAR" />
     <result column="profession" property="profession" jdbcType="VARCHAR" />
     <result column="introduce" property="introduce" jdbcType="VARCHAR" />
+    <result column="picture" property="picture" jdbcType="VARCHAR" />
     <result column="regist_time" property="registTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="enabled" property="enabled" jdbcType="CHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="me.jeekhan.leyi.model.UserFullInfo" extends="BaseResultMap" >
-    <result column="picture" property="picture" jdbcType="LONGVARBINARY" />
-  </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
+
   <sql id="Base_Column_List" >
-    id, username, email, age, sex, passwd, city, favourite, profession, introduce, regist_time, 
+    id, username, email, age, sex, passwd, city, favourite, profession, introduce, picture, regist_time, 
     update_time, enabled
   </sql>
-  <sql id="Blob_Column_List" >
-    picture
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="me.jeekhan.leyi.model.UserFullInfoExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from tb_user_full_info
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="me.jeekhan.leyi.model.UserFullInfoExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from tb_user_full_info
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from tb_user_full_info
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_user_full_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="me.jeekhan.leyi.model.UserFullInfoExample" >
-    delete from tb_user_full_info
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
+  
   <insert id="insert" parameterType="me.jeekhan.leyi.model.UserFullInfo" >
     insert into tb_user_full_info (id, username, email, 
       age, sex, passwd, city, 
@@ -142,8 +46,9 @@
       #{age,jdbcType=INTEGER}, #{sex,jdbcType=CHAR}, #{passwd,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
       #{favourite,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, 
       #{registTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{enabled,jdbcType=CHAR}, 
-      #{picture,jdbcType=LONGVARBINARY})
+      #{picture,jdbcType=VARCHAR})
   </insert>
+  
   <insert id="insertSelective" parameterType="me.jeekhan.leyi.model.UserFullInfo" >
     insert into tb_user_full_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -231,105 +136,11 @@
         #{enabled,jdbcType=CHAR},
       </if>
       <if test="picture != null" >
-        #{picture,jdbcType=LONGVARBINARY},
+        #{picture,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="me.jeekhan.leyi.model.UserFullInfoExample" resultType="java.lang.Integer" >
-    select count(*) from tb_user_full_info
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update tb_user_full_info
-    <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.username != null" >
-        username = #{record.username,jdbcType=VARCHAR},
-      </if>
-      <if test="record.email != null" >
-        email = #{record.email,jdbcType=VARCHAR},
-      </if>
-      <if test="record.age != null" >
-        age = #{record.age,jdbcType=INTEGER},
-      </if>
-      <if test="record.sex != null" >
-        sex = #{record.sex,jdbcType=CHAR},
-      </if>
-      <if test="record.passwd != null" >
-        passwd = #{record.passwd,jdbcType=VARCHAR},
-      </if>
-      <if test="record.city != null" >
-        city = #{record.city,jdbcType=VARCHAR},
-      </if>
-      <if test="record.favourite != null" >
-        favourite = #{record.favourite,jdbcType=VARCHAR},
-      </if>
-      <if test="record.profession != null" >
-        profession = #{record.profession,jdbcType=VARCHAR},
-      </if>
-      <if test="record.introduce != null" >
-        introduce = #{record.introduce,jdbcType=VARCHAR},
-      </if>
-      <if test="record.registTime != null" >
-        regist_time = #{record.registTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.updateTime != null" >
-        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.enabled != null" >
-        enabled = #{record.enabled,jdbcType=CHAR},
-      </if>
-      <if test="record.picture != null" >
-        picture = #{record.picture,jdbcType=LONGVARBINARY},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update tb_user_full_info
-    set id = #{record.id,jdbcType=INTEGER},
-      username = #{record.username,jdbcType=VARCHAR},
-      email = #{record.email,jdbcType=VARCHAR},
-      age = #{record.age,jdbcType=INTEGER},
-      sex = #{record.sex,jdbcType=CHAR},
-      passwd = #{record.passwd,jdbcType=VARCHAR},
-      city = #{record.city,jdbcType=VARCHAR},
-      favourite = #{record.favourite,jdbcType=VARCHAR},
-      profession = #{record.profession,jdbcType=VARCHAR},
-      introduce = #{record.introduce,jdbcType=VARCHAR},
-      regist_time = #{record.registTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      enabled = #{record.enabled,jdbcType=CHAR},
-      picture = #{record.picture,jdbcType=LONGVARBINARY}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update tb_user_full_info
-    set id = #{record.id,jdbcType=INTEGER},
-      username = #{record.username,jdbcType=VARCHAR},
-      email = #{record.email,jdbcType=VARCHAR},
-      age = #{record.age,jdbcType=INTEGER},
-      sex = #{record.sex,jdbcType=CHAR},
-      passwd = #{record.passwd,jdbcType=VARCHAR},
-      city = #{record.city,jdbcType=VARCHAR},
-      favourite = #{record.favourite,jdbcType=VARCHAR},
-      profession = #{record.profession,jdbcType=VARCHAR},
-      introduce = #{record.introduce,jdbcType=VARCHAR},
-      regist_time = #{record.registTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      enabled = #{record.enabled,jdbcType=CHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
+  
   <update id="updateByPrimaryKeySelective" parameterType="me.jeekhan.leyi.model.UserFullInfo" >
     update tb_user_full_info
     <set >
@@ -370,28 +181,12 @@
         enabled = #{enabled,jdbcType=CHAR},
       </if>
       <if test="picture != null" >
-        picture = #{picture,jdbcType=LONGVARBINARY},
+        picture = #{picture,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="me.jeekhan.leyi.model.UserFullInfo" >
-    update tb_user_full_info
-    set username = #{username,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      age = #{age,jdbcType=INTEGER},
-      sex = #{sex,jdbcType=CHAR},
-      passwd = #{passwd,jdbcType=VARCHAR},
-      city = #{city,jdbcType=VARCHAR},
-      favourite = #{favourite,jdbcType=VARCHAR},
-      profession = #{profession,jdbcType=VARCHAR},
-      introduce = #{introduce,jdbcType=VARCHAR},
-      regist_time = #{registTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      enabled = #{enabled,jdbcType=CHAR},
-      picture = #{picture,jdbcType=LONGVARBINARY}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
   <update id="updateByPrimaryKey" parameterType="me.jeekhan.leyi.model.UserFullInfo" >
     update tb_user_full_info
     set username = #{username,jdbcType=VARCHAR},
@@ -403,11 +198,13 @@
       favourite = #{favourite,jdbcType=VARCHAR},
       profession = #{profession,jdbcType=VARCHAR},
       introduce = #{introduce,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR},
       regist_time = #{registTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       enabled = #{enabled,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
   <update id="logOffUserById" parameterType="integer">
   	update tb_user_full_info
   	set enabled = '1'
@@ -416,3 +213,4 @@
   		
   		
 </mapper>
+

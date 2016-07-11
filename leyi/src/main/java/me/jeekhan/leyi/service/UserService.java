@@ -10,7 +10,7 @@ public interface UserService {
 	
 	public UserFullInfo getUserFullInfo(int id);
 	
-	public int addUser(UserFullInfo userFullInfo);
+	public int saveUser(UserFullInfo userFullInfo);
 	
 	public int logOffUser(int id);
 

@@ -18,6 +18,10 @@ public class PageCond {
 		this.begin = begin;
 		this.pageSize = DEFAULT_PAGESIZE;
 	}
+	public PageCond(){
+		this.begin = 0;
+		this.pageSize = DEFAULT_PAGESIZE;
+	}
 	public int getBegin() {
 		return begin;
 	}

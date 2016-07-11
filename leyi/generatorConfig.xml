@@ -25,6 +25,6 @@
         <table tableName="tb_theme_class" domainObjectName="ThemeClass" />
         <table tableName="tb_article_brief" domainObjectName="ArticleBrief" />
         <table tableName="tb_article_content" domainObjectName="ArticleContent" />
-        
+        <table tableName="tb_comments" domainObjectName="ArticleComments" />
     </context>
 </generatorConfiguration>

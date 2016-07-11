@@ -131,7 +131,7 @@ CREATE TABLE `tb_user_full_info` (
   `favourite` varchar(100) DEFAULT NULL COMMENT '兴趣爱好',
   `profession` varchar(100) DEFAULT NULL COMMENT '职业',
   `introduce` varchar(600) DEFAULT NULL COMMENT '个人简介',
-  `picture` blob COMMENT '照片',
+  `picture` varchar(250) COMMENT '照片',
   `regist_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `enabled` char(1) NOT NULL COMMENT '启用状态',

@@ -43,12 +43,19 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	/**
-	 * 添加用户
+	 * 保存用户：有则更新，无则修改
 	 * @param	用户详细信息
 	 */
 	@Override 
-	public int addUser(UserFullInfo userFullInfo){
-		return userFullInfoMapper.insert(userFullInfo);
+	public int saveUser(UserFullInfo userFullInfo){
+		if(userFullInfo == null){
+			return -1;
+		}
+		if(userFullInfo.getId() == null){
+			return userFullInfoMapper.insert(userFullInfo);
+		}else{
+			return userFullInfoMapper.updateByPrimaryKey(userFullInfo);
+		}
 	}
 	/**
 	 * 注销用户

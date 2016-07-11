@@ -11,97 +11,31 @@
     <result column="update_opr" property="updateOpr" jdbcType="INTEGER" />
     <result column="enabled" property="enabled" jdbcType="CHAR" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
+  
   <sql id="Base_Column_List" >
     id, parent_id, name, keywords, desc_info, update_time, update_opr, enabled
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="me.jeekhan.leyi.model.ThemeClassExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from tb_theme_class
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from tb_theme_class
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and enabled = '0'
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from tb_theme_class
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_theme_class
+    where name = #{name,jdbcType=VARCHAR} and enabled = '0'
+  </select>
+  
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update tb_theme_class
+    set enabled = 'D' 
     where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="me.jeekhan.leyi.model.ThemeClassExample" >
-    delete from tb_theme_class
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
+  </update>
+  
+
   <insert id="insert" parameterType="me.jeekhan.leyi.model.ThemeClass" >
     insert into tb_theme_class (id, parent_id, name, 
       keywords, desc_info, update_time, 
@@ -110,6 +44,7 @@
       #{keywords,jdbcType=VARCHAR}, #{descInfo,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{updateOpr,jdbcType=INTEGER}, #{enabled,jdbcType=CHAR})
   </insert>
+  
   <insert id="insertSelective" parameterType="me.jeekhan.leyi.model.ThemeClass" >
     insert into tb_theme_class
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -165,59 +100,9 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="me.jeekhan.leyi.model.ThemeClassExample" resultType="java.lang.Integer" >
-    select count(*) from tb_theme_class
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update tb_theme_class
-    <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.parentId != null" >
-        parent_id = #{record.parentId,jdbcType=INTEGER},
-      </if>
-      <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
-      </if>
-      <if test="record.keywords != null" >
-        keywords = #{record.keywords,jdbcType=VARCHAR},
-      </if>
-      <if test="record.descInfo != null" >
-        desc_info = #{record.descInfo,jdbcType=VARCHAR},
-      </if>
-      <if test="record.updateTime != null" >
-        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.updateOpr != null" >
-        update_opr = #{record.updateOpr,jdbcType=INTEGER},
-      </if>
-      <if test="record.enabled != null" >
-        enabled = #{record.enabled,jdbcType=CHAR},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update tb_theme_class
-    set id = #{record.id,jdbcType=INTEGER},
-      parent_id = #{record.parentId,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
-      keywords = #{record.keywords,jdbcType=VARCHAR},
-      desc_info = #{record.descInfo,jdbcType=VARCHAR},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      update_opr = #{record.updateOpr,jdbcType=INTEGER},
-      enabled = #{record.enabled,jdbcType=CHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="me.jeekhan.leyi.model.ThemeClass" >
+  
+
+  <update id="updateByPrimaryKey" parameterType="me.jeekhan.leyi.model.ThemeClass" >
     update tb_theme_class
     <set >
       <if test="parentId != null" >
@@ -244,15 +129,40 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="me.jeekhan.leyi.model.ThemeClass" >
-    update tb_theme_class
-    set parent_id = #{parentId,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
-      keywords = #{keywords,jdbcType=VARCHAR},
-      desc_info = #{descInfo,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      update_opr = #{updateOpr,jdbcType=INTEGER},
-      enabled = #{enabled,jdbcType=CHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+  <!--获取用户的所有主题，并按照父类归类 -->
+  <select id="selectUserThemes" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_theme_class t
+    where t.enabled= '0' and t.update_opr = #{userId,jdbcType=INTEGER}
+    order by t.parent_id,t.id desc
+  </select>
+  <!-- 获取指定的直接下属主题-->
+  <select id="selectChildThemes" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_theme_class
+    where enabled= '0' and parent_id = #{parentId,jdbcType=INTEGER}
+  </select>
+   <!-- 获取用户的顶层主题-->
+  <select id="selectUserTopThemes" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_theme_class
+    where enabled= '0' and parent_id is null and update_opr = #{userId,jdbcType=INTEGER}
+  </select>
+   <!-- 获取指定主题向上获取层次树--> 
+  <select id="selectThemeTreeUp" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from tb_theme_class 
+  	where FIND_IN_SET(id,getThemeTreeUp(#{parentId,jdbcType=INTEGER})) order by id 
+  </select>
+  <!-- 统计用户的顶层主题个数-->
+  <select id="countUserTopTheme" resultType="int">
+  	select count(1) CNT 
+  	from tb_theme_class t 
+  	where t.parent_id is null and enabled='0' and update_opr = #{userId,jdbcType=INTEGER};
+  </select>
 </mapper>
+
