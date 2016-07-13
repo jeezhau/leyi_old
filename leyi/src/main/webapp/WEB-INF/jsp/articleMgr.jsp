@@ -58,32 +58,28 @@
     <div class="col-md-8" >
       <div class="panel panel-info">
         <div class="panel-heading" style="margin:0">
-	      <div class="btn-toolbar btn-toolbar-info" role="toolbar">
-	        <div class="btn-group">
-	          <button class="btn btn-primary" id="addArticle">新增文章</button>
-	          <button class="btn btn-primary" id="editArticle">编辑文章</button>
-	          <button class="btn btn-primary" id="deleteArticle">删除文章</button>
-	        </div>
-          </div>
+	     	<a href="../editing" target="_blank">新增文章</a>
         </div>
         <table class="table table-striped  table-bordered table-hover ">
           <thead>
-   	        <tr><th>标题</th><th>关键词 </th></tr>
+   	        <tr><th>文章标题</th><th>关键词 </th><th>操作 </th></tr>
           </thead>
           <tbody> 
            <c:forEach items="${currArticles}" var="item">
             <tr>
               <td>${item.name}</td>
               <td>${item.keywords }</td>
+              <td>[<a href="../editing?articleId=${item.id }" target="_blank">编辑</a>]&nbsp;&nbsp;[<a href="../delete?articleId=${item.id }">删除</a>]</td>
             </tr>
-           </c:forEach> 
+           </c:forEach>
           </tbody>
         </table>
       </div>
     </div><!-- end of 右面文章列表 -->
-    
   </div>
+    
 </div>
+
 
 <script>
 

@@ -110,11 +110,11 @@
 =================================================================================-->  
   <div class="row">
    <footer class="text-center">
-      <p>Copyright &copy; 2084 Company Name 
+      <p> Copyright &copy; 2084 Company Name 
         | Designed by <a href="http://www.templatemo.com" target="_parent">templatemo</a></p>
     </footer>         
   </div> 
-</div><!-- end of container -->
+</div> <!-- end of container -->
  
 </body>
-</html>
+</html> 

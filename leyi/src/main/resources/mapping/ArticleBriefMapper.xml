@@ -82,5 +82,13 @@
   	order by b.update_time desc , (select (1) from tb_comments c where c.article_id = b.id and c.enabled=0) desc
   	limit #{pageCond.begin},#{pageCond.pageSize}
   </select> 
+  <!--取指定主题下指定名称最新添加的文章简介 -->
+  <select id="selectLatestRecrod" parameterType="me.jeekhan.leyi.model.ArticleBrief"  resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from tb_article_brief 
+  	where id = ( select max(id) from tb_article_brief b 
+		where b.theme_id = #{themeId} and b.`name` = #{name} and b.keywords = #{keywords} and b.source=#{source} and b.type=#{type} and b.update_opr=#{updateOpr})
+  </select> 
 </mapper>
 

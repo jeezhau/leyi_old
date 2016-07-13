@@ -23,5 +23,6 @@ public interface ArticleBriefMapper {
     
     List<ArticleBrief> selectArticlesByTheme(@Param("themeId") int themeId,@Param("pageCond") PageCond pageCond);
     
+    ArticleBrief selectLatestRecrod(ArticleBrief record);
 
 }

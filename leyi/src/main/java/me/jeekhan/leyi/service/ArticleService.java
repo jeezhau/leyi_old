@@ -24,7 +24,7 @@ public interface ArticleService {
 	 * @param articleContent	文章内容
 	 * @return
 	 */
-	public int saveArtileContent(ArticleContent articleContent);
+	public int saveArticleContent(ArticleContent articleContent);
 	/**
 	 * 保存文章全部信息
 	 * @param articleBrief		文章简介

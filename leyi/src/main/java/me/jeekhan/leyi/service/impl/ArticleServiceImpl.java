@@ -61,6 +61,8 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 	/**
 	 * 保存文章信息：有则更新，无则插入
+	 * @param articleBrief	文章简介
+	 * @return 文章ID
 	 */
 	@Override
 	public int saveArticleBrief(ArticleBrief articleBrief) {
@@ -68,27 +70,39 @@ public class ArticleServiceImpl implements ArticleService {
 			return -1;
 		}
 		if(articleBrief.getId() == null){
-			return articleBriefMapper.insert(articleBrief);
+			articleBriefMapper.insert(articleBrief);
+			return articleBriefMapper.selectLatestRecrod(articleBrief).getId();
 		}else{
-			return articleBriefMapper.updateByPrimaryKey(articleBrief);
+			articleBriefMapper.updateByPrimaryKey(articleBrief);
+			return articleBrief.getId();
 		}
 	}
 	/**
 	 * 保存文章内容：有则更新，无则插入
+	 * @param articleContent	文章内容
+	 * @return 文章ID
 	 */
 	@Override
-	public int saveArtileContent(ArticleContent articleContent) {
+	public int saveArticleContent(ArticleContent articleContent) {
 		if(articleContent == null){
 			return -1;
 		}
 		if(articleContent.getArticleId() == null){
-			return articleContentMapper.insert(articleContent);
+			return -2;
 		}else{
-			return articleContentMapper.update(articleContent);
+			if(articleContentMapper.selectByPrimaryKey(articleContent.getArticleId())!=null){
+				articleContentMapper.update(articleContent);
+			}else{
+				articleContentMapper.insert(articleContent);
+			}
+			return articleContent.getArticleId();
 		}
 	}
 	/**
 	 * 保存文章全部信息：有则更新，无则插入
+	 * @param articleBrief	文章简介
+	 * @param articleContent	文章内容  
+	 * @return 文章ID 
 	 */
 	@Override
 	public int saveArticleInfo(ArticleBrief articleBrief, ArticleContent articleContent) {
@@ -98,8 +112,9 @@ public class ArticleServiceImpl implements ArticleService {
 		if(articleBrief.getId() != articleContent.getArticleId()){
 			return -2;
 		}
-		saveArtileContent(articleContent);
-		return saveArticleBrief(articleBrief);
+		saveArticleContent(articleContent);
+		saveArticleBrief(articleBrief);
+		return articleBrief.getId();
 	}
 	/**
 	 * 删除指定文章
@@ -117,7 +132,5 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<ArticleBrief> getArticlesByTheme(int themeId,PageCond pageCond){
 		return articleBriefMapper.selectArticlesByTheme(themeId, pageCond);
 	}
-	
-	
 	
 }
