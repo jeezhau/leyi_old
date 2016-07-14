@@ -3,6 +3,7 @@ package me.jeekhan.leyi.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import me.jeekhan.leyi.common.SunSHAUtils;
 import me.jeekhan.leyi.dao.UserBaseInfoMapper;
 import me.jeekhan.leyi.dao.UserFullInfoMapper;
 import me.jeekhan.leyi.model.UserBaseInfo;
@@ -24,14 +25,33 @@ public class UserServiceImpl implements UserService{
 		return userBaseInfoMapper.selectByPrimaryKey(id);
 	}
 	/**
+	 * 提取用户基本信息
+	 * @param	用户名或邮箱
+	 */
+	public UserFullInfo getUserFullInfo(String username){
+		UserBaseInfo  userInfo = userBaseInfoMapper.selectByName(username);
+		return userFullInfoMapper.selectByPrimaryKey(userInfo.getUserId());
+	}
+	/**
 	 * 用户身份验证
 	 * @param	userBaseInfo	用户基本信息
 	 * @param	passwd			用户密码（明文）
 	 */
 	@Override
-	public boolean authentification(UserBaseInfo userBaseInfo, String passwd) {
-		
-		return false;
+	public boolean authentification(String username, String passwd) {
+		UserBaseInfo  userInfo = userBaseInfoMapper.selectByName(username);
+		try{
+			if(userInfo == null){
+				return false;
+			}else{
+				//if(SunSHAUtils.encodeSHA512Hex(passwd).equals(userInfo.getPasswd())){
+					return true;
+				//}
+			}
+			//return false;
+		}catch(Exception e){
+			return false;
+		}
 	}
 	/**
 	 * 获取用户的详细信息

@@ -58,7 +58,7 @@
     <div class="col-md-8" >
       <div class="panel panel-info">
         <div class="panel-heading" style="margin:0">
-	     	<a href="../editing" target="_blank">新增文章</a>
+	     	<a href="/leyi/article/editing" target="_blank">新增文章</a>
         </div>
         <table class="table table-striped  table-bordered table-hover ">
           <thead>
@@ -69,7 +69,11 @@
             <tr>
               <td>${item.name}</td>
               <td>${item.keywords }</td>
-              <td>[<a href="../editing?articleId=${item.id }" target="_blank">编辑</a>]&nbsp;&nbsp;[<a href="../delete?articleId=${item.id }">删除</a>]</td>
+              <td>
+                [<a href="/leyi/article/editing?articleId=${item.id }" target="_blank">编辑</a>]&nbsp;&nbsp;
+                [<a href="/leyi/article/delete?articleId=${item.id }">删除</a>]&nbsp;&nbsp;
+                [<a href="/leyi/article/${item.id }"  target="_blank">显示</a>]&nbsp;&nbsp;
+              </td>
             </tr>
            </c:forEach>
           </tbody>

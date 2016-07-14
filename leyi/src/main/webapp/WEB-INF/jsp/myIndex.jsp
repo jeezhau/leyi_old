@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">  
-  <title>Jee的主页</title>
+  <title>${operator.username}的主页</title>
   <meta name="description" content="">
   <meta name="author" content="jeekhan">
 
@@ -25,21 +26,16 @@
 <div class="container">
   <div class="row">
   	<ul class="nav nav-tabs pull-right" >
-     <li><a href="login.jsp" target="_blank">登录</a></li>
-     <li><a href="#">注册</a></li>
+  	 <li><a href="/leyi/theme/" target="_blank">分类管理</a></li>
+     <li><a href="/leyi/article/" target="_blank">文章收录</a></li>
 	</ul>
   </div>
   <div class="row">
 <!--=============================左边菜单链接  ===================================--> 
     <div class="col-md-3" >
       <div class="row" style="height:250px;overflow:auto ;padding:3px;border:0px #443322 solid ;">
-        <img style="float:left;margin:3px;" src="images/profile-photo.jpg" width="150" height="150" alt="Profile Photo" class="img-responsive">  
-        
-          个人履历:<br>
-        	根据 HTML5 规范：
-强烈建议为 html 根元素指定 lang 属性，从而为文档设置正确的语言。这将有助于语音合成工具确定其所应该采用的发音，
-有助于翻译工具确定其翻译时所应遵守的规则等等。更多关于 lang 属性的知识可以从 此规范 中了解。
-        	
+        <img style="float:left;margin:3px;" src="/leyi/images/profile-photo.jpg" width="150" height="150" alt="Profile Photo" class="img-responsive">  
+         ${userInfo.introduce}
         </div>     
         <!-- Search box -->
         <form class="templatemo-search-form"  style="background-color:#112233" role="search">
@@ -48,56 +44,36 @@
               <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">           
           </div>
         </form>
-        
+        <ol class="breadcrumb" style="margin:0;">
+	     <c:forEach items="${themeTreeUp}" var="item">
+	       <c:if test="${currTheme.id==item.id}"> <li class="active">${item.name}</li> </c:if>
+	       <c:if test="${currTheme.id!=item.id}"> <li><a href="${item.id}">${item.name}</a></li> </c:if>
+	     </c:forEach>
+	    </ol>
         <nav class="navbar navbar-info "  role="navigation">          
           <ul class="nav nav-tabs nav-stacked">
-		   <li class="active"><a href="#">Home</a></li>
-		   <li><a href="#">SVN</a></li>
-		   <li><a href="#">iOS</a></li>
-		   <li><a href="#">VB.Net</a></li>
-		   <li><a href="#">Java</a></li>
-		   <li><a href="#">PHP</a></li>
-		</ul> 
-        </nav>
-        
-        
-  </div>
-<!--======================中间主要内容  ===================--> 
-  <div class="col-md-9 light-gray-bg">
-    <!-- =====================顶部主题分类=================== -->
-	<ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin:10px 0;">
-	   <li class="active"><a href="#">Home</a></li>
-	   <li><a href="#">SVN</a></li>
-	   <li><a href="#">iOS</a></li>
-	   <li><a href="#">VB.Net</a></li>
-	   <li><a href="#">Java</a></li>
-	   <li><a href="#">PHP</a></li>
-	</ul>
-		  
-    <div class="panel panel-info">
-      <div class="panel-heading">
-			<h3 class="panel-title">文章标题</h3>
-		</div>
-		<div class="panel-body">
-		文章简介
-		</div>
-	  </div> <!-- 文章panel -->
+           <c:forEach items="${children}" var="item">
+            <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/mypage/theme/${item.id}">${item.name}</a></li></c:if>
+            <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/mypage/theme/${item.id}">${item.name}</a></li></c:if>
+           </c:forEach>
+		  </ul>
+        </nav>        
+    </div>
+    <!--======================中间主要内容  ===================--> 
+    <div class="col-md-9 light-gray-bg">
+      <!-- =====================顶部主题分类=================== -->
+	  <ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin:10px 0;">
+	   <c:forEach items="${topThemes}" var="item">
+        <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/mypage/theme/${item.id}">${item.name}</a></li></c:if>
+        <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/mypage/theme/${item.id}">${item.name}</a></li></c:if>
+       </c:forEach>
+	  </ul>
+	<c:forEach items="${articleBriefs}" var="item">	  
 	  <div class="panel panel-info">
-      <div class="panel-heading">
-			<h3 class="panel-title">文章标题</h3>
-		</div>
-		<div class="panel-body">
-		文章简介
-		</div>
+        <div class="panel-heading"><h3 class="panel-title">${item.name}</h3></div>
+	    <div class="panel-body">${item.brief}</div>
 	  </div> <!-- 文章panel -->
-	  <div class="panel panel-info">
-      <div class="panel-heading">
-			<h3 class="panel-title">文章标题</h3>
-		</div>
-		<div class="panel-body">
-		文章简介
-		</div>
-	  </div> <!-- 文章panel -->
+	 </c:forEach>
     </div>
   </div><!-- end of row -->
 <!--==============================================================================    

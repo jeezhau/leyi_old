@@ -6,7 +6,9 @@ import me.jeekhan.leyi.model.UserFullInfo;
 public interface UserService {
 	public UserBaseInfo getUserBaseInfo(int id);
 	
-	public boolean authentification(UserBaseInfo userBaseInfo,String passwd);
+	public boolean authentification(String username,String passwd);
+	
+	public UserFullInfo getUserFullInfo(String username);
 	
 	public UserFullInfo getUserFullInfo(int id);
 	
