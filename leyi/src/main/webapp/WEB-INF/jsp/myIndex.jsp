@@ -36,28 +36,22 @@
       <div class="row" style="height:250px;overflow:auto ;padding:3px;border:0px #443322 solid ;">
         <img style="float:left;margin:3px;" src="/leyi/images/profile-photo.jpg" width="150" height="150" alt="Profile Photo" class="img-responsive">  
          ${userInfo.introduce}
-        </div>     
-        <!-- Search box -->
-        <form class="templatemo-search-form"  style="background-color:#112233" role="search">
-          <div class="input-group" style="background-color:#112233">
-              <button type="submit" class="fa fa-search"></button>
-              <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">           
-          </div>
-        </form>
-        <ol class="breadcrumb" style="margin:0;">
-	     <c:forEach items="${themeTreeUp}" var="item">
-	       <c:if test="${currTheme.id==item.id}"> <li class="active">${item.name}</li> </c:if>
-	       <c:if test="${currTheme.id!=item.id}"> <li><a href="${item.id}">${item.name}</a></li> </c:if>
-	     </c:forEach>
-	    </ol>
-        <nav class="navbar navbar-info "  role="navigation">          
-          <ul class="nav nav-tabs nav-stacked">
-           <c:forEach items="${children}" var="item">
-            <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/mypage/theme/${item.id}">${item.name}</a></li></c:if>
-            <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/mypage/theme/${item.id}">${item.name}</a></li></c:if>
-           </c:forEach>
-		  </ul>
-        </nav>        
+      </div>     
+
+      <ol class="breadcrumb" style="margin:0;">
+	   <c:forEach items="${themeTreeUp}" var="item">
+	    <c:if test="${currTheme.id==item.id}"> <li class="active">${item.name}</li> </c:if>
+	    <c:if test="${currTheme.id!=item.id}"> <li><a href="${item.id}">${item.name}</a></li> </c:if>
+	   </c:forEach>
+	  </ol>
+      <nav class="navbar navbar-info "  role="navigation">          
+        <ul class="nav nav-tabs nav-stacked">
+         <c:forEach items="${children}" var="item">
+          <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/mypage/theme/${item.id}">${item.name}</a></li></c:if>
+          <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/mypage/theme/${item.id}">${item.name}</a></li></c:if>
+         </c:forEach>
+		</ul>
+      </nav>        
     </div>
     <!--======================中间主要内容  ===================--> 
     <div class="col-md-9 light-gray-bg">

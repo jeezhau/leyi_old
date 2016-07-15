@@ -30,6 +30,13 @@
     from tb_user_full_info
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <!-- 根据用户名或邮箱获取用户信息-->
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_user_full_info
+    where username = #{userName,jdbcType=VARCHAR} or email = #{userName,jdbcType=VARCHAR}
+  </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_user_full_info

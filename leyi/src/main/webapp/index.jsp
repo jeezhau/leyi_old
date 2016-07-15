@@ -26,7 +26,7 @@
   <div class="row">
   	<ul class="nav nav-tabs pull-right" >
      <li><a href="login.jsp" target="_blank">登录</a></li>
-     <li><a href="#">注册</a></li>
+     <li><a href="register.jsp"  target="_blank">注册</a></li>
 	</ul>
   </div>
   <div class="row">
@@ -41,13 +41,7 @@
 有助于翻译工具确定其翻译时所应遵守的规则等等。更多关于 lang 属性的知识可以从 此规范 中了解。
         	
         </div>     
-        <!-- Search box -->
-        <form class="templatemo-search-form"  style="background-color:#112233" role="search">
-          <div class="input-group" style="background-color:#112233">
-              <button type="submit" class="fa fa-search"></button>
-              <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">           
-          </div>
-        </form>
+
         
         <nav class="navbar navbar-info "  role="navigation">          
           <ul class="nav nav-tabs nav-stacked">

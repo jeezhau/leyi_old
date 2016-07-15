@@ -44,11 +44,11 @@ public class UserServiceImpl implements UserService{
 			if(userInfo == null){
 				return false;
 			}else{
-				//if(SunSHAUtils.encodeSHA512Hex(passwd).equals(userInfo.getPasswd())){
+				if(SunSHAUtils.encodeSHA512Hex(passwd).equals(userInfo.getPasswd())){
 					return true;
-				//}
+				}
 			}
-			//return false;
+			return false;
 		}catch(Exception e){
 			return false;
 		}
@@ -65,6 +65,7 @@ public class UserServiceImpl implements UserService{
 	/**
 	 * 保存用户：有则更新，无则修改
 	 * @param	用户详细信息
+	 * @return  用户ID
 	 */
 	@Override 
 	public int saveUser(UserFullInfo userFullInfo){
@@ -72,9 +73,11 @@ public class UserServiceImpl implements UserService{
 			return -1;
 		}
 		if(userFullInfo.getId() == null){
-			return userFullInfoMapper.insert(userFullInfo);
+			userFullInfoMapper.insert(userFullInfo);
+			return userFullInfoMapper.selectByName(userFullInfo.getUsername()).getId();
 		}else{
-			return userFullInfoMapper.updateByPrimaryKey(userFullInfo);
+			userFullInfoMapper.updateByPrimaryKey(userFullInfo);
+			return userFullInfo.getId();
 		}
 	}
 	/**

@@ -9,6 +9,8 @@ public interface UserFullInfoMapper {
     int insert(UserFullInfo record);
 
     UserFullInfo selectByPrimaryKey(Integer id);
+    
+    UserFullInfo selectByName(String username);
 
     int updateByPrimaryKey(UserFullInfo record);
     
