@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">  
-  <title>${operator.username}的主页</title>
+  <title>${userInfo.username}的主页</title>
   <meta name="description" content="">
   <meta name="author" content="jeekhan">
 
@@ -25,16 +25,18 @@
 </div>
 <div class="container">
   <div class="row">
+  <c:if test="${not empty operator.userId and operator.userId == userInfo.id}">
   	<ul class="nav nav-tabs pull-right" >
   	 <li><a href="/leyi/theme/" target="_blank">分类管理</a></li>
      <li><a href="/leyi/article/" target="_blank">文章收录</a></li>
 	</ul>
+   </c:if>
   </div>
   <div class="row">
 <!--=============================左边菜单链接  ===================================--> 
     <div class="col-md-3" >
       <div class="row" style="height:250px;overflow:auto ;padding:3px;border:0px #443322 solid ;">
-        <img style="float:left;margin:3px;" src="/leyi/images/profile-photo.jpg" width="150" height="150" alt="Profile Photo" class="img-responsive">  
+        <img style="float:left;margin:3px;" src="/leyi/upload/${userInfo.username}/${userInfo.picture }" width="150" height="150" alt="Profile Photo" class="img-responsive">  
          ${userInfo.introduce}
       </div>     
 

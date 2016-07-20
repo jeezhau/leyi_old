@@ -25,7 +25,6 @@
 		<property name="prefix" value="/WEB-INF/jsp/" /> 
 		<property name="suffix" value=".jsp" />  
 	</bean>
-	
 	<!-- 输出对象转JSON支持 -->
     <bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
  <!--   
@@ -44,5 +43,11 @@
             </list>
         </property>
     </bean> -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+        <property name="defaultEncoding" value="utf-8"></property>   
+        <property name="maxUploadSize" value="10485760000"></property>  
+        <property name="maxInMemorySize" value="40960"></property>  
+   </bean>  
+
 
 </beans>

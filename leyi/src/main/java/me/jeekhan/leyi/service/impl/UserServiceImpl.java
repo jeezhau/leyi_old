@@ -29,8 +29,7 @@ public class UserServiceImpl implements UserService{
 	 * @param	用户名或邮箱
 	 */
 	public UserFullInfo getUserFullInfo(String username){
-		UserBaseInfo  userInfo = userBaseInfoMapper.selectByName(username);
-		return userFullInfoMapper.selectByPrimaryKey(userInfo.getUserId());
+		return userFullInfoMapper.selectByName(username);
 	}
 	/**
 	 * 用户身份验证
@@ -65,14 +64,22 @@ public class UserServiceImpl implements UserService{
 	/**
 	 * 保存用户：有则更新，无则修改
 	 * @param	用户详细信息
-	 * @return  用户ID
+	 * @return  用户ID,0-缺少信息，-1-用户名已被使用,-2-邮箱已被使用
 	 */
 	@Override 
 	public int saveUser(UserFullInfo userFullInfo){
 		if(userFullInfo == null){
-			return -1;
+			return 0;
 		}
 		if(userFullInfo.getId() == null){
+			UserFullInfo info1 = userFullInfoMapper.selectByName(userFullInfo.getUsername());
+			UserFullInfo info2 = userFullInfoMapper.selectByName(userFullInfo.getEmail());
+			if(info1!=null ){
+				return -1;
+			}
+			if(info2!=null){
+				return -2;
+			}
 			userFullInfoMapper.insert(userFullInfo);
 			return userFullInfoMapper.selectByName(userFullInfo.getUsername()).getId();
 		}else{

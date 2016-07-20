@@ -2,14 +2,16 @@ package me.jeekhan.leyi.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class UserFullInfo {
     private Integer id;
 
     private String username;
 
     private String email;
-
-    private Integer age;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date birthday;
 
     private String sex;
 
@@ -29,7 +31,7 @@ public class UserFullInfo {
 
     private String enabled;
 
-    private byte[] picture;
+    private String picture;
 
     public Integer getId() {
         return id;
@@ -55,15 +57,15 @@ public class UserFullInfo {
         this.email = email;
     }
 
-    public Integer getAge() {
-        return age;
-    }
+    public Date getBirthday() {
+		return birthday;
+	}
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
 
-    public String getSex() {
+	public String getSex() {
         return sex;
     }
 
@@ -135,11 +137,11 @@ public class UserFullInfo {
         this.enabled = enabled;
     }
 
-    public byte[] getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(byte[] picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 }

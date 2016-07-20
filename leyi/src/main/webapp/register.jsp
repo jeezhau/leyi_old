@@ -24,35 +24,45 @@
 <div class="container" > 
   <h3 style="text-align:center;margin:20px 0 ">用户注册</h3>
   <div class="row">
-	<form class="form-horizontal" id="registerForm" action="register" method ="post" role="form" >
+	<form class="form-horizontal" id="registerForm" action="register" method ="post" autocomplete="on" enctype="multipart/form-data" role="form" >
 	  <div class="form-group">
 	    <label for="username" class="col-sm-2 control-label">用户名<span style="color:red">*</span></label>
 	    <div class="col-sm-5">
-	      <input type="text" class="form-control" id="username" name="username" value="" maxLength="25" required placeholder="请输入用户名">
+	      <input type="text" class="form-control" id="username" name="username" maxLength="25" required placeholder="请输入用户名">
+	      <c:if test="${not empty param.username_msg}">
+	      <div class="alert alert-warning alert-dismissable">${param.username_msg}
+	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+	      </div>
+	      </c:if>
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label for=email class="col-sm-2 control-label">邮箱<span style="color:red">*</span></label>
 	    <div class="col-sm-5">
-	      <input class="form-control" type="text" id="email" name="email" required placeholder="请输入邮箱">
+	      <input class="form-control" type="email" id="email" name="email" required placeholder="请输入邮箱">
+	      <c:if test="${not empty param.email_msg}">
+	      <div class="alert alert-warning alert-dismissable">${param.email_msg}
+	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+	      </div>
+	      </c:if>
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label for="password" class="col-sm-2 control-label">密码<span style="color:red">*</span></label>
 	    <div class="col-sm-5">
-	      <input class="form-control" type="text" id="password" name="passwd" required placeholder="请输入密码">
+	      <input class="form-control" type="password" id="password" name="passwd" required placeholder="请输入密码">
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label for="re-password" class="col-sm-2 control-label">确认密码<span style="color:red">*</span></label>
 	    <div class="col-sm-5">
-	      <input class="form-control" type="text" id="re-password" name="re-password" required placeholder="请输入确认密码">
+	      <input class="form-control" type="password" id="re-password" required placeholder="请输入确认密码">
 	    </div>
 	  </div>	  	  
 	  <div class="form-group">
-        <label for="age" class="col-sm-2 control-label">年龄</label>
+        <label for="age" class="col-sm-2 control-label">生日</label>
         <div class="col-sm-3">
-          <input class="form-control" type="number" id="age" name="age" min="1" max="999" placeholder="请输入年龄">
+          <input class="form-control" type="date" id="birthday" name="birthday" placeholder="请输入年龄">
         </div>
       </div>
  	  <div class="form-group">
@@ -92,7 +102,7 @@
       <div class="form-group">
         <label for="introduce" class="col-sm-2 control-label">照片</label>
         <div class="col-sm-5">
-          <input type="file" id="picture" name="picture" >
+          <input type="file" id="picFile" name="picFile" >
         </div>
       </div>
       <div class="form-group">

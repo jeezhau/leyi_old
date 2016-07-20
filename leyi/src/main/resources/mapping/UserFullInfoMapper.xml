@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
-    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
     <result column="sex" property="sex" jdbcType="CHAR" />
     <result column="passwd" property="passwd" jdbcType="VARCHAR" />
     <result column="city" property="city" jdbcType="VARCHAR" />
@@ -19,7 +19,7 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, username, email, age, sex, passwd, city, favourite, profession, introduce, picture, regist_time, 
+    id, username, email, birthday, sex, passwd, city, favourite, profession, introduce, picture, regist_time, 
     update_time, enabled
   </sql>
 
@@ -45,12 +45,12 @@
   
   <insert id="insert" parameterType="me.jeekhan.leyi.model.UserFullInfo" >
     insert into tb_user_full_info (id, username, email, 
-      age, sex, passwd, city, 
+      birthday, sex, passwd, city, 
       favourite, profession, introduce, 
       regist_time, update_time, enabled, 
       picture)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{age,jdbcType=INTEGER}, #{sex,jdbcType=CHAR}, #{passwd,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=DATE}, #{sex,jdbcType=CHAR}, #{passwd,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
       #{favourite,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, 
       #{registTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{enabled,jdbcType=CHAR}, 
       #{picture,jdbcType=VARCHAR})
@@ -68,8 +68,8 @@
       <if test="email != null" >
         email,
       </if>
-      <if test="age != null" >
-        age,
+      <if test="birthday != null" >
+        birthday,
       </if>
       <if test="sex != null" >
         sex,
@@ -112,8 +112,8 @@
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
       </if>
-      <if test="age != null" >
-        #{age,jdbcType=INTEGER},
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
       </if>
       <if test="sex != null" >
         #{sex,jdbcType=CHAR},
@@ -157,8 +157,8 @@
       <if test="email != null" >
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="age != null" >
-        age = #{age,jdbcType=INTEGER},
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
       </if>
       <if test="sex != null" >
         sex = #{sex,jdbcType=CHAR},
@@ -198,7 +198,7 @@
     update tb_user_full_info
     set username = #{username,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
-      age = #{age,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=DATE},
       sex = #{sex,jdbcType=CHAR},
       passwd = #{passwd,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
