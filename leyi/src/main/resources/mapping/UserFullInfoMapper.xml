@@ -212,11 +212,13 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <update id="logOffUserById" parameterType="integer">
-  	update tb_user_full_info
-  	set enabled = '1'
-  	where id = #{id}
-  </update>
+  <!--随机获取一条可用显示于主页的用户信息 -->
+  <select id="selectIndexShowUser" resultMap="BaseResultMap" >
+  	select 
+  	<include refid="Base_Column_List" />
+    from tb_user_full_info
+    where indexshow = 'T' order by rand() limit 1
+  </select>
   		
   		
 </mapper>

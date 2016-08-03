@@ -44,6 +44,8 @@
 		<property name="dataSource" ref="dataSource" />
 		<!-- 自动扫描mapping.xml文件 --> 
 		<property name="mapperLocations"  value="classpath:mapping/*.xml"></property>
+		<!--mybatis配置
+		<property name="configLocation" value="classpath:MyBatis-Configuration.xml"></property> -->
 	</bean>  
 
 	<!-- DAO组件注册--> 
@@ -56,8 +58,10 @@
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
 		<property name="dataSource" ref="dataSource" />
 	</bean>  
-
-
+	<!-- <tx:annotation-driven/> only looks for @Transactional on beans in the same application context it is defined in. 
+	 This means that, if you put <tx:annotation-driven/> in a WebApplicationContext for a DispatcherServlet, 
+	 it only checks for @Transactional beans in your controllers, and not your services-->
+	<tx:annotation-driven transaction-manager="transactionManager" />
 </beans>
 
 

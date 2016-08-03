@@ -16,13 +16,13 @@
   <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
 </head>
-<body>
-<div style="height:38px;background-color:#b3b3ff ">
+<body style="background-color: #efefef;">  
+<div style="height:38px;background-color:#b3b3ff;margin-bottom:5px; ">
 
 </div>
 <div class="container">
   <div class="row">
-   <!-- =====================顶部文章=================== -->
+   <!-- =====================顶部主题=================== -->
 	<ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin:10px 0;">
 	   <c:forEach items="${topThemes}" var="item">
 	       <c:if test="${themeTreeUp[0].id==item.id}"> <li class="active"><a href="/leyi/article/theme/${item.id}">${item.name}</a></li> </c:if>
@@ -72,7 +72,7 @@
               <td>
                 [<a href="/leyi/article/editing?articleId=${item.id }" target="_blank">编辑</a>]&nbsp;&nbsp;
                 [<a href="/leyi/article/delete?articleId=${item.id }">删除</a>]&nbsp;&nbsp;
-                [<a href="/leyi/article/${item.id }"  target="_blank">显示</a>]&nbsp;&nbsp;
+                [<a href="/leyi/article/detail/${item.id }"  target="_blank">显示</a>]&nbsp;&nbsp;
               </td>
             </tr>
            </c:forEach>

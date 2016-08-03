@@ -20,53 +20,61 @@
 
 </head>
 <body style="background-color: #efefef;">  
-<div style="height:38px;background-color:#b3b3ff ">
+<div style="height:38px;background-color:#b3b3ff ;margin-bottom:5px;">
 
 </div>
 <div class="container">
   <div class="row">
-  <c:if test="${not empty operator.userId and operator.userId == userInfo.id}">
+  <c:if test="${not empty operator.userId and operator.userId > 0}">
   	<ul class="nav nav-tabs pull-right" >
   	 <li><a href="/leyi/theme/" target="_blank">分类管理</a></li>
-     <li><a href="/leyi/article/" target="_blank">文章收录</a></li>
+     <li><a href="/leyi/article/" target="_blank">文章管理</a></li>
+     <li><a href="/leyi/logout">退出</a></li>
 	</ul>
    </c:if>
+   <c:if test="${empty operator.userId or operator.userId < 1}">
+    <ul class="nav nav-tabs pull-right" >
+     <li><a href="/leyi/login.jsp" target="_blank">登录</a></li>
+     <li><a href="/leyi/register.jsp"  target="_blank">注册</a></li>
+	</ul>
+	</c:if>
   </div>
   <div class="row">
 <!--=============================左边菜单链接  ===================================--> 
     <div class="col-md-3" >
-      <div class="row" style="height:250px;overflow:auto ;padding:3px;border:0px #443322 solid ;">
-        <img style="float:left;margin:3px;" src="/leyi/upload/${userInfo.username}/${userInfo.picture }" width="150" height="150" alt="Profile Photo" class="img-responsive">  
-         ${userInfo.introduce}
-      </div>     
-
-      <ol class="breadcrumb" style="margin:0;">
-	   <c:forEach items="${themeTreeUp}" var="item">
-	    <c:if test="${currTheme.id==item.id}"> <li class="active">${item.name}</li> </c:if>
-	    <c:if test="${currTheme.id!=item.id}"> <li><a href="${item.id}">${item.name}</a></li> </c:if>
-	   </c:forEach>
-	  </ol>
-      <nav class="navbar navbar-info "  role="navigation">          
-        <ul class="nav nav-tabs nav-stacked">
-         <c:forEach items="${children}" var="item">
-          <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/mypage/theme/${item.id}">${item.name}</a></li></c:if>
-          <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/mypage/theme/${item.id}">${item.name}</a></li></c:if>
-         </c:forEach>
-		</ul>
-      </nav>        
+      <div class="row" style="height:250px;overflow:auto ;padding:3px;border:3px #CECEF6 solid ;border-radius:5px;">
+         <img style="float:left;margin:3px;" src="/leyi/showPic/${userInfo.username}/${userInfo.picture }" width="150" height="150" alt="Profile Photo" class="img-responsive">  
+         <b>&nbsp;&nbsp;&nbsp;${userInfo.username}</b><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
+      </div>
+	  <div class="row light-gray-bg">
+	      <ol class="breadcrumb " style="margin:10px 0;">
+		   <c:forEach items="${themeTreeUp}" var="item">
+		    <c:if test="${currTheme.id==item.id}"> <li class="active">${item.name}</li> </c:if>
+		    <c:if test="${currTheme.id!=item.id}"> <li><a href="${item.id}">${item.name}</a></li> </c:if>
+		   </c:forEach>
+		  </ol>
+	      <nav class="navbar navbar-info "  role="navigation">          
+	        <ul class="nav nav-tabs nav-stacked">
+	         <c:forEach items="${children}" var="item">
+	          <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/${userInfo.username}/theme/${item.id}">${item.name}</a></li></c:if>
+	          <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/${userInfo.username}/theme/${item.id}">${item.name}</a></li></c:if>
+	         </c:forEach>
+			</ul>
+	      </nav> 
+      </div>       
     </div>
     <!--======================中间主要内容  ===================--> 
     <div class="col-md-9 light-gray-bg">
       <!-- =====================顶部主题分类=================== -->
 	  <ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin:10px 0;">
 	   <c:forEach items="${topThemes}" var="item">
-        <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/mypage/theme/${item.id}">${item.name}</a></li></c:if>
-        <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/mypage/theme/${item.id}">${item.name}</a></li></c:if>
+        <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/${userInfo.username}/theme/${item.id}">${item.name}</a></li></c:if>
+        <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/${userInfo.username}/theme/${item.id}">${item.name}</a></li></c:if>
        </c:forEach>
 	  </ul>
 	<c:forEach items="${articleBriefs}" var="item">	  
-	  <div class="panel panel-info">
-        <div class="panel-heading"><h3 class="panel-title">${item.name}</h3></div>
+	  <div class="panel panel-info" style="margin-bottom:5px">
+        <div class="panel-heading"><h4 class="panel-title"><a target="_blank" href="/leyi/article/detail/${item.id}">${item.name}</a></h4></div>
 	    <div class="panel-body">${item.brief}</div>
 	  </div> <!-- 文章panel -->
 	 </c:forEach>
@@ -78,7 +86,7 @@
   <div class="row">
    <footer class="text-center">
       <p> Copyright &copy; 2084 Company Name 
-        | Designed by <a href="http://www.templatemo.com" target="_parent">templatemo</a></p>
+        </p>
     </footer>         
   </div> 
 </div> <!-- end of container -->

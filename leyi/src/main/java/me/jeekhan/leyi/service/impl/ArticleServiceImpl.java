@@ -42,21 +42,21 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 查询指定用户下的所有文章
 	 */
 	@Override
-	public List<ArticleBrief> getArticlesByUser(int userId,PageCond pageCond){
+	public List<ArticleBrief> getArticlesByUser(int userId,boolean reviewing,PageCond pageCond){
 		if(pageCond == null){
 			pageCond = new PageCond(0);
 		}
-		List<ArticleBrief> list = articleBriefMapper.selectArticlesByUser(userId, pageCond);
+		List<ArticleBrief> list = articleBriefMapper.selectArticlesByUser(userId, reviewing,pageCond);
 		return list;
 	}
 	/**
 	 * 查询所有文章信息
 	 */
-	public List<ArticleBrief> getArticles(PageCond pageCond){
+	public List<ArticleBrief> getArticles(boolean reviewing,PageCond pageCond){
 		if(pageCond == null){
 			pageCond = new PageCond(0);
 		}
-		List<ArticleBrief> list = articleBriefMapper.selectArticles(pageCond);
+		List<ArticleBrief> list = articleBriefMapper.selectArticles(reviewing,pageCond);
 		return list;
 	}
 	/**
@@ -129,8 +129,19 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 获取指定主题下的所有文章简介信息
 	 */
 	@Override
-	public List<ArticleBrief> getArticlesByTheme(int themeId,PageCond pageCond){
-		return articleBriefMapper.selectArticlesByTheme(themeId, pageCond);
+	public List<ArticleBrief> getArticlesByTheme(int themeId,boolean reviewing,PageCond pageCond){
+		return articleBriefMapper.selectArticlesByTheme(themeId, reviewing,pageCond);
 	}
-	
+	/**
+	 * 取最新最热门的文章20条
+	 */
+	public List<ArticleBrief> getHotNewArticles(){
+		return articleBriefMapper.selectArticles(false, new PageCond());
+	}
+	/**
+	 * 取最新待审核的20条记录
+	 */
+	public List<ArticleBrief> getArticles4Review(){
+		return articleBriefMapper.selectArticles4Review();
+	}
 }

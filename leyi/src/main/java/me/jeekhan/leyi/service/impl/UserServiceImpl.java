@@ -88,11 +88,11 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 	/**
-	 * 注销用户
-	 * @param id
+	 * 随机获取一个可用于显示于首页的用户
 	 * @return
 	 */
-	public int logOffUser(int id){
-		return userFullInfoMapper.logOffUserById(id);
+	@Override
+	public UserFullInfo getIndexShowUser(){
+		return userFullInfoMapper.selectIndexShowUser();
 	}
 }

@@ -56,24 +56,38 @@ public interface ArticleService {
 	 * 分页查询指定用户的所有文章信息，按更新时间，评论数量降序排列;
 	 * 分页显示
 	 * @param userId	用户ID
+	 * @param reviewing 是否包含审核中的记录
 	 * @param pageCond	分页条件
 	 * @return
 	 */
-	public List<ArticleBrief> getArticlesByUser(int userId,PageCond pageCond);
+	public List<ArticleBrief> getArticlesByUser(int userId,boolean reviewing,PageCond pageCond);
 	
 	/**
 	 * 分页查询显示所有用户的所有文章信息，按更新时间，评论数量降序排列
+	 * @param reviewing 是否包含审核中的记录
 	 * @param pageCond	分页条件
 	 * @return
 	 */
-	public List<ArticleBrief> getArticles(PageCond pageCond);
+	public List<ArticleBrief> getArticles(boolean reviewing,PageCond pageCond);
 	
 	/**
 	 * 分页查询显示指定主题下的所有文章信息，按更新时间，评论数量降序排列
 	 * @param themeId
+	 * @param reviewing 是否包含审核中的记录
 	 * @return
 	 */
-	public List<ArticleBrief> getArticlesByTheme(int themeId,PageCond pageCond);
+	public List<ArticleBrief> getArticlesByTheme(int themeId,boolean reviewing,PageCond pageCond);
 	
+	/**
+	 * 取最新最热门的文章20条
+	 * @return
+	 */
+    public List<ArticleBrief> getHotNewArticles();
+    
+	/**
+	 * 取最新待审核的文章20条
+	 * @return
+	 */
+    public List<ArticleBrief> getArticles4Review();
 
 }

@@ -18,9 +18,15 @@ import me.jeekhan.leyi.dto.Operator;
 import me.jeekhan.leyi.model.ArticleBrief;
 import me.jeekhan.leyi.model.ArticleContent;
 import me.jeekhan.leyi.model.ThemeClass;
+import me.jeekhan.leyi.model.UserFullInfo;
 import me.jeekhan.leyi.service.ArticleService;
 import me.jeekhan.leyi.service.ThemeClassService;
-
+import me.jeekhan.leyi.service.UserService;
+/**
+ * 文章管理
+ * @author Jee Khan
+ *
+ */
 @Controller
 @RequestMapping("/article")
 @SessionAttributes({"currTheme","operator","topThemes"})
@@ -29,24 +35,41 @@ public class ArticleMgrAction {
 	private ArticleService articleService;
 	@Autowired
 	private ThemeClassService themeClassService;
+	@Autowired
+	private UserService userService;
+	
 	
 	/**
-	 * 显示文章
+	 * 显示文章详细信息
+	 * 【权限】
+	 * 		所有人
+	 * 【功能说明】
+	 * 		1.取文章信息；
+	 * 		2.如果没有对应的作者信息，则取作者信息；
+	 * 		3.如果文章不存在则返回应用主页；
 	 * @param articleId	文章ID
 	 * @param map
 	 * @return
 	 */
-	@RequestMapping(value="/{articleId}",method=RequestMethod.GET)
-	public String showArticle(@PathVariable("articleId")Integer articleId,Map<String,Object> map){
+	@RequestMapping(value="/{mode}/{articleId}",method=RequestMethod.GET)
+	public String showArticle(@PathVariable("mode")String mode,@PathVariable("articleId")Integer articleId,Map<String,Object> map){
 		ArticleBrief brief = articleService.getArticleBref(articleId);
-		if(brief!=null){
+		if(("detail".equals(mode) || "review".equals(mode)) && brief != null){
+			map.put("mode", mode);
 			map.put("brief", brief);
+			ArticleContent content = articleService.getArticleContent(articleId);
+			if(content != null){
+				map.put("content", content);
+			}
+			UserFullInfo userInfo = (UserFullInfo) map.get("userInfo");
+			if(userInfo == null || brief.getUpdateOpr() != userInfo.getId()){
+				userInfo = userService.getUserFullInfo(brief.getUpdateOpr());
+				map.put("userInfo", userInfo);
+			}
+			return "articleShow";
+		}else{
+			return "redirect:/";
 		}
-		ArticleContent content = articleService.getArticleContent(articleId);
-		if(content != null){
-			map.put("content", content);
-		}
-		return "articleShow";
 	}
 
 	/**
@@ -166,8 +189,12 @@ public class ArticleMgrAction {
 		List<ThemeClass> themeTreeUp = themeClassService.getThemeTreeUp(currTheme.getId());
 		map.put("themeTreeUp", themeTreeUp);
 		List<ThemeClass> children = themeClassService.getChildThemes(currTheme.getId());
-		map.put("children",children);	
-		List<ArticleBrief> currArticles = articleService.getArticlesByTheme(currTheme.getId(), new PageCond());
+		map.put("children",children);
+		boolean reviewing = false;
+		if(operator.getUserId() == currTheme.getUpdateOpr() ){
+			reviewing = true;
+		}
+		List<ArticleBrief> currArticles = articleService.getArticlesByTheme(currTheme.getId(),reviewing,new PageCond());
 		map.put("currArticles", currArticles);
 		
 		return "articleMgr";
@@ -182,7 +209,7 @@ public class ArticleMgrAction {
 	 * @return
 	 */
 	@RequestMapping(value="/*",method=RequestMethod.GET)
-	public String article(Map<String,Object> map){
+	public String article(@ModelAttribute("operator")Operator operator,Map<String,Object> map){
 		@SuppressWarnings("unchecked")
 		List<ThemeClass> topThemes = (List<ThemeClass>) map.get("topThemes");
 		ThemeClass currTheme = topThemes.get(0);
@@ -191,8 +218,11 @@ public class ArticleMgrAction {
 		map.put("themeTreeUp", themeTreeUp);
 		List<ThemeClass> children = themeClassService.getChildThemes(currTheme.getId());
 		map.put("children",children);
-
-		List<ArticleBrief> currArticles = articleService.getArticlesByTheme(currTheme.getId(), new PageCond());
+		boolean reviewing = false;
+		if(operator.getUserId() == currTheme.getUpdateOpr() ){
+			reviewing = true;
+		}
+		List<ArticleBrief> currArticles = articleService.getArticlesByTheme(currTheme.getId(),reviewing, new PageCond());
 		map.put("currArticles", currArticles);
 		
 		return "articleMgr";

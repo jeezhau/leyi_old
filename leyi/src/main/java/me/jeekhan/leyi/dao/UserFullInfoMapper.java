@@ -14,5 +14,5 @@ public interface UserFullInfoMapper {
 
     int updateByPrimaryKey(UserFullInfo record);
     
-    int logOffUserById(int id);
+    UserFullInfo selectIndexShowUser();
 }

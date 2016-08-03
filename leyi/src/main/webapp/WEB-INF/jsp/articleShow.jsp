@@ -17,56 +17,128 @@
 
   <script src="/leyi/ckeditor/ckeditor.js"></script>
 </head>
-<body>
-<div style="height:38px;background-color:#b3b3ff ">
+<body style="background-color: #efefef;">  
+<div style="height:38px;background-color:#b3b3ff ;margin-bottom:5px;">
 
 </div>
 <div class="container">
+  <c:if test="${not empty operator.userId and operator.userId >0}">
   <div class="row">
-   <!-- =====================顶部文章=================== -->
-	<ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin:10px 0;">
+     <div class="col-md-3" >
+      <div class="row" style="height:250px;overflow:auto ;padding:3px;border:3px #CECEF6 solid ;border-radius:5px;">
+       <img style="float:left;margin:3px;" src="/leyi/showPic/${userInfo.username}/${userInfo.picture }" width="150" height="150" alt="Profile Photo" >  
+        <b>&nbsp;&nbsp;&nbsp;${userInfo.username}</b><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
+       </div>
+	 </div>
+	 
+   <!--======================中间主要内容  ===================--> 
+    <div class="col-md-9 light-gray-bg">
+      <!-- =====================顶部主题分类=================== -->
+	  <ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin:10px 0;">
 	   <c:forEach items="${topThemes}" var="item">
-	       <c:if test="${themeTreeUp[0].id==item.id}"> <li class="active"><a href="/leyi/article/theme/${item.id}">${item.name}</a></li> </c:if>
-	       <c:if test="${themeTreeUp[0].id!=item.id}"> <li><a href="/leyi/article/theme/${item.id}">${item.name}</a></li> </c:if>	
+        <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/article/theme/${item.id}">${item.name}</a></li></c:if>
+        <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/article/theme/${item.id}">${item.name}</a></li></c:if>
        </c:forEach>
+	  </ul>
+	  <div class="panel panel-info">
+        <div class="panel-heading text-center"><h3 class="panel-title">${brief.name}</h3></div>
+	    <div class="panel-body">
+	     <article>
+			  <div class="row">
+			  	<div class="col-sm-12 "> 关键词：${brief.keywords} </div>
+			    <div class="col-sm-6 "> 来&nbsp;&nbsp;&nbsp;&nbsp;源：
+			     <c:choose>
+			     	<c:when test="${brief.source == 0}">自创</c:when>
+			     	<c:when test="${brief.source == 1}">转摘</c:when>
+			     	<c:when test="${brief.source == 2}">其他</c:when>
+			     </c:choose>   
+			     </div>
+			  	 <div class="col-sm-6 "> 类&nbsp;&nbsp;&nbsp;&nbsp;型：
+			  	 <c:choose>
+			     	<c:when test="${brief.type == 0}">文本</c:when>
+			     	<c:when test="${brief.type == 1}">图册</c:when>
+			     	<c:when test="${brief.type == 2}">视频</c:when>
+			     	<c:when test="${brief.type == 3}">语音</c:when>
+			     	<c:when test="${brief.type == 4}">混合</c:when>
+			     </c:choose>
+			     </div>
+			  </div>
+			  <div class="row">
+			    <hr>
+			  	<div class="col-sm-12 "> 简&nbsp;&nbsp;&nbsp;&nbsp;介：${brief.brief} </div>
+			  </div> 
+			  <div class="row">
+			    <hr>
+			    <div class="col-sm-12 "> ${content.content} </div>
+			  </div>
+		  </article>
+	    </div>
+	  </div> <!-- 文章panel -->
+    </div>
+  </div><!-- end of row -->
+  </c:if>
+  
+  <c:if test="${empty operator.userId or operator.userId < 1}">
+  <!-- 未登录用户 -->
+  <div class="row">
+    <ul class="nav nav-tabs pull-right" >
+     <li><a href="/leyi/login.jsp" target="_blank">登录</a></li>
+     <li><a href="/leyi/register.jsp"  target="_blank">注册</a></li>
 	</ul>
   </div>
-  <article>
-	  <div class="row">
-		 <div class="col-sm-12 text-center"><h3>${brief.name}</h3></div>
-	  </div>
-	  <div class="row">
-	    <hr>
-	  	<div class="col-sm-12 "> 关键词：${brief.keywords} </div>
-	  </div>
-	  <div class="row">
-	     <hr>
-	     <div class="col-sm-6 "> 来&nbsp;&nbsp;&nbsp;&nbsp;源：
-	     <c:choose>
-	     	<c:when test="${brief.source == 0}">自创</c:when>
-	     	<c:when test="${brief.source == 1}">转摘</c:when>
-	     	<c:when test="${brief.source == 2}">其他</c:when>
-	     </c:choose>   
-	     </div>
-	  	 <div class="col-sm-6 "> 类&nbsp;&nbsp;&nbsp;&nbsp;型：
-	  	 <c:choose>
-	     	<c:when test="${brief.type == 0}">文本</c:when>
-	     	<c:when test="${brief.type == 1}">图册</c:when>
-	     	<c:when test="${brief.type == 2}">视频</c:when>
-	     	<c:when test="${brief.type == 3}">语音</c:when>
-	     	<c:when test="${brief.type == 4}">混合</c:when>
-	     </c:choose>
-	     </div>
-	  </div>
-	  <div class="row">
-	    <hr>
-	  	<div class="col-sm-12 "> 简&nbsp;&nbsp;&nbsp;&nbsp;介：${brief.brief} </div>
-	  </div> 
-	  <div class="row">
-	    <hr>
-	    <div class="col-sm-12 "> ${content.content} </div>
-	  </div>
-  </article>
+  <div class="row">
+     <div class="col-md-3" >
+      <div class="row" style="height:250px;overflow:auto ;padding:3px;border:3px #CECEF6 solid ;border-radius:5px;">
+       <img style="float:left;margin:3px;" src="/leyi/showPic/${userInfo.username}/${userInfo.picture }" width="150" height="150" alt="Profile Photo" >  
+        <b>&nbsp;&nbsp;&nbsp;${userInfo.username}</b><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
+       </div>
+	 </div>
+	 
+   <!--======================中间主要内容  ===================--> 
+    <div class="col-md-9 light-gray-bg">
+	  <div class="panel panel-info">
+        <div class="panel-heading text-center"><h3 class="panel-title">${brief.name}</h3></div>
+	    <div class="panel-body">
+	     <article>
+			  <div class="row">
+			  	<div class="col-sm-12 "> 关键词：${brief.keywords} </div>
+			    <div class="col-sm-6 "> 来&nbsp;&nbsp;&nbsp;&nbsp;源：
+			     <c:choose>
+			     	<c:when test="${brief.source == 0}">自创</c:when>
+			     	<c:when test="${brief.source == 1}">转摘</c:when>
+			     	<c:when test="${brief.source == 2}">其他</c:when>
+			     </c:choose>   
+			     </div>
+			  	 <div class="col-sm-6 "> 类&nbsp;&nbsp;&nbsp;&nbsp;型：
+			  	 <c:choose>
+			     	<c:when test="${brief.type == 0}">文本</c:when>
+			     	<c:when test="${brief.type == 1}">图册</c:when>
+			     	<c:when test="${brief.type == 2}">视频</c:when>
+			     	<c:when test="${brief.type == 3}">语音</c:when>
+			     	<c:when test="${brief.type == 4}">混合</c:when>
+			     </c:choose>
+			     </div>
+			  </div>
+			  <div class="row">
+			    <hr>
+			  	<div class="col-sm-12 "> 简&nbsp;&nbsp;&nbsp;&nbsp;介：${brief.brief} </div>
+			  </div> 
+			  <div class="row">
+			    <hr>
+			    <div class="col-sm-12 "> ${content.content} </div>
+			  </div>
+			  <div class="form-group">
+		         <div class="col-sm-offset-5 col-sm-10">
+		           <button type="submit" class="btn btn-info" id="accept" style="margin:20px">&nbsp;&nbsp;通过&nbsp;&nbsp;</button>
+		           <button type="submit" class="btn btn-warning" id="refuse" style="margin:20px">&nbsp;&nbsp;拒绝&nbsp;&nbsp; </button>
+		         </div>
+      		   </div>
+		  </article>
+	    </div>
+	  </div> <!-- 文章panel -->
+    </div>
+  </div><!-- end of row -->
+  </c:if>
 </div>
 
 </body>

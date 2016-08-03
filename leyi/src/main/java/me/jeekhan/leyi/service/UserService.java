@@ -14,6 +14,7 @@ public interface UserService {
 	
 	public int saveUser(UserFullInfo userFullInfo);
 	
-	public int logOffUser(int id);
+	public UserFullInfo getIndexShowUser();
 
+	
 }

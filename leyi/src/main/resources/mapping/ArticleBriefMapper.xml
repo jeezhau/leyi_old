@@ -17,19 +17,19 @@
   <sql id="Base_Column_List" >
     id, name, keywords, brief, source, theme_id, type, update_time, update_opr, enabled
   </sql>
-
+  <!-- 根据主键取文章简介-->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from tb_article_brief
     where id = #{id,jdbcType=INTEGER}
   </select>
-  
+  <!--根据主键删除文章 -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_article_brief
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  
+  <!-- 新插入一条文章简介-->
   <insert id="insert" parameterType="me.jeekhan.leyi.model.ArticleBrief" >
     insert into tb_article_brief (id, name, keywords, 
       brief, source, theme_id, 
@@ -40,7 +40,7 @@
       #{type,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateOpr,jdbcType=INTEGER}, 
       #{enabled,jdbcType=CHAR})
   </insert>
-  
+  <!--根据主键更新全部文章简介信息-->
   <update id="updateByPrimaryKey" parameterType="me.jeekhan.leyi.model.ArticleBrief" >
     update tb_article_brief
     set name = #{name,jdbcType=VARCHAR},
@@ -55,33 +55,38 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
+  <!--取指定用户的所有（分页）的文章 -->
   <select id="selectArticlesByUser" parameterType="map" resultMap="BaseResultMap">
   	select 
   	<include refid="Base_Column_List"/>
   	from tb_article_brief b
-  	where b.enabled = '0' and update_opr = #{userId}
-  	order by b.update_time desc , (select (1) from tb_comments c where c.article_id = b.id and c.enabled=0) desc
-  	limit #{pageCond.begin},#{pageCond.pageSize}
-  	
-  </select>
-  <!-- 取所有文章简介 -->
-  <select id="selectArticles" parameterType="map" resultMap="BaseResultMap">
-  	select 
-  	<include refid="Base_Column_List"/>
-  	from tb_article_brief b
-  	where b.enabled = '0'
-  	order by b.update_time desc , (select (1) from tb_comments c where c.article_id = b.id and c.enabled=0) desc
+  	where b.enabled in ('0'<if test="reviewing" >,'1'</if>)
+  	 and update_opr = #{userId}
+  	order by (UNIX_TIMESTAMP(b.update_time)/3600/24 + (select count(1) from tb_comments c where c.article_id = b.id and c.enabled=0)) desc
   	limit #{pageCond.begin},#{pageCond.pageSize}
   </select>
+  
   <!--取指定主题下的所有文章简介 -->
   <select id="selectArticlesByTheme" parameterType="map" resultMap="BaseResultMap">
   	select 
   	<include refid="Base_Column_List"/>
   	from tb_article_brief b
-  	where b.enabled = '0' and b.theme_id in (select t1.id from tb_theme_class t1 where FIND_IN_SET(#{themeId,jdbcType=INTEGER},getThemeTreeUp(t1.id))) 
-  	order by b.update_time desc , (select (1) from tb_comments c where c.article_id = b.id and c.enabled=0) desc
+  	where b.enabled in ('0'<if test="reviewing">,'1'</if>)
+  	and b.theme_id in (select t1.id from tb_theme_class t1 where FIND_IN_SET(#{themeId,jdbcType=INTEGER},getThemeTreeUp(t1.id))) 
+  	order by (UNIX_TIMESTAMP(b.update_time)/3600/24 + (select count(1) from tb_comments c where c.article_id = b.id and c.enabled=0)) desc
   	limit #{pageCond.begin},#{pageCond.pageSize}
   </select> 
+  
+  <!-- 取所有用户文章 -->
+  <select id="selectArticles" parameterType="map" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from tb_article_brief b
+  	where b.enabled in ('0'<if test="reviewing">,'1'</if>)
+  	order by (UNIX_TIMESTAMP(b.update_time)/3600/24 + (select count(1) from tb_comments c where c.article_id = b.id and c.enabled=0)) desc
+  	limit #{pageCond.begin},#{pageCond.pageSize}
+  </select>
+  
   <!--取指定主题下指定名称最新添加的文章简介 -->
   <select id="selectLatestRecrod" parameterType="me.jeekhan.leyi.model.ArticleBrief"  resultMap="BaseResultMap">
   	select 
@@ -90,5 +95,16 @@
   	where id = ( select max(id) from tb_article_brief b 
 		where b.theme_id = #{themeId} and b.`name` = #{name} and b.keywords = #{keywords} and b.source=#{source} and b.type=#{type} and b.update_opr=#{updateOpr})
   </select> 
+  
+  <!-- 取待审核的最新10条文章简介 -->
+  <select id="selectArticles4Review" parameterType="map" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from tb_article_brief b
+  	where b.enabled = '1'
+  	order by b.update_time desc
+  	limit 0,10
+  </select>
+  
 </mapper>
 
