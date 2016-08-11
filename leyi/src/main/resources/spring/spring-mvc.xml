@@ -49,5 +49,13 @@
         <property name="maxInMemorySize" value="40960"></property>  
    </bean>  
 
-
+   <!-- 拦截器配置-->
+   <mvc:interceptors>
+   	<mvc:interceptor>
+   		<mvc:mapping path="/theme/**"/>
+   		<mvc:mapping path="/review/**"/>
+   		<mvc:mapping path="/article/**"/>
+   		<bean class="me.jeekhan.leyi.interceptor.LoginInterceptor"/>
+   	</mvc:interceptor>
+   </mvc:interceptors>
 </beans>

@@ -32,19 +32,19 @@ public interface ThemeClassService {
 	 * 获取指定用户所有的主题分类
 	 * @return
 	 */
-	public List<ThemeClass> getUserThemes(int userId);
+	public List<ThemeClass> getUserThemes(int userId,boolean isSlef);
 	
 	/**
 	 * 获取指定用户所有顶层主题分类
 	 * @return
 	 */
-	public List<ThemeClass> getUserTopThemes(int userId);
+	public List<ThemeClass> getUserTopThemes(int userId,boolean isSlef);
 	
 	/**
 	 * 获取指定主题下的所有的子主题分类
 	 * @return
 	 */
-	public List<ThemeClass> getChildThemes(int parentId);
+	public List<ThemeClass> getChildThemes(int parentId,boolean isSlef);
 	/**
 	 * 向上获取主题分类属
 	 * @param themeId
@@ -52,5 +52,11 @@ public interface ThemeClassService {
 	 */
 	public List<ThemeClass> getThemeTreeUp(int themeId);
 	
+	
+	/**
+	 * 获取待审核的10条主题
+	 * @return
+	 */
+	public List<ThemeClass> getThemes4Review();
 	
 }

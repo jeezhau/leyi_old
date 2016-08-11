@@ -24,9 +24,10 @@
     from tb_article_brief
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <!--根据主键删除文章 -->
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from tb_article_brief
+  <!--根据主键更新文章 状态：0-正常，1-待审核，D-删除，R-拒绝-->
+  <delete id="updateEnabledStatus" parameterType="map" >
+    update tb_article_brief 
+    set enabled = #{enabled,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <!-- 新插入一条文章简介-->
@@ -60,7 +61,7 @@
   	select 
   	<include refid="Base_Column_List"/>
   	from tb_article_brief b
-  	where b.enabled in ('0'<if test="reviewing" >,'1'</if>)
+  	where b.enabled in ('0'<if test="isSelf" >,'1','R'</if>)
   	 and update_opr = #{userId}
   	order by (UNIX_TIMESTAMP(b.update_time)/3600/24 + (select count(1) from tb_comments c where c.article_id = b.id and c.enabled=0)) desc
   	limit #{pageCond.begin},#{pageCond.pageSize}
@@ -71,7 +72,7 @@
   	select 
   	<include refid="Base_Column_List"/>
   	from tb_article_brief b
-  	where b.enabled in ('0'<if test="reviewing">,'1'</if>)
+  	where b.enabled in ('0'<if test="isSelf" >,'1','R'</if>)
   	and b.theme_id in (select t1.id from tb_theme_class t1 where FIND_IN_SET(#{themeId,jdbcType=INTEGER},getThemeTreeUp(t1.id))) 
   	order by (UNIX_TIMESTAMP(b.update_time)/3600/24 + (select count(1) from tb_comments c where c.article_id = b.id and c.enabled=0)) desc
   	limit #{pageCond.begin},#{pageCond.pageSize}
@@ -82,7 +83,7 @@
   	select 
   	<include refid="Base_Column_List"/>
   	from tb_article_brief b
-  	where b.enabled in ('0'<if test="reviewing">,'1'</if>)
+  	where b.enabled in ('0'<if test="isSelf" >,'1','R'</if>)
   	order by (UNIX_TIMESTAMP(b.update_time)/3600/24 + (select count(1) from tb_comments c where c.article_id = b.id and c.enabled=0)) desc
   	limit #{pageCond.begin},#{pageCond.pageSize}
   </select>

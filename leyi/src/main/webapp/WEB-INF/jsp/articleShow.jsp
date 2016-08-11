@@ -27,7 +27,7 @@
      <div class="col-md-3" >
       <div class="row" style="height:250px;overflow:auto ;padding:3px;border:3px #CECEF6 solid ;border-radius:5px;">
        <img style="float:left;margin:3px;" src="/leyi/showPic/${userInfo.username}/${userInfo.picture }" width="150" height="150" alt="Profile Photo" >  
-        <b>&nbsp;&nbsp;&nbsp;${userInfo.username}</b><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
+         <a href="/leyi/${userInfo.username}"><b>&nbsp;&nbsp;&nbsp;${userInfo.username}</b></a><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
        </div>
 	 </div>
 	 
@@ -36,8 +36,8 @@
       <!-- =====================顶部主题分类=================== -->
 	  <ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin:10px 0;">
 	   <c:forEach items="${topThemes}" var="item">
-        <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/article/theme/${item.id}">${item.name}</a></li></c:if>
-        <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/article/theme/${item.id}">${item.name}</a></li></c:if>
+        <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/${userInfo.username}/theme/${item.id}">${item.name}</a></li></c:if>
+        <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/${userInfo.username}/theme/${item.id}">${item.name}</a></li></c:if>
        </c:forEach>
 	  </ul>
 	  <div class="panel panel-info">
@@ -71,6 +71,36 @@
 			    <hr>
 			    <div class="col-sm-12 "> ${content.content} </div>
 			  </div>
+			  <c:if test="${mode == 'review'}">
+			  <div class="row">
+			     <hr>
+			     <form id="reviewForm" method="post" action="">
+			     <input type="hidden" name="articleId" value="${brief.id }">
+			     <div class="form-group">
+			        <label  class="col-sm-2 control-label">审核说明</label>
+			        <div class="col-sm-10">
+			          <textarea class="form-control" id="remark" name="remark" placeholder="请输入审核说明" rows="5" ></textarea>
+			        </div>
+			      </div>
+		         <div class="col-sm-offset-4 col-sm-10">
+		           <button type="button" class="btn btn-info" id="accept" style="margin:20px">&nbsp;&nbsp;通过&nbsp;&nbsp;</button>
+		           <button type="button" class="btn btn-warning" id="refuse" style="margin:20px">&nbsp;&nbsp;拒绝&nbsp;&nbsp; </button>
+		         </div>
+		         </form>
+		         <script type="text/javascript">
+		         $(function(){ 
+			 		$("#accept").click(function(){
+						$("#reviewForm").attr('action','/leyi/article/accept');
+						$("#reviewForm").submit();
+					});
+			 		$("#refuse").click(function(){
+						$("#reviewForm").attr('action','/leyi/article/refuse');
+						$("#reviewForm").submit();
+					});
+		         });
+		         </script>
+      		  </div>
+      		  </c:if>
 		  </article>
 	    </div>
 	  </div> <!-- 文章panel -->
@@ -90,7 +120,7 @@
      <div class="col-md-3" >
       <div class="row" style="height:250px;overflow:auto ;padding:3px;border:3px #CECEF6 solid ;border-radius:5px;">
        <img style="float:left;margin:3px;" src="/leyi/showPic/${userInfo.username}/${userInfo.picture }" width="150" height="150" alt="Profile Photo" >  
-        <b>&nbsp;&nbsp;&nbsp;${userInfo.username}</b><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
+        <a href="/leyi/${userInfo.username}"><b>&nbsp;&nbsp;&nbsp;${userInfo.username}</b></a><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
        </div>
 	 </div>
 	 
@@ -127,12 +157,6 @@
 			    <hr>
 			    <div class="col-sm-12 "> ${content.content} </div>
 			  </div>
-			  <div class="form-group">
-		         <div class="col-sm-offset-5 col-sm-10">
-		           <button type="submit" class="btn btn-info" id="accept" style="margin:20px">&nbsp;&nbsp;通过&nbsp;&nbsp;</button>
-		           <button type="submit" class="btn btn-warning" id="refuse" style="margin:20px">&nbsp;&nbsp;拒绝&nbsp;&nbsp; </button>
-		         </div>
-      		   </div>
 		  </article>
 	    </div>
 	  </div> <!-- 文章panel -->

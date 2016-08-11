@@ -9,12 +9,12 @@
   <title>一叶知秋</title>
   <meta name="description" content="">
   <meta name="author" content="jeekhan">
-
+  <link href="images/favicon.ico" rel="shortcut icon" />
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/templatemo-style.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">  
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">  
 <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
@@ -28,7 +28,7 @@
    <c:if test="${empty operator.userId or operator.userId < 1}">
   	<ul class="nav nav-tabs pull-right" >
      <li><a href="login.jsp" target="_blank">登录</a></li>
-     <li><a href="register.jsp"  target="_blank">注册</a></li>
+     <li><a href="/leyi/register"  target="_blank">注册</a></li>
 	</ul>
 	</c:if>
 	<c:if test="${not empty operator.userId and operator.userId > 0}">
@@ -51,7 +51,7 @@
     <div class="col-md-9 light-gray-bg">
 	 <c:forEach items="${hotnew}" var="item">
 	  <div class="panel panel-info" style="margin-bottom:5px">
-	    <div class="panel-heading"><h4 class="panel-title"><a target="_blank" href="/leyi/article/detail/${item.id}">${item.name}</a></h4></div>
+	    <div class="panel-heading"><h4 class="panel-title"><a target="_blank" href="/leyi/${userInfo.username}/article/${item.id}">${item.name}</a></h4></div>
 		<div class="panel-body">${item.brief}</div>
 	  </div> <!-- 文章panel -->
 	 </c:forEach>  

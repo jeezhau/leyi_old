@@ -56,27 +56,27 @@ public interface ArticleService {
 	 * 分页查询指定用户的所有文章信息，按更新时间，评论数量降序排列;
 	 * 分页显示
 	 * @param userId	用户ID
-	 * @param reviewing 是否包含审核中的记录
+	 * @param isSelf 是否包含审核中的记录
 	 * @param pageCond	分页条件
 	 * @return
 	 */
-	public List<ArticleBrief> getArticlesByUser(int userId,boolean reviewing,PageCond pageCond);
+	public List<ArticleBrief> getArticlesByUser(int userId,boolean isSelf,PageCond pageCond);
 	
 	/**
 	 * 分页查询显示所有用户的所有文章信息，按更新时间，评论数量降序排列
-	 * @param reviewing 是否包含审核中的记录
+	 * @param isSelf 是否包含审核中的记录
 	 * @param pageCond	分页条件
 	 * @return
 	 */
-	public List<ArticleBrief> getArticles(boolean reviewing,PageCond pageCond);
+	public List<ArticleBrief> getArticles(boolean isSelf,PageCond pageCond);
 	
 	/**
 	 * 分页查询显示指定主题下的所有文章信息，按更新时间，评论数量降序排列
 	 * @param themeId
-	 * @param reviewing 是否包含审核中的记录
+	 * @param isSelf 是否包含审核中的记录
 	 * @return
 	 */
-	public List<ArticleBrief> getArticlesByTheme(int themeId,boolean reviewing,PageCond pageCond);
+	public List<ArticleBrief> getArticlesByTheme(int themeId,boolean isSelf,PageCond pageCond);
 	
 	/**
 	 * 取最新最热门的文章20条
@@ -90,4 +90,16 @@ public interface ArticleService {
 	 */
     public List<ArticleBrief> getArticles4Review();
 
+	/**
+	 * 文章审核通过
+	 * @param articleId 文章ID
+	 * @param remark	审核说明
+	 */
+	public int acceptArticle(int articleId,String remark);
+	/**
+	 * 文章审核拒绝
+	 * @param articleId 文章ID
+	 * @param remark	审核说明
+	 */
+	public int refuseArticle(int articleId,String remark);
 }

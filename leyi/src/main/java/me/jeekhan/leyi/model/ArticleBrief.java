@@ -2,25 +2,44 @@ package me.jeekhan.leyi.model;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 public class ArticleBrief {
     private Integer id;
 
+    @NotNull
+    @Size(max=50)
     private String name;
-
+    
+    @NotNull
+    @Size(max=255)
     private String keywords;
 
+    @NotNull
+    @Size(max=600)
     private String brief;
-
+    
+    @NotNull
+    @Pattern(regexp="^[0-2]$")
     private String source;
-
+    
+    @NotNull
     private Integer themeId;
-
+    
+    @NotNull
+    @Pattern(regexp="^[0-4]$")
     private String type;
-
+    
+    @Null
     private Date updateTime;
-
+    
+    @Null
     private Integer updateOpr;
-
+    
+    @Null
     private String enabled;
 
     public Integer getId() {

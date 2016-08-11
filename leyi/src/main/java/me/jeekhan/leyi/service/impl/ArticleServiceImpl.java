@@ -1,5 +1,6 @@
 package me.jeekhan.leyi.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,21 +43,21 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 查询指定用户下的所有文章
 	 */
 	@Override
-	public List<ArticleBrief> getArticlesByUser(int userId,boolean reviewing,PageCond pageCond){
+	public List<ArticleBrief> getArticlesByUser(int userId,boolean isSelf,PageCond pageCond){
 		if(pageCond == null){
 			pageCond = new PageCond(0);
 		}
-		List<ArticleBrief> list = articleBriefMapper.selectArticlesByUser(userId, reviewing,pageCond);
+		List<ArticleBrief> list = articleBriefMapper.selectArticlesByUser(userId, isSelf,pageCond);
 		return list;
 	}
 	/**
 	 * 查询所有文章信息
 	 */
-	public List<ArticleBrief> getArticles(boolean reviewing,PageCond pageCond){
+	public List<ArticleBrief> getArticles(boolean isSelf,PageCond pageCond){
 		if(pageCond == null){
 			pageCond = new PageCond(0);
 		}
-		List<ArticleBrief> list = articleBriefMapper.selectArticles(reviewing,pageCond);
+		List<ArticleBrief> list = articleBriefMapper.selectArticles(isSelf,pageCond);
 		return list;
 	}
 	/**
@@ -69,6 +70,8 @@ public class ArticleServiceImpl implements ArticleService {
 		if(articleBrief == null){
 			return -1;
 		}
+		articleBrief.setEnabled("1");
+		articleBrief.setUpdateTime(new Date());
 		if(articleBrief.getId() == null){
 			articleBriefMapper.insert(articleBrief);
 			return articleBriefMapper.selectLatestRecrod(articleBrief).getId();
@@ -117,20 +120,19 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleBrief.getId();
 	}
 	/**
-	 * 删除指定文章
+	 * 逻辑删除指定文章
 	 */
 	@Override
 	public int deleteArticle(int articleId) {
-		articleBriefMapper.deleteByPrimaryKey(articleId);
-		return articleContentMapper.delete(articleId);
+		return articleBriefMapper.updateEnabledStatus(articleId,'D');
 	}	
 	
 	/**
 	 * 获取指定主题下的所有文章简介信息
 	 */
 	@Override
-	public List<ArticleBrief> getArticlesByTheme(int themeId,boolean reviewing,PageCond pageCond){
-		return articleBriefMapper.selectArticlesByTheme(themeId, reviewing,pageCond);
+	public List<ArticleBrief> getArticlesByTheme(int themeId,boolean isSelf,PageCond pageCond){
+		return articleBriefMapper.selectArticlesByTheme(themeId, isSelf,pageCond);
 	}
 	/**
 	 * 取最新最热门的文章20条
@@ -144,4 +146,19 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<ArticleBrief> getArticles4Review(){
 		return articleBriefMapper.selectArticles4Review();
 	}
+	
+	/**
+	 * 文章审核通过
+	 */
+	public int acceptArticle(int articleId,String remark) {
+		return articleBriefMapper.updateEnabledStatus(articleId,'0');
+	}
+	/**
+	 * 文章审核拒绝
+	 */
+	public int refuseArticle(int articleId,String remark) {
+		return articleBriefMapper.updateEnabledStatus(articleId,'R');
+	}
+	
+	
 }

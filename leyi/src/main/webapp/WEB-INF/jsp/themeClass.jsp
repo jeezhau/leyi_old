@@ -40,9 +40,9 @@
 	   </ol>
 	   <div class="btn-toolbar btn-toolbar-info" role="toolbar">
   		<div class="btn-group">
-	     <button class="btn btn-primary" id="addTheme">新增主题分类</button>
-	     <button class="btn btn-primary" id="editTheme">编辑主题分类</button>
-	     <button class="btn btn-primary" id="deleteTheme">删除主题分类</button>
+	     <button class="btn btn-primary" id="addTheme">新增</button>
+	     <button class="btn btn-primary" id="editTheme">编辑</button>
+	     <button class="btn btn-primary" id="deleteTheme">删除</button>
 	    </div>
        </div>
    </div>

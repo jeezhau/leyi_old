@@ -36,13 +36,23 @@ public class ReviewAction {
 	private ThemeClassService themeClassService;
 	@Autowired
 	private UserService userService;
-	
+	/**
+	 * 审核初始化
+	 * 【权限】
+	 * 	1、仅登录的管理员可执行该操作；
+	 *  
+	 * @param operator
+	 * @param map
+	 * @return
+	 */
 	@RequestMapping(value="/review",method=RequestMethod.GET)
 	public String review(@ModelAttribute("operator")Operator operator,Map<String,Object> map){
-		if(operator.getUserId()>0){
+		if(operator.getUserId()>0 && operator.getLevel() >= 9){
 			List<ArticleBrief> articles = articleService.getArticles4Review();
 			map.put("articles", articles);
-			return "articleShow";
+//			List<ThemeClass> themes = themeClassService.getThemes4Review();
+//			map.put("themes", themes);
+			return "review";
 		}else{
 			return "redirect:/";
 		}

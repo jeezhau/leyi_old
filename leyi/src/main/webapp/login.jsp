@@ -39,7 +39,7 @@
 	        </form>
 		</div>
 		<div class="templatemo-content-widget templatemo-login-widget templatemo-register-widget white-bg">
-			<p>还未有账号? <strong><a href="#" class="blue-text">注册!</a></strong></p>
+			<p>还未有账号? <strong><a href="/leyi/register" class="blue-text">注册!</a></strong></p>
 		</div>
 	</body>
 </html>

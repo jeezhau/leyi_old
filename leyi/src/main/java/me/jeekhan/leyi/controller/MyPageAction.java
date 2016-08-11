@@ -8,11 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import me.jeekhan.leyi.common.PageCond;
 import me.jeekhan.leyi.dto.Operator;
 import me.jeekhan.leyi.model.ArticleBrief;
+import me.jeekhan.leyi.model.ArticleContent;
 import me.jeekhan.leyi.model.ThemeClass;
 import me.jeekhan.leyi.model.UserFullInfo;
 import me.jeekhan.leyi.service.ArticleService;
@@ -45,27 +47,27 @@ public class MyPageAction {
 	 */
 	@RequestMapping(value="/{username}/theme/{themeId}")
 	public String MyIndexPage(@PathVariable("themeId")Integer themeId,@PathVariable("username")String username,
-			@ModelAttribute("operator")Operator operator,Map<String,Object> map){
+			Operator operator,Map<String,Object> map){
 		UserFullInfo userInfo = userService.getUserFullInfo(username);
 		ThemeClass currTheme = themeClassService.getThemeClass(themeId);
 		if(userInfo != null && currTheme != null && userInfo.getId() == currTheme.getUpdateOpr()){
 			map.put("currTheme", currTheme);
 			map.put("userInfo", userInfo);
-			
+			boolean isSelf = false;
+			if(operator.getUserId() == currTheme.getUpdateOpr() ){ //作者自己
+				isSelf = true;
+			}
 			int id = userInfo.getId();
-			List<ThemeClass> topThemes = themeClassService.getUserTopThemes(id);
+			List<ThemeClass> topThemes = themeClassService.getUserTopThemes(id,isSelf);
 			map.put("topThemes",topThemes);
 			
 			List<ThemeClass> themeTreeUp = themeClassService.getThemeTreeUp(themeId);
 			map.put("themeTreeUp", themeTreeUp);
 			
-			List<ThemeClass> children = themeClassService.getChildThemes(themeId);
+			List<ThemeClass> children = themeClassService.getChildThemes(themeId,isSelf);
 			map.put("children",children);
-			boolean reviewing = false;
-			if(operator.getUserId() == currTheme.getUpdateOpr() ){
-				reviewing = true;
-			}
-			List<ArticleBrief> articleBriefs = articleService.getArticlesByTheme(themeId,reviewing, new PageCond());
+			
+			List<ArticleBrief> articleBriefs = articleService.getArticlesByTheme(themeId,isSelf, new PageCond());
 			map.put("articleBriefs",articleBriefs);
 			return "myIndex";
 		}else{
@@ -85,23 +87,61 @@ public class MyPageAction {
 	 * @return
 	 */
 	@RequestMapping(value="/{username}")
-	public String MyIndexPage(@PathVariable("username")String username ,@ModelAttribute("operator")Operator operator,Map<String,Object> map){
+	public String MyIndexPage(@PathVariable("username")String username ,Operator operator,Map<String,Object> map){
 		UserFullInfo userInfo = userService.getUserFullInfo(username);
 		if(userInfo != null){
 			int id = userInfo.getId();
 			map.put("userInfo", userInfo);
-			
-			List<ThemeClass> topThemes = themeClassService.getUserTopThemes(id);
-			map.put("topThemes",topThemes);
-			boolean reviewing = false;
-			if(operator.getUserId() == id ){
-				reviewing = true;
+			boolean isSelf = false;
+			if(operator.getUserId() == id ){ //作者自己
+				isSelf = true;
 			}
-			List<ArticleBrief> articleBriefs = articleService.getArticlesByUser(id, reviewing,new PageCond());
+			List<ThemeClass> topThemes = themeClassService.getUserTopThemes(id,isSelf);
+			map.put("topThemes",topThemes);
+
+			List<ArticleBrief> articleBriefs = articleService.getArticlesByUser(id, isSelf,new PageCond());
 			map.put("articleBriefs",articleBriefs);
 			return "myIndex";
 		}else{
 			return "redirect:/";
 		}
+	}
+	/**
+	 * 显示文章详细信息
+	 * 【权限】
+	 * 	1、详情显示-所有人；
+	 * 【功能说明】
+	 * 	1.取文章信息，如果文章不存在则返回应用主页；
+	 * 	2.取文章作者信息；
+	 * @param articleId	文章ID
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value="/{username}/article/{articleId}",method=RequestMethod.GET)
+	public String showArticle(@PathVariable("username")String username,@PathVariable("articleId")Integer articleId,Operator operator,Map<String,Object> map){
+		UserFullInfo userInfo = userService.getUserFullInfo(username);
+		if(userInfo == null){
+			return "redirect:/";
+		}
+		
+		ArticleBrief brief = articleService.getArticleBref(articleId);
+		if(brief == null){	//无该文章
+			return "redirect:/" + username;
+		}
+		ArticleContent content = articleService.getArticleContent(articleId);
+		if(operator.getUserId() == brief.getUpdateOpr()){ 	//作者自己
+			if("D".equals(brief.getEnabled())){
+				return "redirect:/" + username;
+			}
+		}else{	//其他人
+			if(!"0".equals(brief.getEnabled())){	
+				return "redirect:/" + username;
+			}
+		}
+		map.put("brief", brief);
+		map.put("userInfo", userInfo);	
+		map.put("content", content);
+	
+		return "articleShow";
 	}
 }

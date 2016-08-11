@@ -62,6 +62,12 @@
 	 This means that, if you put <tx:annotation-driven/> in a WebApplicationContext for a DispatcherServlet, 
 	 it only checks for @Transactional beans in your controllers, and not your services-->
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+      <property name="basename" value="validMsg" />
+      <property name="useCodeAsDefaultMessage" value="true" />
+	</bean>
+
 </beans>
 
 

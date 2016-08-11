@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="me.jeekhan.leyi.model.ThemeClass,java.util.*,me.jeekhan.leyi.common.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -24,16 +26,19 @@
 <div class="container" > 
   <h3 style="text-align:center;margin:20px 0 ">用户注册</h3>
   <div class="row">
-	<form class="form-horizontal" id="registerForm" action="register" method ="post" autocomplete="on" enctype="multipart/form-data" role="form" >
+	<form class="form-horizontal" id="registerForm" action="addUser" method ="post" autocomplete="on" enctype="multipart/form-data" role="form" >
 	  <div class="form-group">
 	    <label for="username" class="col-sm-2 control-label">用户名<span style="color:red">*</span></label>
 	    <div class="col-sm-5">
-	      <input type="text" class="form-control" id="username" name="username" maxLength="25" required placeholder="请输入用户名">
+	      <input type="text" class="form-control" id="username" name="username" maxLength="25" value="${param.username}" required placeholder="请输入用户名">
 	      <c:if test="${not empty param.username_msg}">
 	      <div class="alert alert-warning alert-dismissable">${param.username_msg}
 	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
 	      </div>
 	      </c:if>
+	      <div class="alert alert-warning alert-dismissable"><form:errors path="userInfo.username"></form:errors>
+	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+	      </div>
 	    </div>
 	  </div>
 	  <div class="form-group">

@@ -175,6 +175,14 @@
 	    <artifactId>jcl-over-slf4j</artifactId>
 	    <version>1.7.21</version>
 	</dependency>
+	<!-- 数据校验框架
+	https://mvnrepository.com/artifact/org.hibernate/hibernate-validator 
+	-->
+	<dependency>
+	    <groupId>org.hibernate</groupId>
+	    <artifactId>hibernate-validator</artifactId>
+	    <version>5.2.4.Final</version>
+	</dependency>
 	
 	
   </dependencies>

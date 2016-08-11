@@ -1,6 +1,5 @@
 package me.jeekhan.leyi.controller;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -42,11 +41,13 @@ public class ArticleMgrAction {
 	/**
 	 * 显示文章详细信息
 	 * 【权限】
-	 * 		所有人
+	 * 	1、详情显示-所有人；
+	 *  2、审核-管理员；如果为非管理员则变更模式为详情显示；
 	 * 【功能说明】
-	 * 		1.取文章信息；
-	 * 		2.如果没有对应的作者信息，则取作者信息；
-	 * 		3.如果文章不存在则返回应用主页；
+	 * 完成文章信息内容显示及审核显示：detail-详情显示；review-审核显示
+	 * 	1.取文章信息，如果文章不存在则返回应用主页；
+	 * 	2.取文章作者信息；
+	 * 	3.保存显示模式（详情或审核）；
 	 * @param articleId	文章ID
 	 * @param map
 	 * @return
@@ -57,6 +58,12 @@ public class ArticleMgrAction {
 		if(("detail".equals(mode) || "review".equals(mode)) && brief != null){
 			map.put("mode", mode);
 			map.put("brief", brief);
+			if("review".equals(mode)){
+				Operator operator = (Operator) map.get("operator");
+				if(operator == null || operator.getLevel() < 9){
+					mode = "detail";
+				}
+			}
 			ArticleContent content = articleService.getArticleContent(articleId);
 			if(content != null){
 				map.put("content", content);
@@ -117,7 +124,6 @@ public class ArticleMgrAction {
 			@ModelAttribute("operator")Operator operator,Map<String,Object> map){
 		ThemeClass theme = (ThemeClass) map.get("currTheme");
 		int themeId = theme.getId();
-		brief.setEnabled("0");
 		brief.setThemeId(themeId);
 		brief.setUpdateOpr(operator.getUserId());  
 		int id = articleService.saveArticleBrief(brief);
@@ -147,8 +153,6 @@ public class ArticleMgrAction {
 			old.setSource(brief.getSource());
 			old.setType(brief.getType());
 			old.setBrief(brief.getBrief());
-			old.setEnabled("0");
-			old.setUpdateTime(new Date());
 			ArticleContent articleContent = new ArticleContent();
 			articleContent.setContent(content);
 			articleContent.setArticleId(id);
@@ -173,7 +177,7 @@ public class ArticleMgrAction {
 	}
 	
 	/**
-	 * 取用户的默认主题下的所有文章
+	 * 取用户的指定主题下的所有文章
 	 * 	设置用户的第一个顶层主题为当前主题；
 	 * 	更新主题向上层次树；
 	 * 	取当前主题的所有直接下属主题
@@ -181,20 +185,19 @@ public class ArticleMgrAction {
 	 * @param map
 	 * @return
 	 */
-	
 	@RequestMapping(value="/theme/{themeId}",method=RequestMethod.GET)
 	public String article(@PathVariable("themeId") int themeId,@ModelAttribute("operator")Operator operator,Map<String,Object> map){
 		ThemeClass currTheme = themeClassService.getThemeClass(themeId);
 		map.put("currTheme", currTheme);
 		List<ThemeClass> themeTreeUp = themeClassService.getThemeTreeUp(currTheme.getId());
 		map.put("themeTreeUp", themeTreeUp);
-		List<ThemeClass> children = themeClassService.getChildThemes(currTheme.getId());
+		List<ThemeClass> children = themeClassService.getChildThemes(currTheme.getId(),true);
 		map.put("children",children);
-		boolean reviewing = false;
+		boolean isSelf = false;
 		if(operator.getUserId() == currTheme.getUpdateOpr() ){
-			reviewing = true;
+			isSelf = true;
 		}
-		List<ArticleBrief> currArticles = articleService.getArticlesByTheme(currTheme.getId(),reviewing,new PageCond());
+		List<ArticleBrief> currArticles = articleService.getArticlesByTheme(currTheme.getId(),isSelf,new PageCond());
 		map.put("currArticles", currArticles);
 		
 		return "articleMgr";
@@ -216,16 +219,71 @@ public class ArticleMgrAction {
 		map.put("currTheme", currTheme);
 		List<ThemeClass> themeTreeUp = themeClassService.getThemeTreeUp(currTheme.getId());
 		map.put("themeTreeUp", themeTreeUp);
-		List<ThemeClass> children = themeClassService.getChildThemes(currTheme.getId());
+		List<ThemeClass> children = themeClassService.getChildThemes(currTheme.getId(),true);
 		map.put("children",children);
-		boolean reviewing = false;
+		boolean isSelf = false;
 		if(operator.getUserId() == currTheme.getUpdateOpr() ){
-			reviewing = true;
+			isSelf = true;
 		}
-		List<ArticleBrief> currArticles = articleService.getArticlesByTheme(currTheme.getId(),reviewing, new PageCond());
+		List<ArticleBrief> currArticles = articleService.getArticlesByTheme(currTheme.getId(),isSelf, new PageCond());
 		map.put("currArticles", currArticles);
 		
 		return "articleMgr";
 	}
-
+	/**
+	 * 文章审核：通过
+	 * 【权限】
+	 * 	1、仅登录的管理员可执行该操作；
+	 * 【功能说明】
+	 *  1、判断审核的文章是否存在；
+	 *  2、执行审核通过
+	 * @param articleId
+	 * @param remark
+	 * @param operator
+	 * @return
+	 */
+	@RequestMapping(value="/accept",method=RequestMethod.POST)
+	public String accept(Integer articleId,String remark,@ModelAttribute("operator")Operator operator){
+		if(operator == null || operator.getLevel() < 9){ //无权限
+			return "redirect:/review";
+		}
+		
+		if(articleId == null){ //文章为空
+			return "redirect:/review";
+		}
+		ArticleBrief brief = articleService.getArticleBref(articleId);
+		if(brief == null){ //无该文章
+			return "redirect:/review";
+		}
+		articleService.acceptArticle(articleId, remark);
+		return "redirect:/review";
+	}
+	/**
+	 * 文章审核：拒绝
+	 * 【权限】
+	 * 	1、仅登录的管理员可执行该操作；
+	 * 【功能说明】
+	 *  1、判断审核的文章是否存在；
+	 *  2、执行审核拒绝
+	 * @param articleId
+	 * @param remark
+	 * @param operator
+	 * @return
+	 */
+	@RequestMapping(value="/refuse",method=RequestMethod.POST)
+	public String refuse(Integer articleId,String remark,@ModelAttribute("operator")Operator operator){
+		if(operator == null || operator.getLevel() < 9){ //无权限
+			return "redirect:/review";
+		}
+		
+		if(articleId == null){ //文章为空
+			return "redirect:/review";
+		}
+		ArticleBrief brief = articleService.getArticleBref(articleId);
+		if(brief == null){ //无该文章
+			return "redirect:/review";
+		}
+		articleService.refuseArticle(articleId, remark);
+		return "redirect:/review";
+	}
 }

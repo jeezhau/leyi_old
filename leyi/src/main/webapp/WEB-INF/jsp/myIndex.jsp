@@ -29,13 +29,14 @@
   	<ul class="nav nav-tabs pull-right" >
   	 <li><a href="/leyi/theme/" target="_blank">分类管理</a></li>
      <li><a href="/leyi/article/" target="_blank">文章管理</a></li>
+     <li><a href="/leyi/review" target="_blank">信息审核</a></li>
      <li><a href="/leyi/logout">退出</a></li>
 	</ul>
    </c:if>
    <c:if test="${empty operator.userId or operator.userId < 1}">
     <ul class="nav nav-tabs pull-right" >
      <li><a href="/leyi/login.jsp" target="_blank">登录</a></li>
-     <li><a href="/leyi/register.jsp"  target="_blank">注册</a></li>
+     <li><a href="/leyi/register"  target="_blank">注册</a></li>
 	</ul>
 	</c:if>
   </div>
@@ -44,7 +45,7 @@
     <div class="col-md-3" >
       <div class="row" style="height:250px;overflow:auto ;padding:3px;border:3px #CECEF6 solid ;border-radius:5px;">
          <img style="float:left;margin:3px;" src="/leyi/showPic/${userInfo.username}/${userInfo.picture }" width="150" height="150" alt="Profile Photo" class="img-responsive">  
-         <b>&nbsp;&nbsp;&nbsp;${userInfo.username}</b><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
+          <a href="/leyi/${userInfo.username}"><b>&nbsp;&nbsp;&nbsp;${userInfo.username}</b></a><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
       </div>
 	  <div class="row light-gray-bg">
 	      <ol class="breadcrumb " style="margin:10px 0;">
@@ -74,7 +75,7 @@
 	  </ul>
 	<c:forEach items="${articleBriefs}" var="item">	  
 	  <div class="panel panel-info" style="margin-bottom:5px">
-        <div class="panel-heading"><h4 class="panel-title"><a target="_blank" href="/leyi/article/detail/${item.id}">${item.name}</a></h4></div>
+        <div class="panel-heading"><h4 class="panel-title"><a target="_blank" href="/leyi/${userInfo.username}/article/${item.id}">${item.name}</a></h4></div>
 	    <div class="panel-body">${item.brief}</div>
 	  </div> <!-- 文章panel -->
 	 </c:forEach>

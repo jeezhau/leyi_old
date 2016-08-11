@@ -20,13 +20,13 @@
     select 
     <include refid="Base_Column_List" />
     from tb_theme_class
-    where id = #{id,jdbcType=INTEGER} and enabled = '0'
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from tb_theme_class
-    where name = #{name,jdbcType=VARCHAR} and enabled = '0'
+    where name = #{name,jdbcType=VARCHAR}
   </select>
   
   <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -130,26 +130,26 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <!--获取用户的所有主题，并按照父类归类 -->
-  <select id="selectUserThemes" resultMap="BaseResultMap" >
+  <select id="selectUserThemes"  parameterType="map" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
     from tb_theme_class t
-    where t.enabled= '0' and t.update_opr = #{userId,jdbcType=INTEGER}
+    where t.enabled in ('0'<if test="isSelf">,'1','R'</if>) and t.update_opr = #{userId,jdbcType=INTEGER}
     order by t.parent_id,t.id desc
   </select>
   <!-- 获取指定的直接下属主题-->
-  <select id="selectChildThemes" resultMap="BaseResultMap" >
+  <select id="selectChildThemes"  parameterType="map" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
     from tb_theme_class
-    where enabled= '0' and parent_id = #{parentId,jdbcType=INTEGER}
+    where enabled in ('0'<if test="isSelf">,'1','R'</if>) and parent_id = #{themeId,jdbcType=INTEGER}
   </select>
    <!-- 获取用户的顶层主题-->
-  <select id="selectUserTopThemes" resultMap="BaseResultMap" >
+  <select id="selectUserTopThemes"  parameterType="map" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
     from tb_theme_class
-    where enabled= '0' and parent_id is null and update_opr = #{userId,jdbcType=INTEGER}
+    where enabled in ('0'<if test="isSelf">,'1'</if>) and parent_id is null and update_opr = #{userId,jdbcType=INTEGER}
   </select>
    <!-- 获取指定主题向上获取层次树--> 
   <select id="selectThemeTreeUp" resultMap="BaseResultMap">
@@ -159,10 +159,19 @@
   	where FIND_IN_SET(id,getThemeTreeUp(#{parentId,jdbcType=INTEGER})) order by id 
   </select>
   <!-- 统计用户的顶层主题个数-->
-  <select id="countUserTopTheme" resultType="int">
+  <select id="countUserTopTheme" parameterType="map">
   	select count(1) CNT 
   	from tb_theme_class t 
-  	where t.parent_id is null and enabled='0' and update_opr = #{userId,jdbcType=INTEGER};
+  	where t.parent_id is null and enabled in ('0','1') and update_opr = #{userId,jdbcType=INTEGER};
+  </select>
+  <!-- 获取最新待审核的10条主题-->
+  <select id="selectThemes4Review" parameterType="map" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_theme_class
+    where enabled= '1'
+    order by update_time desc
+  	limit 0,10
   </select>
 </mapper>
 

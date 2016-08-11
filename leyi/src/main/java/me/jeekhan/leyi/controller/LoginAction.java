@@ -16,9 +16,11 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,7 +66,7 @@ public class LoginAction {
 		if(userService.authentification(username, password)){
 			UserFullInfo userInfo = userService.getUserFullInfo(username);
 			Operator operator = new Operator();
-			operator.setLevel(0);
+			operator.setLevel(9);
 			operator.setUserId(userInfo.getId());
 			operator.setUsername(username);
 			map.put("operator", operator);
@@ -112,13 +114,19 @@ public class LoginAction {
 	 * @throws NoSuchAlgorithmException
 	 * @throws IOException
 	 */
-	@RequestMapping(value="/register",method=RequestMethod.POST)
-	public String register(UserFullInfo userInfo,@RequestParam(value="picFile",required=false)MultipartFile file,Map<String,Object>map,HttpServletRequest request) throws NoSuchAlgorithmException, IOException{
+	@RequestMapping(value="/addUser",method=RequestMethod.POST)
+	public String register(@Valid UserFullInfo userInfo,BindingResult result,@RequestParam(value="picFile",required=false)MultipartFile file,
+			Map<String,Object>map,HttpServletRequest request) throws NoSuchAlgorithmException, IOException{
+		if(result.hasErrors()){
+			result.getAllErrors();
+			System.out.println(result.getAllErrors());
+			return "register";
+		}
 		userInfo.setEnabled("1");
 		userInfo.setRegistTime(new Date());
-		userInfo.setRegistTime(new Date());
+		userInfo.setUpdateTime(new Date());
 		userInfo.setPasswd(SunSHAUtils.encodeSHA512Hex(userInfo.getPasswd()));
-		if(file != null){
+		if(!file.isEmpty()){
 			userInfo.setPicture(file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf('.')));
 		}
 		int id = userService.saveUser(userInfo);
@@ -129,9 +137,9 @@ public class LoginAction {
 			if(id == -2){
 				map.put("email_msg", "该邮箱已被使用");
 			}
-			return "redirect:/register.jsp";
+			return "register";
 		}
-		if(file != null){
+		if(!file.isEmpty()){
 			String path = "e:/webapp" + request.getContextPath() + "/upload/" + userInfo.getUsername() + "/";  
 			File dir = new File(path);
 			if(!dir.exists()){
@@ -176,6 +184,21 @@ public class LoginAction {
 		List<ArticleBrief> hotnew = articleService.getHotNewArticles();
 		map.put("hotnew", hotnew);
 		return "index";
+	}
+	/**
+	 * 用户注册初始化
+	 * 【权限】
+	 * 	1、所用人
+	 * 【功能说明】
+	 * 	1、用户注册初始化；
+	 * 【输入输出】
+	 * @param map
+	 * @return	目标页面
+	 */
+	@RequestMapping(value="/register")
+	public String register(Map<String,Object>map){
+
+		return "register";
 	}
 	/**
 	 * 显示图片

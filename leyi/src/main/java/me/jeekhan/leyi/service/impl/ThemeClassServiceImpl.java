@@ -1,5 +1,6 @@
 package me.jeekhan.leyi.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,11 @@ public class ThemeClassServiceImpl implements ThemeClassService {
 		if(themeClass == null ){
 			return -1;
 		}
+		themeClass.setEnabled("0");
+		themeClass.setUpdateTime(new Date());
 		ThemeClass t = themeClassMapper.selectByName(themeClass.getName());
 		if(t==null && themeClass.getId() == null){//新增
-			int count = themeClassMapper.countUserTopTheme(1);//userid
+			int count = themeClassMapper.countUserTopTheme(themeClass.getUpdateOpr());//userid
 			if(count >= 6 && themeClass.getParentId() == null){
 				return -3;
 			}
@@ -69,21 +72,30 @@ public class ThemeClassServiceImpl implements ThemeClassService {
 	}
 	
 	@Override
-	public List<ThemeClass> getUserThemes(int userId) {
-		return themeClassMapper.selectUserThemes(userId);
+	public List<ThemeClass> getUserThemes(int userId,boolean isSlef) {
+		return themeClassMapper.selectUserThemes(userId,isSlef);
 	}
 
 	@Override
-	public List<ThemeClass> getUserTopThemes(int userId) {
-		return themeClassMapper.selectUserTopThemes(userId);
+	public List<ThemeClass> getUserTopThemes(int userId,boolean isSlef) {
+		return themeClassMapper.selectUserTopThemes(userId,isSlef);
 	}
 	
 	@Override
-	public List<ThemeClass> getChildThemes(int parentId) {
-		return themeClassMapper.selectChildThemes(parentId);
+	public List<ThemeClass> getChildThemes(int parentId,boolean isSlef) {
+		return themeClassMapper.selectChildThemes(parentId,isSlef);
 	}
 	@Override
 	public List<ThemeClass> getThemeTreeUp(int themeId){
 		return themeClassMapper.selectThemeTreeUp(themeId);
+	}
+	
+	/**
+	 * 获取待审核的10条主题
+	 * @return
+	 */
+	@Override
+	public List<ThemeClass> getThemes4Review(){
+		return themeClassMapper.selectThemes4Review();
 	}
 }
