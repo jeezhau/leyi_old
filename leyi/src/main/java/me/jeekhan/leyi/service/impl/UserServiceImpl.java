@@ -1,5 +1,9 @@
 package me.jeekhan.leyi.service.impl;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,12 +69,18 @@ public class UserServiceImpl implements UserService{
 	 * 保存用户：有则更新，无则修改
 	 * @param	用户详细信息
 	 * @return  用户ID,0-缺少信息，-1-用户名已被使用,-2-邮箱已被使用
+	 * @throws UnsupportedEncodingException 
+	 * @throws NoSuchAlgorithmException 
 	 */
 	@Override 
-	public int saveUser(UserFullInfo userFullInfo){
+	public int saveUser(UserFullInfo userFullInfo) throws NoSuchAlgorithmException, UnsupportedEncodingException{
 		if(userFullInfo == null){
 			return 0;
 		}
+		userFullInfo.setEnabled("1");
+		userFullInfo.setRegistTime(new Date());
+		userFullInfo.setUpdateTime(new Date());
+		userFullInfo.setPasswd(SunSHAUtils.encodeSHA512Hex(userFullInfo.getPasswd()));
 		if(userFullInfo.getId() == null){
 			UserFullInfo info1 = userFullInfoMapper.selectByName(userFullInfo.getUsername());
 			UserFullInfo info2 = userFullInfoMapper.selectByName(userFullInfo.getEmail());

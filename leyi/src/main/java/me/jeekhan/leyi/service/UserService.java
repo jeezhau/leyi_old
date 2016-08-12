@@ -1,5 +1,8 @@
 package me.jeekhan.leyi.service;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+
 import me.jeekhan.leyi.model.UserBaseInfo;
 import me.jeekhan.leyi.model.UserFullInfo;
 
@@ -12,7 +15,7 @@ public interface UserService {
 	
 	public UserFullInfo getUserFullInfo(int id);
 	
-	public int saveUser(UserFullInfo userFullInfo);
+	public int saveUser(UserFullInfo userFullInfo) throws NoSuchAlgorithmException, UnsupportedEncodingException;
 	
 	public UserFullInfo getIndexShowUser();
 

@@ -51,6 +51,7 @@
 
    <!-- 拦截器配置-->
    <mvc:interceptors>
+   	<bean class="me.jeekhan.leyi.interceptor.LogInterceptor"/>
    	<mvc:interceptor>
    		<mvc:mapping path="/theme/**"/>
    		<mvc:mapping path="/review/**"/>

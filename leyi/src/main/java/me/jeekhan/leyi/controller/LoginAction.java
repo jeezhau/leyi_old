@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -118,24 +120,24 @@ public class LoginAction {
 	public String register(@Valid UserFullInfo userInfo,BindingResult result,@RequestParam(value="picFile",required=false)MultipartFile file,
 			Map<String,Object>map,HttpServletRequest request) throws NoSuchAlgorithmException, IOException{
 		if(result.hasErrors()){
-			result.getAllErrors();
-			System.out.println(result.getAllErrors());
+			List<ObjectError> list = result.getAllErrors();
+			for(ObjectError e :list){
+				String filed = e.getCodes()[0].substring(e.getCodes()[0].lastIndexOf('.')+1);
+				map.put(filed, e.getDefaultMessage());
+			}
+			
 			return "register";
 		}
-		userInfo.setEnabled("1");
-		userInfo.setRegistTime(new Date());
-		userInfo.setUpdateTime(new Date());
-		userInfo.setPasswd(SunSHAUtils.encodeSHA512Hex(userInfo.getPasswd()));
 		if(!file.isEmpty()){
 			userInfo.setPicture(file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf('.')));
 		}
 		int id = userService.saveUser(userInfo);
 		if(id<=0){
 			if(id == -1){
-				map.put("username_msg", "该用户名已被使用");
+				map.put("username", "该用户名已被使用");
 			}
 			if(id == -2){
-				map.put("email_msg", "该邮箱已被使用");
+				map.put("email", "该邮箱已被使用");
 			}
 			return "register";
 		}

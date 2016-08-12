@@ -13,37 +13,37 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class UserFullInfo {
     private Integer id;
-    @NotNull(message="用户名不可为空！")
-    @Size(min=3,max=50,message="用户名长度为6-50个字符！")	
+    @NotNull(message="不可为空！")
+    @Size(min=3,max=50,message="长度为3-50个字符！")	
     private String username;
     
-    @NotNull(message="邮箱不可为空！")
-    @Size(max=100)
+    @NotNull(message="不可为空！")
+    @Size(max=100,message="最长100个字符！")
     @Email
     //@Pattern(regexp="^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$")
     private String email;
     
-    @Past
+    @Past(message="不可大于当前日期！")
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date birthday;
     
-    @Pattern(regexp="^[0-3]$")
+    @Pattern(regexp="^[0-3]$",message="值只可为【0-男，1-女，2-其他】！")
     private String sex;
     
-    @NotNull
-    @Size(min=6,max=12)
+    @NotNull(message="密码不可为空！")
+    @Size(min=6,max=20,message="长度为6-20个字符！")
     private String passwd;
     
-    @Size(max=50)
+    @Size(max=50,message="最长为50个字符！")
     private String city;
     
-    @Size(max=100)
+    @Size(max=100,message="最长为100个字符！")
     private String favourite;
     
-    @Size(max=100)
+    @Size(max=100,message="最长为100个字符！")
     private String profession;
     
-    @Size(max=600)
+    @Size(max=600,message="最长为600个字符！")
     private String introduce;
     
     @Null

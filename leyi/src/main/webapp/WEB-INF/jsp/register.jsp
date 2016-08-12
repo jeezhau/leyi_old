@@ -30,23 +30,20 @@
 	  <div class="form-group">
 	    <label for="username" class="col-sm-2 control-label">用户名<span style="color:red">*</span></label>
 	    <div class="col-sm-5">
-	      <input type="text" class="form-control" id="username" name="username" maxLength="25" value="${param.username}" required placeholder="请输入用户名">
-	      <c:if test="${not empty param.username_msg}">
-	      <div class="alert alert-warning alert-dismissable">${param.username_msg}
+	      <input type="text" class="form-control" id="username" name="username" pattern="\w{3,20}" title="3-20个字符组成" maxLength=20 value="${param.username}" required placeholder="请输入用户名（3-50个字符）">
+	      <c:if test="${not empty username}">
+	      <div class="alert alert-warning alert-dismissable">${username}
 	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
 	      </div>
 	      </c:if>
-	      <div class="alert alert-warning alert-dismissable"><form:errors path="userInfo.username"></form:errors>
-	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
-	      </div>
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label for=email class="col-sm-2 control-label">邮箱<span style="color:red">*</span></label>
 	    <div class="col-sm-5">
-	      <input class="form-control" type="email" id="email" name="email" required placeholder="请输入邮箱">
-	      <c:if test="${not empty param.email_msg}">
-	      <div class="alert alert-warning alert-dismissable">${param.email_msg}
+	      <input class="form-control" type="email" id="email" name="email" value="${param.email}" required maxLength=100 placeholder="请输入邮箱（最长100个字符）">
+	      <c:if test="${not empty email}">
+	      <div class="alert alert-warning alert-dismissable">${email}
 	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
 	      </div>
 	      </c:if>
@@ -55,19 +52,29 @@
 	  <div class="form-group">
 	    <label for="password" class="col-sm-2 control-label">密码<span style="color:red">*</span></label>
 	    <div class="col-sm-5">
-	      <input class="form-control" type="password" id="password" name="passwd" required placeholder="请输入密码">
+	      <input class="form-control" type="password" id="password" name="passwd" title="6-20个字符，最好包含大小字符，数字和符号" pattern="\w{6,20}" maxLength=20 required autocomplete="off" placeholder="请输入密码">
+	      <c:if test="${not empty passwd}">
+	      <div class="alert alert-warning alert-dismissable">${passwd}
+	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+	      </div>
+	      </c:if>
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label for="re-password" class="col-sm-2 control-label">确认密码<span style="color:red">*</span></label>
 	    <div class="col-sm-5">
-	      <input class="form-control" type="password" id="re-password" required placeholder="请输入确认密码">
+	      <input class="form-control" type="password" id="re-password" pattern="\w{6,20}" maxLength=20 required autocomplete="off" placeholder="请输入确认密码">
 	    </div>
 	  </div>	  	  
 	  <div class="form-group">
         <label for="age" class="col-sm-2 control-label">生日</label>
         <div class="col-sm-3">
           <input class="form-control" type="date" id="birthday" name="birthday" placeholder="请输入年龄">
+          <c:if test="${not empty birthday}">
+	      <div class="alert alert-warning alert-dismissable">${birthday}
+	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+	      </div>
+	      </c:if>
         </div>
       </div>
  	  <div class="form-group">
@@ -79,31 +86,56 @@
            <option value="2">其他</option>
           </select>
         </div>
+         <c:if test="${not empty sex}">
+	      <div class="alert alert-warning alert-dismissable">${sex}
+	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+	      </div>
+	      </c:if>
       </div>    
       <div class="form-group">
         <label for="city" class="col-sm-2 control-label">所在城市</label>
         <div class="col-sm-3">
-          <input class="form-control" id="city" name="city" placeholder="请输入城市" >
+          <input class="form-control" id="city" name="city" maxLength=50 placeholder="请输入城市" >
         </div>
+        <c:if test="${not empty city}">
+	      <div class="alert alert-warning alert-dismissable">${city}
+	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+	      </div>
+	      </c:if>
       </div> 
       <div class="form-group">
         <label for="favourite" class="col-sm-2 control-label">兴趣爱好</label>
         <div class="col-sm-5">
-          <input class="form-control" id="favourite" name="favourite" placeholder="请输入兴趣爱好" >
+          <input class="form-control" id="favourite" name="favourite"  maxLength=100  placeholder="请输入兴趣爱好" >
         </div>
+        <c:if test="${not empty favourite}">
+	      <div class="alert alert-warning alert-dismissable">${favourite}
+	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+	      </div>
+	      </c:if>
       </div> 
       <div class="form-group">
         <label for="profession" class="col-sm-2 control-label">职业</label>
         <div class="col-sm-5">
-          <input class="form-control" id="favourite" name="profession" placeholder="请输入职业" >
+          <input class="form-control" id="favourite" name="profession"  maxLength=100   placeholder="请输入职业" >
         </div>
+        <c:if test="${not empty profession}">
+	    <div class="alert alert-warning alert-dismissable">${profession}
+	       <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+	    </div>
+	    </c:if>
       </div>       
       <div class="form-group">
         <label for="introduce" class="col-sm-2 control-label">个人简介<span style="color:red">*</span></label>
         <div class="col-sm-8">
-          <textarea class="form-control" id="introduce" name="introduce" rows=5 required ></textarea>
+          <textarea class="form-control" id="introduce" name="introduce"  maxLength=600 rows=5 required ></textarea>
         </div>
       </div>
+      <c:if test="${not empty introduce}">
+      <div class="alert alert-warning alert-dismissable">${introduce}
+        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+      </div>
+      </c:if>
       <div class="form-group">
         <label for="introduce" class="col-sm-2 control-label">照片</label>
         <div class="col-sm-5">
@@ -112,13 +144,23 @@
       </div>
       <div class="form-group">
          <div class="col-sm-offset-5 col-sm-10">
-           <button type="submit" class="btn btn-info" id="save" style="margin:20px">&nbsp;&nbsp;提 交&nbsp;&nbsp;</button>
+           <button type="submit" class="btn btn-info" id="save" style="margin:20px" onclick="return checkPwdSame()">&nbsp;&nbsp;提 交&nbsp;&nbsp;</button>
            <button type="button" class="btn btn-warning" id="reset" style="margin:20px">&nbsp;&nbsp;重 置&nbsp;&nbsp; </button>
          </div>
       </div>
 	</form>
   </div>
 </div>
+<script>
+	function checkPwdSame(){
+		if($('#password').val() === $('#re-password').val()){
+			return true;
+		}else{
+			alert('确认密码与密码不一致！');
+			return false;
+		}
+	}
 
+</script>
 </body>
 </html>
