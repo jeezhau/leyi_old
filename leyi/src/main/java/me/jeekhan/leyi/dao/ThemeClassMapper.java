@@ -8,13 +8,13 @@ import me.jeekhan.leyi.model.ThemeClass;
 
 public interface ThemeClassMapper {
 
-    int deleteByPrimaryKey(Integer id);
+    int updateEnabledStatus(@Param("id")Integer id,@Param("status") String status);
 
     int insert(ThemeClass record);
 
     ThemeClass selectByPrimaryKey(Integer id);
     
-    ThemeClass selectByName(String name);
+    ThemeClass selectByName(@Param("name")String name,@Param("parentId")Integer parentId );
 
     int updateByPrimaryKey(ThemeClass record);
     
@@ -26,7 +26,7 @@ public interface ThemeClassMapper {
     
     List<ThemeClass> selectThemeTreeUp(Integer themeId);
     
-    int countUserTopTheme(int userId); 
+    int countUserTopTheme(@Param("userId")int userId); 
     
     List<ThemeClass> selectThemes4Review();
 }

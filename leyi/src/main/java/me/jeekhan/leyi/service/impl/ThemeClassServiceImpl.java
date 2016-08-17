@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import me.jeekhan.leyi.dao.ReviewInfoMapper;
 import me.jeekhan.leyi.dao.ThemeClassMapper;
+import me.jeekhan.leyi.model.ReviewInfo;
 import me.jeekhan.leyi.model.ThemeClass;
 import me.jeekhan.leyi.service.ThemeClassService;
 
@@ -19,46 +21,73 @@ import me.jeekhan.leyi.service.ThemeClassService;
 public class ThemeClassServiceImpl implements ThemeClassService {
 	@Autowired
 	private ThemeClassMapper themeClassMapper;
+	@Autowired
+	private ReviewInfoMapper reviewInfoMapper;
+	/**
+	 * 保存主题
+	 *  0、顶层主题最多为6个；
+	 *  1、存在ID则更信息；无ID则新增；
+	 *  2、同名同层主题使用更新；
+	 */
 	@Override
 	public Integer saveThemeClass(ThemeClass themeClass) {
-		if(themeClass == null ){
+		if(themeClass == null ){	//数据为空
 			return -1;
 		}
-		themeClass.setEnabled("0");
+		themeClass.setEnabled("1");
 		themeClass.setUpdateTime(new Date());
-		ThemeClass t = themeClassMapper.selectByName(themeClass.getName());
-		if(t==null && themeClass.getId() == null){//新增
-			int count = themeClassMapper.countUserTopTheme(themeClass.getUpdateOpr());//userid
-			if(count >= 6 && themeClass.getParentId() == null){
-				return -3;
+		ThemeClass old = themeClassMapper.selectByName(themeClass.getName(),themeClass.getParentId());
+		if(themeClass.getId() == null){
+			int  topcount = 0;
+			if(themeClass.getParentId() == null){
+				topcount = themeClassMapper.countUserTopTheme(themeClass.getUpdateOpr());
+				if(topcount >= 6){  //顶层主题个数大于6个
+					return -2;  
+				}
 			}
-			int c = themeClassMapper.insert(themeClass);
-			t = themeClassMapper.selectByName(themeClass.getName());
-			if(c>0){
-				return t.getId();
+			
+			if(old != null){
+				if("D".equals(old.getEnabled())){
+					themeClass.setId(old.getId());
+					themeClassMapper.updateByPrimaryKey(themeClass);
+					return old.getId();
+				}else{	//存在同层同名的活动主题
+					return -3;	
+				}
 			}else{
-				return -2;
+				themeClassMapper.insert(themeClass);
+				ThemeClass lastest = themeClassMapper.selectByName(themeClass.getName(),themeClass.getParentId());
+				return lastest.getId();
+			}
+			
+		}else{
+			ThemeClass tmp = themeClassMapper.selectByPrimaryKey(themeClass.getId());
+			if(tmp == null || tmp.getParentId() != themeClass.getParentId()){ //主题为空或上层主题不一致，数据有问题
+				return -1;
+			}else{
+				if( old == null || old != null && themeClass.getId() == old.getId()  ){	//同名同ID或无同名
+					themeClassMapper.updateByPrimaryKey(themeClass);
+					return old.getId();
+				}else{ //存在同层同名的活动主题
+					if("D".equals(old.getEnabled())){
+						themeClassMapper.updateByPrimaryKey(themeClass);
+						return old.getId();
+					}else{	//存在同层同名的活动主题
+						return -3;	
+					}
+				}
 			}
 		}
-		else {
-			if(t == null && themeClass.getId() != null){//修改了名称
-				t = themeClassMapper.selectByPrimaryKey(themeClass.getId());
-			}
-			themeClass.setId(t.getId());
-			themeClass.setParentId(t.getParentId());
-			int c = themeClassMapper.updateByPrimaryKey(themeClass);
-			if(c>0){
-				return themeClass.getId();
-			}else{
-				return -2;
-			}
-		}
+		
 	}
-
+	/**
+	 * 逻辑删除主题
+	 *  设置主题状态为'D'
+	 */
 	@Override
 	public Integer deleteThemeClass(int themeClassId) {
 		ThemeClass t = themeClassMapper.selectByPrimaryKey(themeClassId);
-		themeClassMapper.deleteByPrimaryKey(themeClassId);
+		themeClassMapper.updateEnabledStatus(themeClassId,"D");
 		return t.getParentId();
 	}
 
@@ -67,8 +96,8 @@ public class ThemeClassServiceImpl implements ThemeClassService {
 		return themeClassMapper.selectByPrimaryKey(themeId);
 	}
 	@Override
-	public ThemeClass getThemeClass(String themeName) {
-		return themeClassMapper.selectByName(themeName);
+	public ThemeClass getThemeClass(String themeName,int parentId) {
+		return themeClassMapper.selectByName(themeName,parentId);
 	}
 	
 	@Override
@@ -97,5 +126,24 @@ public class ThemeClassServiceImpl implements ThemeClassService {
 	@Override
 	public List<ThemeClass> getThemes4Review(){
 		return themeClassMapper.selectThemes4Review();
+	}
+	
+	/**
+	 * 主题审核
+	 * @param themeId   主题ID
+	 * @param result	审核结果:0-通过,R-拒绝
+	 * @param reviewInfo	审核说明
+	 */
+	@Override
+	public int reviewTheme(int themeId,String result,ReviewInfo reviewInfo){
+		String themeInfo = themeClassMapper.selectByPrimaryKey(themeId).toString();
+		reviewInfo.setObjName("tb_theme_class");
+		reviewInfo.setKeyId(themeId);
+		reviewInfo.setOriginalInfo(themeInfo);
+		reviewInfo.setResult(result);
+		reviewInfo.setReviewTime(new Date());
+		reviewInfoMapper.insert(reviewInfo);
+		
+		return themeClassMapper.updateEnabledStatus(themeId, result);
 	}
 }

@@ -16,27 +16,31 @@
     id, parent_id, name, keywords, desc_info, update_time, update_opr, enabled
   </sql>
   
+  <!--根据主键获取主题 -->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from tb_theme_class
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  
+  <!--获取同名同层主题 -->
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="map" >
     select 
     <include refid="Base_Column_List" />
     from tb_theme_class
-    where name = #{name,jdbcType=VARCHAR}
+    where name = #{name,jdbcType=VARCHAR} and parent_id = #{parentId,jdbcType=INTEGER}
   </select>
   
-  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <!--更新主题 状态：0-正常，1-待审核，R-拒绝,D-删除 -->
+  <update id="updateEnabledStatus" parameterType="map" >
     update tb_theme_class
-    set enabled = 'D' 
+    set enabled = #{status,jdbcType=CHAR} 
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-
-  <insert id="insert" parameterType="me.jeekhan.leyi.model.ThemeClass" >
+  <!-- 新插入一条主题信息-->
+  <insert id="insert" parameterType="me.jeekhan.leyi.model.ThemeClass" keyProperty="id" >
     insert into tb_theme_class (id, parent_id, name, 
       keywords, desc_info, update_time, 
       update_opr, enabled)
@@ -101,7 +105,7 @@
     </trim>
   </insert>
   
-
+  <!--根据主键更新主题信息 -->
   <update id="updateByPrimaryKey" parameterType="me.jeekhan.leyi.model.ThemeClass" >
     update tb_theme_class
     <set >
@@ -129,7 +133,8 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <!--获取用户的所有主题，并按照父类归类 -->
+  
+  <!--获取用户的所有主题，并按照父类归类；其他一般用户只取正常状态的主题，用户自己取非删除的主题 -->
   <select id="selectUserThemes"  parameterType="map" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
@@ -137,20 +142,23 @@
     where t.enabled in ('0'<if test="isSelf">,'1','R'</if>) and t.update_opr = #{userId,jdbcType=INTEGER}
     order by t.parent_id,t.id desc
   </select>
-  <!-- 获取指定的直接下属主题-->
+  
+  <!-- 获取指定的直接下属主题；其他一般用户只取正常状态的主题，用户自己取非删除的主题-->
   <select id="selectChildThemes"  parameterType="map" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
     from tb_theme_class
     where enabled in ('0'<if test="isSelf">,'1','R'</if>) and parent_id = #{themeId,jdbcType=INTEGER}
   </select>
-   <!-- 获取用户的顶层主题-->
+  
+   <!-- 获取用户的顶层主题；其他一般用户只取正常状态的主题，用户自己取正常与待审核的主题-->
   <select id="selectUserTopThemes"  parameterType="map" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
     from tb_theme_class
     where enabled in ('0'<if test="isSelf">,'1'</if>) and parent_id is null and update_opr = #{userId,jdbcType=INTEGER}
   </select>
+  
    <!-- 获取指定主题向上获取层次树--> 
   <select id="selectThemeTreeUp" resultMap="BaseResultMap">
   	select 
@@ -158,12 +166,14 @@
   	from tb_theme_class 
   	where FIND_IN_SET(id,getThemeTreeUp(#{parentId,jdbcType=INTEGER})) order by id 
   </select>
-  <!-- 统计用户的顶层主题个数-->
-  <select id="countUserTopTheme" parameterType="map">
+  
+  <!-- 统计用户的顶层主题个数，仅包含正常与待审核状态-->
+  <select id="countUserTopTheme" parameterType="map" resultType="java.lang.Integer" >
   	select count(1) CNT 
   	from tb_theme_class t 
-  	where t.parent_id is null and enabled in ('0','1') and update_opr = #{userId,jdbcType=INTEGER};
+  	where t.parent_id is null and t.enabled in ('0','1') and t.update_opr = #{userId,jdbcType=INTEGER};
   </select>
+  
   <!-- 获取最新待审核的10条主题-->
   <select id="selectThemes4Review" parameterType="map" resultMap="BaseResultMap" >
     select 
@@ -173,5 +183,6 @@
     order by update_time desc
   	limit 0,10
   </select>
+  
 </mapper>
 

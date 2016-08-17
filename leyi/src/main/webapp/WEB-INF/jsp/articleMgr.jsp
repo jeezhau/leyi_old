@@ -25,8 +25,8 @@
    <!-- =====================顶部主题=================== -->
 	<ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin:10px 0;">
 	   <c:forEach items="${topThemes}" var="item">
-	       <c:if test="${themeTreeUp[0].id==item.id}"> <li class="active"><a href="/leyi/article/theme/${item.id}">${item.name}</a></li> </c:if>
-	       <c:if test="${themeTreeUp[0].id!=item.id}"> <li><a href="/leyi/article/theme/${item.id}">${item.name}</a></li> </c:if>	
+	       <c:if test="${themeTreeUp[0].id==item.id}"> <li class="active"><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}">${item.name}</a></li> </c:if>
+	       <c:if test="${themeTreeUp[0].id!=item.id}"> <li><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}">${item.name}</a></li> </c:if>	
        </c:forEach>
 	</ul>
   </div>
@@ -39,7 +39,7 @@
           <ol class="breadcrumb" style="margin:0;">
 	      <c:forEach items="${themeTreeUp}" var="item">
 	       <c:if test="${currTheme.id==item.id}"> <li class="active">${item.name}</li> </c:if>
-	       <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/article/theme/${item.id}">${item.name}</a></li> </c:if>
+	       <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}">${item.name}</a></li> </c:if>
 	      </c:forEach>
 	      </ol>
         </div>
@@ -49,7 +49,7 @@
    		</div>
 	   	<ul class="list-group">
 	     <c:forEach items="${children}" var="item">
-	       <li class="list-group-item"><a href="/leyi/article/theme/${item.id}">${item.name}</a></li>
+	       <li class="list-group-item"><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}">${item.name}</a></li>
 	     </c:forEach>
 	   	</ul>
   	  </div>
@@ -58,7 +58,7 @@
     <div class="col-md-8" >
       <div class="panel panel-info">
         <div class="panel-heading" style="margin:0">
-	     	<a href="/leyi/article/editing" target="_blank">新增文章</a>
+	     	<a href="/leyi/${operator.username}/article_mgr/editing" target="_blank">新增文章</a>
         </div>
         <table class="table table-striped  table-bordered table-hover ">
           <thead>
@@ -70,9 +70,9 @@
               <td>${item.name}</td>
               <td>${item.keywords }</td>
               <td>
-                [<a href="/leyi/article/editing?articleId=${item.id }" target="_blank">编辑</a>]&nbsp;&nbsp;
-                [<a href="/leyi/article/delete?articleId=${item.id }">删除</a>]&nbsp;&nbsp;
-                [<a href="/leyi/article/detail/${item.id }"  target="_blank">显示</a>]&nbsp;&nbsp;
+                [<a href="/leyi/${operator.username}/article_mgr/editing?articleId=${item.id }" target="_blank">编辑</a>]&nbsp;&nbsp;
+                [<a href="/leyi/${operator.username}/article_mgr/delete?articleId=${item.id }">删除</a>]&nbsp;&nbsp;
+                [<a href="/leyi/${operator.username}/article_mgr/detail/${item.id }"  target="_blank">显示</a>]&nbsp;&nbsp;
               </td>
             </tr>
            </c:forEach>

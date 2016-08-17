@@ -5,6 +5,7 @@ import java.util.List;
 import me.jeekhan.leyi.common.PageCond;
 import me.jeekhan.leyi.model.ArticleBrief;
 import me.jeekhan.leyi.model.ArticleContent;
+import me.jeekhan.leyi.model.ReviewInfo;
 
 /**
  * 文章相关服务
@@ -91,15 +92,10 @@ public interface ArticleService {
     public List<ArticleBrief> getArticles4Review();
 
 	/**
-	 * 文章审核通过
-	 * @param articleId 文章ID
-	 * @param remark	审核说明
+	 * 文章审核
+	 * @param articleId	  文章ID
+	 * @param result	  审核结果：0-通过，R-拒绝
+	 * @param reviewInfo 审核信息
 	 */
-	public int acceptArticle(int articleId,String remark);
-	/**
-	 * 文章审核拒绝
-	 * @param articleId 文章ID
-	 * @param remark	审核说明
-	 */
-	public int refuseArticle(int articleId,String remark);
+	public int reviewArticle(int articleId,String result,ReviewInfo reviewInfo);
 }

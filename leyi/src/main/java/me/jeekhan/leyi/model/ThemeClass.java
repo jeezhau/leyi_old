@@ -6,6 +6,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class ThemeClass {
     private Integer id;
 
@@ -93,5 +96,14 @@ public class ThemeClass {
 
     public void setEnabled(String enabled) {
         this.enabled = enabled;
+    }
+    //·µ»ØJSON×Ö·û´®
+    public String toString(){
+    	ObjectMapper mapper = new ObjectMapper();
+    	try {
+			return mapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			return super.toString();
+		} 
     }
 }

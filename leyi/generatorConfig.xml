@@ -10,7 +10,7 @@
             <property name="suppressAllComments" value="true"/>  
         </commentGenerator>  
         <!--数据库链接URL，用户名、密码 -->  
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/leyi" userId="root" password="root"/>  
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/leyi" userId="root" password="rootpwd"/>  
         <javaTypeResolver>  
             <property name="forceBigDecimals" value="false"/>  
         </javaTypeResolver>  
@@ -20,11 +20,7 @@
         <sqlMapGenerator targetPackage="mapping" targetProject="leyi/src/main/resources" />  
         <!-- 生成DAO的包名和位置-->  
         <javaClientGenerator type="XMLMAPPER" targetPackage="me.jeekhan.leyi.dao" targetProject="leyi/src/main/java" />  
-        <table tableName="tb_user_base_info" domainObjectName="UserBaseInfo" />
-        <table tableName="tb_user_full_info" domainObjectName="UserFullInfo" />
-        <table tableName="tb_theme_class" domainObjectName="ThemeClass" />
-        <table tableName="tb_article_brief" domainObjectName="ArticleBrief" />
-        <table tableName="tb_article_content" domainObjectName="ArticleContent" />
-        <table tableName="tb_comments" domainObjectName="ArticleComments" />
+
+        <table tableName="tb_review_info" domainObjectName="ReviewInfo" />
     </context>
 </generatorConfiguration>

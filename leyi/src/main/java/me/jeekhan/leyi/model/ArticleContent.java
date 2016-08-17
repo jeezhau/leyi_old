@@ -2,6 +2,9 @@ package me.jeekhan.leyi.model;
 
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class ArticleContent {
     private Integer articleId;
     
@@ -22,5 +25,14 @@ public class ArticleContent {
 
     public void setContent(String content) {
         this.content = content;
+    }
+    //·µ»ØJSON×Ö·û´®
+    public String toString(){
+    	ObjectMapper mapper = new ObjectMapper();
+    	try {
+			return mapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			return super.toString();
+		} 
     }
 }

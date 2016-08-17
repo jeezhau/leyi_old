@@ -2,6 +2,7 @@ package me.jeekhan.leyi.service;
 
 import java.util.List;
 
+import me.jeekhan.leyi.model.ReviewInfo;
 import me.jeekhan.leyi.model.ThemeClass;
 /**
  *  主题分类服务类
@@ -27,7 +28,7 @@ public interface ThemeClassService {
 	 * @return
 	 */
 	public ThemeClass getThemeClass(int themeClassId);
-	public ThemeClass getThemeClass(String themeName);
+	public ThemeClass getThemeClass(String themeName,int parentId);
 	/**
 	 * 获取指定用户所有的主题分类
 	 * @return
@@ -58,5 +59,13 @@ public interface ThemeClassService {
 	 * @return
 	 */
 	public List<ThemeClass> getThemes4Review();
+	
+	/**
+	 * 主题审核
+	 * @param themeId   主题ID
+	 * @param result	审核结果:0-通过,R-拒绝
+	 * @param reviewInfo	审核说明
+	 */
+	public int reviewTheme(int themeId,String result,ReviewInfo reviewInfo);
 	
 }

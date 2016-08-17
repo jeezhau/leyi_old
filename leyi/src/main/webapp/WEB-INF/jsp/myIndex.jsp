@@ -27,9 +27,9 @@
   <div class="row">
   <c:if test="${not empty operator.userId and operator.userId > 0}">
   	<ul class="nav nav-tabs pull-right" >
-  	 <li><a href="/leyi/theme/" target="_blank">分类管理</a></li>
-     <li><a href="/leyi/article/" target="_blank">文章管理</a></li>
-     <li><a href="/leyi/review" target="_blank">信息审核</a></li>
+  	 <li><a href="/leyi/${operator.username }/theme_mgr/" target="_blank">分类管理</a></li>
+     <li><a href="/leyi/${operator.username }/article_mgr/" target="_blank">文章管理</a></li>
+     <li><a href="/leyi/${operator.username }/review" target="_blank">信息审核</a></li>
      <li><a href="/leyi/logout">退出</a></li>
 	</ul>
    </c:if>

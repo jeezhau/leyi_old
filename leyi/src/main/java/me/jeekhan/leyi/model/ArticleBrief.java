@@ -1,11 +1,15 @@
 package me.jeekhan.leyi.model;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ArticleBrief {
     private Integer id;
@@ -120,5 +124,14 @@ public class ArticleBrief {
 
     public void setEnabled(String enabled) {
         this.enabled = enabled;
+    }
+    //·µ»ØJSON×Ö·û´®
+    public String toString(){
+    	ObjectMapper mapper = new ObjectMapper();
+    	try {
+			return mapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			return super.toString();
+		} 
     }
 }

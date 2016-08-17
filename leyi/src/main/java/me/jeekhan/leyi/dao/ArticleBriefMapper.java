@@ -9,7 +9,7 @@ import me.jeekhan.leyi.model.ArticleBrief;
 
 public interface ArticleBriefMapper {
 	//变更文章状态
-    int updateEnabledStatus(@Param("id")Integer id,@Param("enabled")char enabled);
+    int updateEnabledStatus(@Param("id")Integer id,@Param("enabled")String enabled);
     //新插入一条文章记录
     int insert(ArticleBrief record);
     

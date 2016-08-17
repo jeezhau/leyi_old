@@ -11,6 +11,9 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class UserFullInfo {
     private Integer id;
     @NotNull(message="不可为空！")
@@ -167,5 +170,14 @@ public class UserFullInfo {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+    //返回JSON字符串
+    public String toString(){
+    	ObjectMapper mapper = new ObjectMapper();
+    	try {
+			return mapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			return super.toString();
+		} 
     }
 }

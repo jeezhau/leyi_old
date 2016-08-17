@@ -80,6 +80,7 @@
             <form class="form-horizontal" id="themeForm" method ="post" action="add" role="form" >
                <div class="form-group">
                	  <input type="hidden" id="themeId" name="id" value="${currTheme.id}">
+               	  <input type="hidden" id="parentId" name="parentId" value="${currTheme.parentId}">
                </div>
                <div id="topThemeFlag" class="form-group">
 			       <label class="col-sm-2 control-label">顶层主题</label>
@@ -114,10 +115,29 @@
       </div><!-- /.modal-content -->
    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<!-- 错误提示模态框（Modal） -->
+<div class="modal fade " id="tipModal" tabindex="-1" role="dialog" aria-labelledby="tipTitle" aria-hidden="true" data-backdrop="static">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"  aria-hidden="true">× </button>
+            <h4 class="modal-title" id="tipTitle">提示信息</h4>
+         </div>
+         <div class="modal-body">
+           ${param.error}
+         </div>
+         <div class="modal-footer">
+         	<div style="margin-left:50px">
+             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+         </div>
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <script>
 	$(function(){ 
-		var mode = '';
-		$("#addTheme").click(function(){
+		var mode = '';  //功能模式
+		$("#addTheme").click(function(){//打开新增对话框
 			mode = 'add';
 			$("#themeModal").modal('show');
 			$("#themeForm").attr('action','add');
@@ -125,7 +145,7 @@
 			$("#themeDesc").val('');
 			$("#keywords").val('');
 		});
-		$("#editTheme").click(function(){
+		$("#editTheme").click(function(){ //打开编辑对话框
 			mode = 'edit';
 			$("#themeModal").modal('show');
 			$("#topThemeFlag").hide();
@@ -135,20 +155,28 @@
 			var kws = $("#keywords-show").text().trim();
 			$("#keywords").val(kws.substring('关键词：'.length));
 		});
-		$("#deleteTheme").click(function(){
+		$("#deleteTheme").click(function(){ //提交删除
 			mode = 'delete';
-			$("#themeForm").attr('action','delete');
-			$("#themeForm").submit();
+			var r = confirm('确定要删除该主题吗？');
+			if(r){
+				$("#themeForm").attr('action','delete');
+				$("#themeForm").submit();
+			}
 		});
 		$("#submit").click(function(){
 			if(mode === 'add'){
-				if($("#topThemeFlag_true").is(':checked')){
+				if($("#topThemeFlag_true").is(':checked')){ //作为顶层主题
 					$("#themeId").val('');
 				}
 			}
 			$("#themeForm").submit();
 			$("#themeModal").modal('hide');
 		});
+		
+		//显示错误信息
+		if('${param.error}'){
+			$("#tipModal").modal('show');
+		}
 	});
 </script>
 

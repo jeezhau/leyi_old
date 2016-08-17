@@ -26,8 +26,8 @@
    <!-- =====================顶部文章=================== -->
 	<ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin:10px 0;">
 	   <c:forEach items="${topThemes}" var="item">
-	       <c:if test="${themeTreeUp[0].id==item.id}"> <li class="active"><a href="/leyi/article/theme/${item.id}">${item.name}</a></li> </c:if>
-	       <c:if test="${themeTreeUp[0].id!=item.id}"> <li><a href="/leyi/article/theme/${item.id}">${item.name}</a></li> </c:if>	
+	       <c:if test="${themeTreeUp[0].id==item.id}"> <li class="active"><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}">${item.name}</a></li> </c:if>
+	       <c:if test="${themeTreeUp[0].id!=item.id}"> <li><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}">${item.name}</a></li> </c:if>	
        </c:forEach>
 	</ul>
   </div>

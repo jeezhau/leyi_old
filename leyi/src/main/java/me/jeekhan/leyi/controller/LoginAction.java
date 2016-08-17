@@ -75,7 +75,7 @@ public class LoginAction {
 			map.put("userInfo", userInfo);
 			return "redirect:/" + username;
 		}else{
-			return "redirect:/";
+			return "forward:/login.jsp";
 		}
 	}
 	/**

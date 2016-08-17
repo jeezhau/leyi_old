@@ -79,7 +79,7 @@
 			     <div class="form-group">
 			        <label  class="col-sm-2 control-label">审核说明</label>
 			        <div class="col-sm-10">
-			          <textarea class="form-control" id="remark" name="remark" placeholder="请输入审核说明" rows="5" ></textarea>
+			          <textarea class="form-control" id="remark" name="remark" placeholder="请输入审核说明" rows="5" maxLength=600></textarea>
 			        </div>
 			      </div>
 		         <div class="col-sm-offset-4 col-sm-10">
@@ -90,11 +90,11 @@
 		         <script type="text/javascript">
 		         $(function(){ 
 			 		$("#accept").click(function(){
-						$("#reviewForm").attr('action','/leyi/article/accept');
+						$("#reviewForm").attr('action','/leyi/${operator.username}/article_mgr/accept');
 						$("#reviewForm").submit();
 					});
 			 		$("#refuse").click(function(){
-						$("#reviewForm").attr('action','/leyi/article/refuse');
+						$("#reviewForm").attr('action','/leyi/${operator.username}/article_mgr/refuse');
 						$("#reviewForm").submit();
 					});
 		         });

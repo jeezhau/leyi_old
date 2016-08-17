@@ -29,6 +29,7 @@ import me.jeekhan.leyi.service.UserService;
  */
 @Controller
 @SessionAttributes({"operator"})
+@RequestMapping(value="/{username}")
 public class ReviewAction {
 	@Autowired
 	private ArticleService articleService;
@@ -50,8 +51,9 @@ public class ReviewAction {
 		if(operator.getUserId()>0 && operator.getLevel() >= 9){
 			List<ArticleBrief> articles = articleService.getArticles4Review();
 			map.put("articles", articles);
-//			List<ThemeClass> themes = themeClassService.getThemes4Review();
-//			map.put("themes", themes);
+			List<ThemeClass> themes = themeClassService.getThemes4Review();
+			map.put("themes", themes);
+			
 			return "review";
 		}else{
 			return "redirect:/";
