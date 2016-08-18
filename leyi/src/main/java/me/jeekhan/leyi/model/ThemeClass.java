@@ -14,15 +14,16 @@ public class ThemeClass {
 
     private Integer parentId;
     
-    @NotNull
-    @Size(min=1,max=20)
+    @NotNull(message="不可为空！")
+    @Size(max=20,message="最大长度为20个字符！")
     private String name;
 
-    @NotNull
-    @Size(max=255)
+    @NotNull(message="不可为空！")
+    @Size(max=255,message="最大长度为255个字符！")
     private String keywords;
     
-    @Size(max=600)
+    @NotNull(message="不可为空！")
+    @Size(max=600,message="最大长度为600个字符！")
     private String descInfo;
 
     @Null

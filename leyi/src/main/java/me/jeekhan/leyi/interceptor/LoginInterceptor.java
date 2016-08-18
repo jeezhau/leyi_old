@@ -19,11 +19,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		
         String requestUri = request.getRequestURI();  
         String contextPath = request.getContextPath();  
-        String url = requestUri.substring(contextPath.length());  
-        
-        log.info("requestUri:"+requestUri);    
-        log.info("contextPath:"+contextPath);    
-        log.info("url:"+url);    
+        String url = requestUri.substring(contextPath.length());   
           
        Operator operator =  (Operator)request.getSession().getAttribute("operator");   
         if(operator == null || operator.getUserId() == 0){  

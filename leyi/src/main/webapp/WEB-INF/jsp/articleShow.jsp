@@ -26,7 +26,7 @@
   <div class="row">
      <div class="col-md-3" >
       <div class="row" style="height:250px;overflow:auto ;padding:3px;border:3px #CECEF6 solid ;border-radius:5px;">
-       <img style="float:left;margin:3px;" src="/leyi/showPic/${userInfo.username}/${userInfo.picture }" width="150" height="150" alt="Profile Photo" >  
+       <img style="float:left;margin:3px;" src="/leyi/common/showPic/${userInfo.username}/${userInfo.picture }" width="150" height="150" alt="Profile Photo" >  
          <a href="/leyi/${userInfo.username}"><b>&nbsp;&nbsp;&nbsp;${userInfo.username}</b></a><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
        </div>
 	 </div>
@@ -163,7 +163,29 @@
     </div>
   </div><!-- end of row -->
   </c:if>
+  
 </div>
+<c:if test="param.error">
+<!-- 错误提示模态框（Modal） -->
+<div class="modal fade " id="tipModal" tabindex="-1" role="dialog" aria-labelledby="tipTitle" aria-hidden="false" data-backdrop="static">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"  aria-hidden="true">× </button>
+            <h4 class="modal-title" id="tipTitle">提示信息</h4>
+         </div>
+         <div class="modal-body">
+           ${param.error}
+         </div>
+         <div class="modal-footer">
+         	<div style="margin-left:50px">
+             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+         </div>
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</c:if>
 
 </body>
 </html>

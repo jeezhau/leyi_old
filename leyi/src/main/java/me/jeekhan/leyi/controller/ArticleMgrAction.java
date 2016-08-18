@@ -3,8 +3,12 @@ package me.jeekhan.leyi.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -121,8 +125,20 @@ public class ArticleMgrAction {
 	 * @return
 	 */
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String addArticle(ArticleBrief brief,String content,
+	public String addArticle(@Valid ArticleBrief brief,BindingResult result,String content,
 			@ModelAttribute("operator")Operator operator,Map<String,Object> map){
+		if(result.hasErrors()){	//验证出错
+			List<ObjectError> list = result.getAllErrors();
+			for(ObjectError e :list){
+				String filed = e.getCodes()[0].substring(e.getCodes()[0].lastIndexOf('.')+1);
+				map.put(filed, e.getDefaultMessage());
+			}
+			return "articleEditing";
+		}
+		if(content.length()>10240){
+			map.put("content", "最大长度为10K个字符！");
+			return "articleEditing";
+		}
 		ThemeClass theme = (ThemeClass) map.get("currTheme");
 		int themeId = theme.getId();
 		brief.setThemeId(themeId);
@@ -143,11 +159,26 @@ public class ArticleMgrAction {
 	 * @return
 	 */
 	@RequestMapping(value="/edit",method=RequestMethod.POST)
-	public String editArticle(ArticleBrief brief,String content,@ModelAttribute("operator")Operator operator){
+	public String editArticle(@Valid ArticleBrief brief,BindingResult result,String content,
+			@ModelAttribute("operator")Operator operator,Map<String,String> map){
+		if(result.hasErrors()){	//验证出错
+			List<ObjectError> list = result.getAllErrors();
+			for(ObjectError e :list){
+				String filed = e.getCodes()[0].substring(e.getCodes()[0].lastIndexOf('.')+1);
+				map.put(filed, e.getDefaultMessage());
+			}
+			return "articleEditing";
+		}
+		if(content.length()>10240){
+			map.put("content", "最大长度为10K个字符！");
+			return "articleEditing";
+		}
+		String redirectUrl = "redirect:/"+operator.getUsername()+"/article_mgr/theme/";
 		int id = brief.getId();
 		ArticleBrief old = articleService.getArticleBref(id);
-		if(old == null || old.getUpdateOpr()!= operator.getUserId()){ 
-			;
+		if(old == null || old.getUpdateOpr()!= operator.getUserId()){ //无该文章或非属主
+			map.put("error", "您无权限执行该操作！");
+			return "articleEditing";
 		}else{
 			old.setName(brief.getName());
 			old.setKeywords(brief.getKeywords());
@@ -158,8 +189,8 @@ public class ArticleMgrAction {
 			articleContent.setContent(content);
 			articleContent.setArticleId(id);
 			articleService.saveArticleInfo(old, articleContent);
+			return redirectUrl + old.getThemeId();
 		}
-		return "redirect:/"+operator.getUsername()+"/article_mgr/theme/" + old.getThemeId();
 	}
 	/**
 	 * 删除指定文章
@@ -168,13 +199,14 @@ public class ArticleMgrAction {
 	 */
 	@RequestMapping(value="/delete",method=RequestMethod.GET)
 	public String deleteArticle(int articleId,@ModelAttribute("operator")Operator operator){
+		String redirectUrl = "redirect:/"+operator.getUsername()+"/article_mgr/theme/";
 		ArticleBrief old = articleService.getArticleBref(articleId);
 		if(old == null || old.getUpdateOpr()!= operator.getUserId()){ 
-			;
+			return redirectUrl + "?error=您无权限执行该操作！";
 		}else{
 			articleService.deleteArticle(articleId);
 		}
-		return "redirect:/"+operator.getUsername()+"/article_mgr/theme/" + old.getThemeId();
+		return redirectUrl + old.getThemeId();
 	}
 	
 	/**

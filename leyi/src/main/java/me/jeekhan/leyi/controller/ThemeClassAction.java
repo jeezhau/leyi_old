@@ -4,8 +4,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -87,8 +91,11 @@ public class ThemeClassAction {
 	 * @return
 	 */
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String addTheme(ThemeClass theme,@ModelAttribute("operator") Operator operator){
+	public String addTheme(@Valid ThemeClass theme,BindingResult result,@ModelAttribute("operator") Operator operator){
 		String redirectUrl = "redirect:/" + operator.getUsername() + "/theme_mgr/";
+		if(result.hasErrors()){
+			return redirectUrl + "?error=字段值有误！";
+		}
 		theme.setParentId(theme.getId());	//设置父主题
 		theme.setId(null);
 		theme.setUpdateOpr(operator.getUserId());
@@ -108,7 +115,7 @@ public class ThemeClassAction {
 					msg = "存在同层同名的活动主题！";
 					break;
 			}
-			return "redirect:/" + operator.getUsername() + "/theme_mgr/?error=" + msg;
+			return redirectUrl + "?error=" + msg;
 		}
 	}
 	
@@ -123,8 +130,11 @@ public class ThemeClassAction {
 	 * @return
 	 */
 	@RequestMapping(value="/edit",method=RequestMethod.POST)
-	public String updateTheme(ThemeClass theme,@ModelAttribute("operator") Operator operator,Map<String,String> map){
+	public String updateTheme(@Valid ThemeClass theme,BindingResult result,@ModelAttribute("operator") Operator operator,Map<String,String> map){
 		String redirectUrl = "redirect:/" + operator.getUsername() + "/theme_mgr/";
+		if(result.hasErrors()){
+			return redirectUrl + "?error=字段值有误！";
+		}
 		ThemeClass old = themeClassService.getThemeClass(theme.getId());
 		if(old != null && old.getUpdateOpr() == operator.getUserId()){
 			theme.setUpdateOpr(operator.getUserId());

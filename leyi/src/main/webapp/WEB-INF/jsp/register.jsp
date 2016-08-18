@@ -14,8 +14,13 @@
   <meta name="author" content="jeekhan">
 
   <link rel="stylesheet" href="/leyi/bootstrap-3.3.5/css/bootstrap.min.css">  
+  <link rel="stylesheet" href="/leyi/bootstrap-3.3.5/css/fileinput.min.css">  
   <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="/leyi/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+
+  <script src="/leyi/bootstrap-3.3.5/js/fileinput.min.js"></script>
+  <script src="/leyi/bootstrap-3.3.5/js/zh.js"></script>
+  
+    <script src="/leyi/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 
   <script src="/leyi/ckeditor/ckeditor.js"></script>
 </head>
@@ -139,7 +144,7 @@
       <div class="form-group">
         <label for="introduce" class="col-sm-2 control-label">照片</label>
         <div class="col-sm-5">
-          <input type="file" id="picFile" name="picFile" >
+          <input id="picFile"  type="file" name="picFile" type="file" accept="image/*" class="file-loading">
         </div>
       </div>
       <div class="form-group">
@@ -148,10 +153,29 @@
            <button type="button" class="btn btn-warning" id="reset" style="margin:20px">&nbsp;&nbsp;重 置&nbsp;&nbsp; </button>
          </div>
       </div>
+      
 	</form>
   </div>
 </div>
 <script>
+$(document).on('ready', function() {
+	    $("#picFile").fileinput({
+	    	language: 'zh', //设置语言
+	        uploadUrl: '', //上传的地址
+	        showUpload: false, //是否显示上传按钮
+	        previewFileType: "image",
+	        browseClass: "btn btn-success",
+	        browseLabel: "Pick Image",
+	        browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
+	        removeClass: "btn btn-danger",
+	        removeLabel: "Delete",
+	        removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i> ",
+	        uploadClass: "btn btn-info",
+	        uploadLabel: "Upload",
+	        uploadIcon: "<i class=\"glyphicon glyphicon-upload\"></i> "
+	    });
+	});
+
 	function checkPwdSame(){
 		if($('#password').val() === $('#re-password').val()){
 			return true;

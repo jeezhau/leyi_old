@@ -91,32 +91,33 @@
 			   <div class="form-group">
 			      <label class="col-sm-2 control-label">主题名称</label>
 			      <div class="col-sm-10">
-			         <input class="form-control" name="name" id="themeName" type="text" value="" placeholder="请输入主题名称..." >
+			         <input class="form-control" name="name" id="themeName" type="text" value="" maxlength=50 required placeholder="请输入主题名称..." >
 			      </div>
 			   </div>
 			   <div class="form-group">
 			      <label for="keywords" class="col-sm-2 control-label">关键词</label>
 			      <div class="col-sm-10">
-			         <textarea class="form-control" name="keywords" id="keywords" placeholder="请输入关键词..." ></textarea>
+			         <textarea class="form-control" name="keywords" id="keywords" maxlength=255 required placeholder="请输入关键词..." ></textarea>
 			      </div>
 			   </div>
 			   <div class="form-group has-success">
 			      <label class="col-sm-2 control-label" for="themeDesc">主题描述</label>
 			      <div class="col-sm-10">
-			         <textarea  class="form-control" name="descInfo" id="themeDesc" rows="8" placeholder="请输入主题描述..." ></textarea>
+			         <textarea  class="form-control" name="descInfo" id="themeDesc" rows="8" maxlength=600 required placeholder="请输入主题描述..." ></textarea>
 			      </div>
 			   </div>
 			</form>
          </div>
          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="submit">提交</button>
+            <button type="submit" class="btn btn-primary" id="submit">提交</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
          </div>
       </div><!-- /.modal-content -->
    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<c:if test="param.error">
 <!-- 错误提示模态框（Modal） -->
-<div class="modal fade " id="tipModal" tabindex="-1" role="dialog" aria-labelledby="tipTitle" aria-hidden="true" data-backdrop="static">
+<div class="modal fade " id="tipModal" tabindex="-1" role="dialog" aria-labelledby="tipTitle" aria-hidden="false" data-backdrop="static">
    <div class="modal-dialog">
       <div class="modal-content">
          <div class="modal-header">
@@ -134,6 +135,7 @@
       </div><!-- /.modal-content -->
    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+</c:if>
 <script>
 	$(function(){ 
 		var mode = '';  //功能模式
@@ -172,11 +174,6 @@
 			$("#themeForm").submit();
 			$("#themeModal").modal('hide');
 		});
-		
-		//显示错误信息
-		if('${param.error}'){
-			$("#tipModal").modal('show');
-		}
 	});
 </script>
 

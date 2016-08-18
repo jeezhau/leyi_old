@@ -80,10 +80,30 @@
         </table>
       </div>
     </div><!-- end of 右面文章列表 -->
-  </div>
-    
+  </div>   
 </div>
 
+ <c:if test="param.error">
+<!-- 错误提示模态框（Modal） -->
+ <div class="modal fade " id="tipModal" tabindex="-1" role="dialog" aria-labelledby="tipTitle" aria-hidden="false" data-backdrop="static">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"  aria-hidden="true">× </button>
+            <h4 class="modal-title" id="tipTitle">提示信息</h4>
+         </div>
+         <div class="modal-body">
+           ${param.error}
+         </div>
+         <div class="modal-footer">
+         	<div style="margin-left:50px">
+             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+         </div>
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+ </div><!-- /.modal -->
+</c:if>
 
 <script>
 

@@ -128,8 +128,10 @@ public class LoginAction {
 			
 			return "register";
 		}
+		String fileName = "";
 		if(!file.isEmpty()){
-			userInfo.setPicture(file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf('.')));
+			fileName = java.util.UUID.randomUUID().toString() + "." + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.')+1);
+			userInfo.setPicture(fileName);
 		}
 		int id = userService.saveUser(userInfo);
 		if(id<=0){
@@ -147,8 +149,8 @@ public class LoginAction {
 			if(!dir.exists()){
 				dir.mkdirs();
 			}
-			userInfo.setPicture(file.getOriginalFilename());
-			FileOutputStream out = new FileOutputStream(path + file.getOriginalFilename());
+			userInfo.setPicture(fileName);
+			FileOutputStream out = new FileOutputStream(path + fileName);
 			InputStream in = file.getInputStream();
 			byte[] buf = new byte[1024];
 			int n = 0;
@@ -202,24 +204,5 @@ public class LoginAction {
 
 		return "register";
 	}
-	/**
-	 * ÏÔÊ¾Í¼Æ¬
-	 * @param username
-	 * @param picName
-	 * @param out
-	 * @throws IOException 
-	 */
-	@RequestMapping(value="/showPic/{username}/{picName}")
-	public void getPersonPicture(@PathVariable("username")String username,@PathVariable("picName")String picName,OutputStream out,HttpServletRequest request,HttpServletResponse response) throws IOException{
-		String path = "e:/webapp" + request.getContextPath() + "/upload/" + username + "/"; 
-		File dir = new File(path);
-		File[] files = dir.listFiles(new FileFilter(picName));
-		if(files != null && files.length>0){
-			BufferedImage image = ImageIO.read(files[0]);
-			response.setContentType("image/*");  
-			OutputStream os = response.getOutputStream();  
-			String type = files[0].getName().substring(picName.length()+1);
-			ImageIO.write(image, type, os);  
-		}
-	}
+
 }

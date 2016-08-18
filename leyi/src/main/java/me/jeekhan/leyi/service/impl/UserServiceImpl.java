@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService{
 	 */
 	@Override
 	public boolean authentification(String username, String passwd) {
-		UserBaseInfo  userInfo = userBaseInfoMapper.selectByName(username);
+		UserFullInfo  userInfo = userFullInfoMapper.selectByName(username);
 		try{
 			if(userInfo == null){
 				return false;

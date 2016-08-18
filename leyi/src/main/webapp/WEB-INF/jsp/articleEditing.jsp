@@ -34,63 +34,96 @@
   
   <div class="row">
 	<form class="form-horizontal" id="articleForm" action="add" method ="post" role="form" >
+	  <c:if test="${not empty error}">
+      <div class="alert alert-warning alert-dismissable">${error}
+        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+      </div>
+	  </c:if>
 	  <div class="form-group">
-	    <label for="name" class="col-sm-2 control-label">标题</label>
+	    <label for="name" class="col-sm-2 control-label">标题<span style="color:red">*</span></label>
 	    <div class="col-sm-5">
 	      <input type="hidden" name="id" value="${brief.id}">
-	      <input type="text" class="form-control" id="name" name="name" value="${brief.name}" placeholder="请输入标题">
+	      <input type="text" class="form-control" id="name" name="name" value="${brief.name}" maxLength=50 required placeholder="请输入标题">
+	      <c:if test="${not empty name}">
+	      <div class="alert alert-warning alert-dismissable">${name}
+	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+	      </div>
+		  </c:if>
 	    </div>
 	  </div>
 	  <div class="form-group">
-	    <label for="keywords" class="col-sm-2 control-label">关键词</label>
+	    <label for="keywords" class="col-sm-2 control-label">关键词<span style="color:red">*</span></label>
 	    <div class="col-sm-10">
-	      <textarea class="form-control" id="keywords" name="keywords" placeholder="请输入关键词">${brief.keywords}</textarea>
+	      <textarea class="form-control" id="keywords" name="keywords" maxLength=255 required placeholder="请输入关键词">${brief.keywords}</textarea>
+	      <c:if test="${not empty keywords}">
+	      <div class="alert alert-warning alert-dismissable">${keywords}
+	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+	      </div>
+		  </c:if>
 	    </div>
 	  </div>
 	  <div class="form-group">
-        <label  class="col-sm-2 control-label">来源</label>
+        <label  class="col-sm-2 control-label">来源<span style="color:red">*</span></label>
         <div class="col-sm-3">
-          <select class="form-control" id="source" name="source" value="${brief.source}">
+          <select class="form-control" id="source" name="source" required>
            <option value="0">自创</option>
            <option value="1">转摘</option>
            <option value="2">其他</option>
           </select>
+          <c:if test="${not empty source}">
+	      <div class="alert alert-warning alert-dismissable">${source}
+	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+	      </div>
+		  </c:if>
         </div>
-      </div>
- 	  <div class="form-group">
-        <label  class="col-sm-2 control-label">类型</label>
+        <label  class="col-sm-2 control-label">类型<span style="color:red">*</span></label>
         <div class="col-sm-3">
-          <select class="form-control" id="type" name="type" value="${brief.type}">
+          <select class="form-control" id="type" name="type" required>
            <option value="0">文本</option>
            <option value="1">图册</option>
            <option value="2">视频</option>
            <option value="3">语音</option>
            <option value="4">混合</option>
           </select>
+          <c:if test="${not empty type}">
+	      <div class="alert alert-warning alert-dismissable">${type}
+	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+	      </div>
+		  </c:if>
         </div>
-      </div>    
+      </div>
+  	
       <div class="form-group">
-        <label  class="col-sm-2 control-label">简介</label>
+        <label  class="col-sm-2 control-label">简介<span style="color:red">*</span></label>
         <div class="col-sm-10">
-          <textarea class="form-control" id="brief" name="brief" placeholder="请输入简介" rows="5" >${brief.brief}</textarea>
+          <textarea class="form-control" id="brief" name="brief" placeholder="请输入简介" rows="5" maxLength=600 required>${brief.brief}</textarea>
+          <c:if test="${not empty brief}">
+	      <div class="alert alert-warning alert-dismissable">${brief}
+	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+	      </div>
+		  </c:if>
         </div>
       </div> 
       <div class="form-group">
-        <label  class="col-sm-2 control-label">内容</label>
+        <label class="col-sm-2 control-label">内容<span style="color:red">*</span></label>
         <div class="col-sm-10">
           <div id="hidden-Content" style="display:none">${content.content }</div>
-          <textarea class="form-control" id="content" name="content">
-			
-          </textarea>
+          <textarea class="form-control" id="content" name="content" maxLength=10240 required></textarea>
+          <c:if test="${not empty content}">
+	      <div class="alert alert-warning alert-dismissable">${content}
+	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+	      </div>
+		  </c:if>
         </div>
       </div>
       <div class="form-group">
          <div class="col-sm-offset-5 col-sm-10">
-           <button type="button" class="btn btn-info" id="save" style="margin:20px">&nbsp;&nbsp;提 交&nbsp;&nbsp;</button>
+           <button type="submit" class="btn btn-info" id="save" style="margin:20px">&nbsp;&nbsp;提 交&nbsp;&nbsp;</button>
            <button type="button" class="btn btn-warning" id="reset" style="margin:20px">&nbsp;&nbsp;重 置&nbsp;&nbsp; </button>
          </div>
       </div>
 	</form>
+	
   </div>
 </div>
 
@@ -101,15 +134,21 @@ $(function(){
 	if(articleId){
 		var content = CKEDITOR.instances['content'];
 		content.setData($('#hidden-Content').html()); 
+		$('#source').val('${brief.source}');
+		$('#type').val('${brief.type}');
 	}
 	
 	$("#save").click(function(){
+		/* if(!$("#articleForm").checkValidity()){
+			return false;	
+		} */
 		if(articleId){
 			$("#articleForm").attr('action','edit');
 		}else{
 			$("#articleForm").attr('action','add');
 		}
-		$("#articleForm").submit();
+		return true;
+		//$("#articleForm").submit();
 	});
 	$("#reset").click(function(){
 		if(articleId){
