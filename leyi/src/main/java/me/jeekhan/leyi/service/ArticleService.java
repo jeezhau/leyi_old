@@ -98,4 +98,11 @@ public interface ArticleService {
 	 * @param reviewInfo 审核信息
 	 */
 	public int reviewArticle(int articleId,String result,ReviewInfo reviewInfo);
+	
+	/**
+	 * 取待审核文章数量
+	 * @return
+	 */
+	public int get4ReviewArticlesCnt();
+	
 }

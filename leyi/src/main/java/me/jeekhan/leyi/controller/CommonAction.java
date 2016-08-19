@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import me.jeekhan.leyi.common.FileFilter;
+import me.jeekhan.leyi.common.SysPropUtil;
 import me.jeekhan.leyi.dto.Operator;
 /**
  * 通用处理
@@ -53,7 +54,7 @@ public class CommonAction {
 	public void uploadImg(@RequestParam(value="upload")MultipartFile upload,@ModelAttribute("operator")Operator operator,PrintWriter out,HttpServletRequest request,HttpServletResponse response) throws IOException{
 		if(!upload.isEmpty()){
 			String imgType = upload.getOriginalFilename().substring(upload.getOriginalFilename().lastIndexOf('.')+1);
-			String path = "e:/webapp" + request.getContextPath() + "/upload/" + operator.getUsername() + "/";  
+			String path = SysPropUtil.getParam("DIR_USER_UPLOAD") + operator.getUsername() + "/";  
 			
 			response.setCharacterEncoding("utf-8");  
 		    // CKEditor回调参数
@@ -101,7 +102,7 @@ public class CommonAction {
 	 */
 	@RequestMapping(value="/showPic/{username}/{picName}")
 	public void getPersonPicture(@PathVariable("username")String username,@PathVariable("picName")String picName,OutputStream out,HttpServletRequest request,HttpServletResponse response) throws IOException{
-		String path = "e:/webapp" + request.getContextPath() + "/upload/" + username + "/"; 
+		String path = SysPropUtil.getParam("DIR_USER_UPLOAD") + username + "/"; 
 		File dir = new File(path);
 		File[] files = dir.listFiles(new FileFilter(picName));
 		if(files != null && files.length>0){

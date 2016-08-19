@@ -29,4 +29,6 @@ public interface ThemeClassMapper {
     int countUserTopTheme(@Param("userId")int userId); 
     
     List<ThemeClass> selectThemes4Review();
+    
+    int countThemes4Review();
 }

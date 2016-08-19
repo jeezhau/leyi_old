@@ -105,4 +105,13 @@ public class UserServiceImpl implements UserService{
 	public UserFullInfo getIndexShowUser(){
 		return userFullInfoMapper.selectIndexShowUser();
 	}
+	
+	/**
+	 * 取待审核用户数量
+	 * @return
+	 */
+	@Override
+	public int get4ReviewUsersCnt() {
+		return userFullInfoMapper.countUsers4Review();
+	}
 }

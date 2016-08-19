@@ -146,4 +146,13 @@ public class ThemeClassServiceImpl implements ThemeClassService {
 		
 		return themeClassMapper.updateEnabledStatus(themeId, result);
 	}
+	
+	/**
+	 * 取待审核主题数量
+	 * @return
+	 */
+	@Override
+	public int get4ReviewThemesCnt() {
+		return themeClassMapper.countThemes4Review();
+	}
 }

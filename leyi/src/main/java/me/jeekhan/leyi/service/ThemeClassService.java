@@ -68,4 +68,10 @@ public interface ThemeClassService {
 	 */
 	public int reviewTheme(int themeId,String result,ReviewInfo reviewInfo);
 	
+	/**
+	 * 取待审核主题数量
+	 * @return
+	 */
+	public int get4ReviewThemesCnt();
+	
 }

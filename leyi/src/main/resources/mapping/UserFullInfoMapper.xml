@@ -219,7 +219,21 @@
     from tb_user_full_info
     where indexshow = 'T' order by rand() limit 1
   </select>
-  		
+  <!-- 获取最新待审核的10条主题-->
+  <select id="selectUsers4Review" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_user_full_info
+    where enabled= '1'
+    order by update_time desc
+  	limit 0,10
+  </select>		
+  <!-- 统计待审核用户数量-->
+  <select id="countUsers4Review" resultType="java.lang.Integer" >
+  	select count(1) CNT 
+  	from tb_user_full_info t 
+  	where t.enabled = '1' 
+  </select>		
   		
 </mapper>
 

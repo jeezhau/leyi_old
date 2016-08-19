@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.jeekhan.leyi.dao.MailSendInfoMapper" >
+  <resultMap id="BaseResultMap" type="me.jeekhan.leyi.model.MailSendInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="subject" property="subject" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="toAddr" property="toAddr" jdbcType="LONGVARCHAR" />
+    <result column="ccAddr" property="ccAddr" jdbcType="LONGVARCHAR" />
+    <result column="bccAddr" property="bccAddr" jdbcType="LONGVARCHAR" />
+    <result column="attachfile_names" property="attachfileNames" jdbcType="LONGVARCHAR" />
+    <result column="crt_time" property="crtTime" jdbcType="TIMESTAMP" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="send_num" property="sendNum" jdbcType="INTEGER" />
+    <result column="fail_msg" property="failMsg" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, subject,content, toAddr, ccAddr, bccAddr, attachfile_names, crt_time, send_time, send_num, fail_msg, status
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_mail_send_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_mail_send_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  
+  <insert id="insert" parameterType="me.jeekhan.leyi.model.MailSendInfo" keyProperty="id" >
+    insert into tb_mail_send_info (id, subject, crt_time, 
+      send_time, send_num, fail_msg, 
+      status, content, toAddr, 
+      ccAddr, bccAddr, attachfile_names
+      )
+    values (#{id,jdbcType=INTEGER}, #{subject,jdbcType=VARCHAR}, #{crtTime,jdbcType=TIMESTAMP}, 
+      #{sendTime,jdbcType=TIMESTAMP}, #{sendNum,jdbcType=INTEGER}, #{failMsg,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{content,jdbcType=LONGVARCHAR}, #{toAddr,jdbcType=LONGVARCHAR}, 
+      #{ccAddr,jdbcType=LONGVARCHAR}, #{bccAddr,jdbcType=LONGVARCHAR}, #{attachfileNames,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+ 
+  
+  <update id="updateByPrimaryKey" parameterType="me.jeekhan.leyi.model.MailSendInfo" >
+    update tb_mail_send_info
+    set send_time = #{sendTime,jdbcType=TIMESTAMP},
+      send_num = #{sendNum,jdbcType=INTEGER},
+      fail_msg = #{failMsg,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <!--获取100条邮件记录执行发送-->
+  <select id="selectMails4Send" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_mail_send_info t
+    where t.`status` = '1' or (t.`status` = 'F' and t.send_num &lt; 3) 
+	order by t.crt_time desc,t.`status` asc,t.send_num desc  
+	limit 0,100
+  </select>
+  
+</mapper>

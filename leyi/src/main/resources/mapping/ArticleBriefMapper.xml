@@ -107,5 +107,11 @@
   	limit 0,10
   </select>
   
+  <!-- 统计待审核文章数量-->
+  <select id="countArticles4Review" resultType="java.lang.Integer" >
+  	select count(1) CNT 
+  	from tb_article_brief t 
+  	where t.enabled = '1' 
+  </select>	 
 </mapper>
 

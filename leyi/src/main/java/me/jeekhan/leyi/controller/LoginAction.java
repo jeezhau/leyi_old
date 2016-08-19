@@ -36,6 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 import jdk.nashorn.internal.ir.RuntimeNode.Request;
 import me.jeekhan.leyi.common.FileFilter;
 import me.jeekhan.leyi.common.SunSHAUtils;
+import me.jeekhan.leyi.common.SysPropUtil;
 import me.jeekhan.leyi.dto.Operator;
 import me.jeekhan.leyi.model.ArticleBrief;
 import me.jeekhan.leyi.model.UserFullInfo;
@@ -144,7 +145,7 @@ public class LoginAction {
 			return "register";
 		}
 		if(!file.isEmpty()){
-			String path = "e:/webapp" + request.getContextPath() + "/upload/" + userInfo.getUsername() + "/";  
+			String path = SysPropUtil.getParam("DIR_USER_UPLOAD") + userInfo.getUsername() + "/";  
 			File dir = new File(path);
 			if(!dir.exists()){
 				dir.mkdirs();

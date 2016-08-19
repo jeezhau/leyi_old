@@ -1,5 +1,7 @@
 package me.jeekhan.leyi.dao;
 
+import java.util.List;
+
 import me.jeekhan.leyi.model.UserFullInfo;
 
 public interface UserFullInfoMapper {
@@ -15,4 +17,8 @@ public interface UserFullInfoMapper {
     int updateByPrimaryKey(UserFullInfo record);
     
     UserFullInfo selectIndexShowUser();
+    
+    List<UserFullInfo> selectUsers4Review();
+    
+    int countUsers4Review();
 }

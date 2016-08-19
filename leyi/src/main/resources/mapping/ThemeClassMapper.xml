@@ -183,6 +183,13 @@
     order by update_time desc
   	limit 0,10
   </select>
+  <!-- 统计待审核主题数量-->
+  <select id="countThemes4Review" resultType="java.lang.Integer" >
+  	select count(1) CNT 
+  	from tb_theme_class t 
+  	where t.enabled = '1' 
+  </select>	
+  
   
 </mapper>
 

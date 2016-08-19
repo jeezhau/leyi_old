@@ -26,4 +26,6 @@ public interface ArticleBriefMapper {
     ArticleBrief selectLatestRecrod(ArticleBrief record);
     //取最新待审核的20条记录
     List<ArticleBrief> selectArticles4Review();
+    //统计待审核文章数量
+    int countArticles4Review();
 }

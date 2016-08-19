@@ -6,6 +6,7 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task" 
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
 		http://www.springframework.org/schema/context 
@@ -15,7 +16,9 @@
 		http://www.springframework.org/schema/tx 
 		http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
 		http://www.springframework.org/schema/aop 
-		http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+		http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/task 
+		http://www.springframework.org/schema/task/spring-task-4.2.xsd">
 	
 
 	<!-- 自动扫描-->  
@@ -67,6 +70,10 @@
       <property name="basename" value="validMsg" />
       <property name="useCodeAsDefaultMessage" value="true" />
 	</bean>
+	<!-- 定时任务注解驱动-->
+	<task:annotation-driven scheduler="myScheduler"/> 
+	<task:scheduler id="myScheduler" pool-size="5"/> 
+
 
 </beans>
 

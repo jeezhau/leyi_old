@@ -176,5 +176,13 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleBriefMapper.updateEnabledStatus(articleId,result);
 		
 	}
+	/**
+	 * 取待审核文章数量
+	 * @return
+	 */
+	@Override
+	public int get4ReviewArticlesCnt() {
+		return articleBriefMapper.countArticles4Review();
+	}
 	
 }

@@ -19,5 +19,10 @@ public interface UserService {
 	
 	public UserFullInfo getIndexShowUser();
 
+	/**
+	 * 取待审核用户数量
+	 * @return
+	 */
+	public int get4ReviewUsersCnt();
 	
 }
