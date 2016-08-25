@@ -38,10 +38,12 @@
     where username = #{userName,jdbcType=VARCHAR} or email = #{userName,jdbcType=VARCHAR}
   </select>
   
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from tb_user_full_info
+  <!--更新用户更 状态：0-正常，1-待审核，R-拒绝,D-删除 -->
+  <update id="updateEnabledStatus" parameterType="map" >
+    update tb_user_full_info
+    set enabled = #{status,jdbcType=CHAR} 
     where id = #{id,jdbcType=INTEGER}
-  </delete>
+  </update>
   
   <insert id="insert" parameterType="me.jeekhan.leyi.model.UserFullInfo" >
     insert into tb_user_full_info (id, username, email, 

@@ -24,13 +24,13 @@
 	        	<div class="form-group">
 	        		<div class="input-group">
 		        		<div class="input-group-addon"><i class="fa fa-user fa-fw"></i></div>	        		
-		              	<input class="form-control" type="text" name="username" placeholder="用户名/邮箱">           
+		              	<input class="form-control" type="text" name="username" required placeholder="用户名/邮箱">           
 		          	</div>	
 	        	</div>
 	        	<div class="form-group">
 	        		<div class="input-group">
 		        		<div class="input-group-addon"><i class="fa fa-key fa-fw"></i></div>	        		
-		              	<input class="form-control" type="password" name="password" placeholder="******">           
+		              	<input class="form-control" type="password" name="password"  required placeholder="******">           
 		          	</div>	
 	        	</div>
 				<div class="form-group">

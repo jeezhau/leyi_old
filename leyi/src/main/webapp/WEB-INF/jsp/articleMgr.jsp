@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="me.jeekhan.leyi.model.ThemeClass,java.util.*,me.jeekhan.leyi.common.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -22,6 +23,12 @@
 </div>
 <div class="container">
   <div class="row">
+    <ul class="nav nav-tabs pull-right" >
+     <li><a href="/leyi/${operator.username }">我的主页</a></li>
+     <li><a href="/leyi/logout">退出</a></li>
+	</ul>
+  </div>
+  <div class="row">
    <!-- =====================顶部主题=================== -->
 	<ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin:10px 0;">
 	   <c:forEach items="${topThemes}" var="item">
@@ -41,11 +48,14 @@
 	       <c:if test="${currTheme.id==item.id}"> <li class="active">${item.name}</li> </c:if>
 	       <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}">${item.name}</a></li> </c:if>
 	      </c:forEach>
+	      <c:if test="${fn:length(themeTreeUp)<=0 }">
+		   还没有主题，请添加！
+		 </c:if>
 	      </ol>
         </div>
   		<div class="panel-body">
     	  <p id="themeDesc-show">&nbsp;&nbsp;&nbsp;&nbsp;${currTheme.descInfo}</p>
-    	  <p id="keywords-show">关键词：${currTheme.keywords}</p>
+    	  <p id="keywords-show"><c:if test="${not empty currTheme.id}"> 关键词：${currTheme.keywords}</c:if></p> 
    		</div>
 	   	<ul class="list-group">
 	     <c:forEach items="${children}" var="item">
@@ -58,11 +68,11 @@
     <div class="col-md-8" >
       <div class="panel panel-info">
         <div class="panel-heading" style="margin:0">
-	     	<a href="/leyi/${operator.username}/article_mgr/editing" target="_blank">新增文章</a>
+	     	<a href="/leyi/${operator.username}/article_mgr/editing" onclick="if('${currTheme.id}') { return true;} else { alert('请先选择主题！');}" target="_blank">新增文章</a>
         </div>
         <table class="table table-striped  table-bordered table-hover ">
           <thead>
-   	        <tr><th>文章标题</th><th>关键词 </th><th>操作 </th></tr>
+   	        <tr><th width="25%">文章标题</th><th>关键词 </th><th width="20%">操作 </th></tr>
           </thead>
           <tbody> 
            <c:forEach items="${currArticles}" var="item">
@@ -70,10 +80,9 @@
               <td>${item.name}</td>
               <td>${item.keywords }</td>
               <td>
-                [<a href="/leyi/${operator.username}/article_mgr/editing?articleId=${item.id }" target="_blank">编辑</a>]&nbsp;&nbsp;
-                [<a href="/leyi/${operator.username}/article_mgr/delete?articleId=${item.id }">删除</a>]&nbsp;&nbsp;
-                [<a href="/leyi/${operator.username}/article_mgr/detail/${item.id }"  target="_blank">显示</a>]&nbsp;&nbsp;
-              </td>
+                [<a href="/leyi/${operator.username}/article_mgr/editing?articleId=${item.id }" target="_blank">编辑</a>]&nbsp;
+                [<a href="/leyi/${operator.username}/article_mgr/delete?articleId=${item.id }">删除</a>]&nbsp;
+                [<a href="/leyi/${operator.username}/article_mgr/detail/${item.id }"  target="_blank">显示</a>]
             </tr>
            </c:forEach>
           </tbody>
@@ -83,7 +92,7 @@
   </div>   
 </div>
 
- <c:if test="param.error">
+ <c:if test="${not empty param.error}">
 <!-- 错误提示模态框（Modal） -->
  <div class="modal fade " id="tipModal" tabindex="-1" role="dialog" aria-labelledby="tipTitle" aria-hidden="false" data-backdrop="static">
    <div class="modal-dialog">

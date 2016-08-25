@@ -2,11 +2,13 @@ package me.jeekhan.leyi.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import me.jeekhan.leyi.model.UserFullInfo;
 
 public interface UserFullInfoMapper {
 
-    int deleteByPrimaryKey(Integer id);
+    int updateEnabledStatus(@Param("id")Integer id,@Param("status") String status);
 
     int insert(UserFullInfo record);
 

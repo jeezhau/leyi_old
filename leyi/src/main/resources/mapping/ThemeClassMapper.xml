@@ -25,11 +25,17 @@
   </select>
   
   <!--获取同名同层主题 -->
-  <select id="selectByName" resultMap="BaseResultMap" parameterType="map" >
+  <select id="selectByNameAndOpr" resultMap="BaseResultMap" parameterType="map" >
     select 
     <include refid="Base_Column_List" />
     from tb_theme_class
-    where name = #{name,jdbcType=VARCHAR} and parent_id = #{parentId,jdbcType=INTEGER}
+    where name = #{name,jdbcType=VARCHAR} and update_opr=#{oprId,jdbcType=INTEGER} 
+    <if test="parentId != null" >
+        and parent_id = #{parentId,jdbcType=INTEGER}
+    </if>
+    <if test="parentId == null" >
+        and parent_id is null
+    </if>
   </select>
   
   <!--更新主题 状态：0-正常，1-待审核，R-拒绝,D-删除 -->

@@ -130,13 +130,13 @@ public class ArticleMgrAction {
 		if(result.hasErrors()){	//验证出错
 			List<ObjectError> list = result.getAllErrors();
 			for(ObjectError e :list){
-				String filed = e.getCodes()[0].substring(e.getCodes()[0].lastIndexOf('.')+1);
-				map.put(filed, e.getDefaultMessage());
+				String field = e.getCodes()[0].substring(e.getCodes()[0].lastIndexOf('.')+1);
+				map.put(field, e.getDefaultMessage());
 			}
 			return "articleEditing";
 		}
 		if(content.length()>10240){
-			map.put("content", "最大长度为10K个字符！");
+			map.put("content", "内容：最大长度为10K个字符！");
 			return "articleEditing";
 		}
 		ThemeClass theme = (ThemeClass) map.get("currTheme");
@@ -170,7 +170,7 @@ public class ArticleMgrAction {
 			return "articleEditing";
 		}
 		if(content.length()>10240){
-			map.put("content", "最大长度为10K个字符！");
+			map.put("content", "内容：最大长度为10K个字符！");
 			return "articleEditing";
 		}
 		String redirectUrl = "redirect:/"+operator.getUsername()+"/article_mgr/theme/";
@@ -248,19 +248,20 @@ public class ArticleMgrAction {
 	public String article(@ModelAttribute("operator")Operator operator,Map<String,Object> map){
 		@SuppressWarnings("unchecked")
 		List<ThemeClass> topThemes = (List<ThemeClass>) map.get("topThemes");
-		ThemeClass currTheme = topThemes.get(0);
-		map.put("currTheme", currTheme);
-		List<ThemeClass> themeTreeUp = themeClassService.getThemeTreeUp(currTheme.getId());
-		map.put("themeTreeUp", themeTreeUp);
-		List<ThemeClass> children = themeClassService.getChildThemes(currTheme.getId(),true);
-		map.put("children",children);
-		boolean isSelf = false;
-		if(operator.getUserId() == currTheme.getUpdateOpr() ){
-			isSelf = true;
+		if(topThemes !=null && topThemes.size()>0){
+			ThemeClass currTheme = topThemes.get(0);
+			map.put("currTheme", currTheme);
+			List<ThemeClass> themeTreeUp = themeClassService.getThemeTreeUp(currTheme.getId());
+			map.put("themeTreeUp", themeTreeUp);
+			List<ThemeClass> children = themeClassService.getChildThemes(currTheme.getId(),true);
+			map.put("children",children);
+			boolean isSelf = false;
+			if(operator.getUserId() == currTheme.getUpdateOpr() ){
+				isSelf = true;
+			}
+			List<ArticleBrief> currArticles = articleService.getArticlesByTheme(currTheme.getId(),isSelf, new PageCond());
+			map.put("currArticles", currArticles);
 		}
-		List<ArticleBrief> currArticles = articleService.getArticlesByTheme(currTheme.getId(),isSelf, new PageCond());
-		map.put("currArticles", currArticles);
-		
 		return "articleMgr";
 	}
 	/**
@@ -277,7 +278,7 @@ public class ArticleMgrAction {
 	 */
 	@RequestMapping(value="/accept",method=RequestMethod.POST)
 	public String accept(Integer articleId,String remark,@ModelAttribute("operator")Operator operator){
-		String redirectUrl = "redirect:/"+operator.getUsername()+"/review";
+		String redirectUrl = "redirect:/"+operator.getUsername()+"/article_mgr/review/" + articleId;
 		if(operator == null || operator.getLevel() < 9){ //无权限
 			return redirectUrl + "?error=您无权限执行该操作！";
 		}
@@ -285,7 +286,7 @@ public class ArticleMgrAction {
 			return redirectUrl;
 		}
 		if(remark !=null && remark.length()>600){
-			return redirectUrl + "?error=" + "审核说明不可超过600个字符！";
+			return redirectUrl + "?error=" + "审核说明：不可超过600个字符！";
 		}
 		ArticleBrief brief = articleService.getArticleBref(articleId);
 		if(brief == null){ //无该文章
@@ -295,7 +296,7 @@ public class ArticleMgrAction {
 		reviewInfo.setReviewInfo(remark);
 		reviewInfo.setReviewOpr(operator.getUserId());
 		articleService.reviewArticle(articleId,"0",reviewInfo);
-		return redirectUrl;
+		return "redirect:/"+operator.getUsername()+ "/review/";
 	}
 	/**
 	 * 文章审核：拒绝
@@ -311,16 +312,16 @@ public class ArticleMgrAction {
 	 */
 	@RequestMapping(value="/refuse",method=RequestMethod.POST)
 	public String refuse(Integer articleId,String remark,@ModelAttribute("operator")Operator operator){
-		String redirectUrl = "redirect:/"+operator.getUsername()+"/review";
+		String redirectUrl = "redirect:/"+operator.getUsername()+"/article_mgr/review/" + articleId ;
 		if(operator == null || operator.getLevel() < 9){ //无权限
 			return redirectUrl + "?error=您无权限执行该操作！";
 		}
 		
 		if(articleId == null || remark == null || remark.trim().length()<1){ //主题或审核说明为空
-			return redirectUrl + "?error=" + ((articleId == null)? "文章ID不可为空！" : "审核说明不可为空！");
+			return redirectUrl + "?error=" + ((articleId == null)? "文章ID：不可为空！" : "审核说明：不可为空！");
 		}
 		if(remark.length()>600){
-			return redirectUrl + "?error=" + "审核说明不可超过600个字符！";
+			return redirectUrl + "?error=" + "审核说明：不可超过600个字符！";
 		}
 		
 		ArticleBrief brief = articleService.getArticleBref(articleId);
@@ -331,6 +332,6 @@ public class ArticleMgrAction {
 		reviewInfo.setReviewInfo(remark);
 		reviewInfo.setReviewOpr(operator.getUserId());
 		articleService.reviewArticle(articleId,"R",reviewInfo);
-		return redirectUrl;
+		return "redirect:/"+operator.getUsername()+ "/review/";
 	}
 }

@@ -94,7 +94,12 @@ public class ThemeClassAction {
 	public String addTheme(@Valid ThemeClass theme,BindingResult result,@ModelAttribute("operator") Operator operator){
 		String redirectUrl = "redirect:/" + operator.getUsername() + "/theme_mgr/";
 		if(result.hasErrors()){
-			return redirectUrl + "?error=字段值有误！";
+			String errors = "";
+			List<ObjectError> list = result.getAllErrors();
+			for(ObjectError e :list){
+				errors += e.getDefaultMessage();
+			}
+			return redirectUrl + "?error=" + errors;
 		}
 		theme.setParentId(theme.getId());	//设置父主题
 		theme.setId(null);
@@ -132,9 +137,18 @@ public class ThemeClassAction {
 	@RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String updateTheme(@Valid ThemeClass theme,BindingResult result,@ModelAttribute("operator") Operator operator,Map<String,String> map){
 		String redirectUrl = "redirect:/" + operator.getUsername() + "/theme_mgr/";
-		if(result.hasErrors()){
-			return redirectUrl + "?error=字段值有误！";
+		if(theme == null || theme.getId()==null){
+			return redirectUrl + "?error=没有指定主题！";
 		}
+		if(result.hasErrors()){
+			String errors = "";
+			List<ObjectError> list = result.getAllErrors();
+			for(ObjectError e :list){
+				errors += e.getDefaultMessage();
+			}
+			return redirectUrl + "?error=" + errors;
+		}
+		
 		ThemeClass old = themeClassService.getThemeClass(theme.getId());
 		if(old != null && old.getUpdateOpr() == operator.getUserId()){
 			theme.setUpdateOpr(operator.getUserId());
@@ -175,12 +189,13 @@ public class ThemeClassAction {
 	@RequestMapping(value="/delete",method=RequestMethod.POST)
 	public String deleteTheme(ThemeClass theme,@ModelAttribute("operator") Operator operator){
 		String redirectUrl = "redirect:/" + operator.getUsername() + "/theme_mgr/";
-		if(theme.getUpdateOpr() == operator.getUserId() && operator.hasTheme(theme.getId())){
+		if(theme == null || theme.getId()==null){
+			return redirectUrl + "?error=没有指定主题！";
+		}
+		ThemeClass tmp = themeClassService.getThemeClass(theme.getId());
+		if(tmp!=null && tmp.getUpdateOpr() == operator.getUserId()){
 			Integer id = themeClassService.deleteThemeClass(theme.getId());
-			if(id == null){
-				return redirectUrl + "?error=主题删除失败！";
-			}
-			return redirectUrl + id;
+			return redirectUrl;
 		}else{
 			return redirectUrl + "?error=您无权限执行该操作！";
 		}
@@ -233,7 +248,7 @@ public class ThemeClassAction {
 			return redirectUrl;
 		}
 		if(remark !=null && remark.length()>600){
-			return redirectUrl + "?error=" + "审核说明不可超过600个字符！";
+			return redirectUrl + "?error=" + "审核说明：不可超过600个字符！";
 		}
 		ThemeClass theme = themeClassService.getThemeClass(themeId);
 		if(theme == null){ //无该主题
@@ -265,7 +280,7 @@ public class ThemeClassAction {
 		}
 		
 		if(themeId == null || remark == null || remark.trim().length()<1){ //主题或审核说明为空
-			return redirectUrl + "?error=" + ((themeId == null)? "主题ID不可为空！" : "审核说明不可为空！");
+			return redirectUrl + "?error=" + ((themeId == null)? "主题ID：不可为空！" : "审核说明：不可为空！");
 		}
 		if(remark.length()>600){
 			return redirectUrl + "?error=" + "审核说明不可超过600个字符！";

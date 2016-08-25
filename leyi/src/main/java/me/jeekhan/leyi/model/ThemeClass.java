@@ -6,6 +6,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -14,16 +16,16 @@ public class ThemeClass {
 
     private Integer parentId;
     
-    @NotNull(message="不可为空！")
-    @Size(max=20,message="最大长度为20个字符！")
+    @NotEmpty(message="名称：不可为空！")
+    @Size(max=20,message="名称：最大长度为20个字符！")
     private String name;
 
-    @NotNull(message="不可为空！")
-    @Size(max=255,message="最大长度为255个字符！")
+    @NotEmpty(message="关键词：不可为空！")
+    @Size(max=255,message="关键词：最大长度为255个字符！")
     private String keywords;
     
-    @NotNull(message="不可为空！")
-    @Size(max=600,message="最大长度为600个字符！")
+    @NotEmpty(message="描述：不可为空！")
+    @Size(max=600,message="描述：最大长度为600个字符！")
     private String descInfo;
 
     @Null

@@ -27,9 +27,9 @@
   <div class="row">
   <c:if test="${not empty operator.userId and operator.userId > 0}">
   	<ul class="nav nav-tabs pull-right" >
-  	 <li><a href="/leyi/${operator.username }/theme_mgr/" target="_blank">分类管理</a></li>
-     <li><a href="/leyi/${operator.username }/article_mgr/" target="_blank">文章管理</a></li>
-     <li><a href="/leyi/${operator.username }/review" target="_blank">信息审核</a></li>
+  	 <li><a href="/leyi/${operator.username }/theme_mgr/" >分类管理</a></li>
+     <li><a href="/leyi/${operator.username }/article_mgr/" >文章管理</a></li>
+     <li><a href="/leyi/${operator.username }/review" >信息审核</a></li>
      <li><a href="/leyi/logout">退出</a></li>
 	</ul>
    </c:if>
@@ -45,7 +45,7 @@
     <div class="col-md-3" >
       <div class="row" style="height:250px;overflow:auto ;padding:3px;border:3px #CECEF6 solid ;border-radius:5px;">
          <img style="float:left;margin:3px;" src="/leyi/common/showPic/${userInfo.username}/${userInfo.picture }" width="150" height="150" alt="Profile Photo" class="img-responsive">  
-          <a href="/leyi/${userInfo.username}"><b>&nbsp;&nbsp;&nbsp;${userInfo.username}</b></a><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
+          <a href="/leyi/${userInfo.username}/detail"><b>&nbsp;&nbsp;&nbsp;${userInfo.username} 的个人信息</b></a><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
       </div>
 	  <div class="row light-gray-bg">
 	      <ol class="breadcrumb " style="margin:10px 0;">

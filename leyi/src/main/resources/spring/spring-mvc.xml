@@ -56,6 +56,7 @@
    		<mvc:mapping path="/*/theme_mgr/**"/>
    		<mvc:mapping path="/*/review/**"/>
    		<mvc:mapping path="/*/article_mgr/**"/>
+   		<mvc:mapping path="/*/user_mgr/**"/>
    		<bean class="me.jeekhan.leyi.interceptor.LoginInterceptor"/>
    	</mvc:interceptor>
    </mvc:interceptors>

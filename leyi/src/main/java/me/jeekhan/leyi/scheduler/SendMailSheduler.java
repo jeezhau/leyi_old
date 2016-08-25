@@ -26,7 +26,7 @@ public class SendMailSheduler {
 	/**
 	 * ·¢ËÍÓÊ¼ş
 	 */
-	@Scheduled(cron="0 55 * * * ? ")
+	@Scheduled(cron="0 31 8-22/2 * * ? ")
 	public void BatchSendEmails(){
 		
 		List<MailSendInfo> mails = mailSendService.getMails4Send();

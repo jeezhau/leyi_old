@@ -158,4 +158,36 @@ public class MyPageAction {
 	
 		return "articleShow";
 	}
+	/**
+	 * 显示用户详细信息
+	 * 【权限】
+	 * 	1、详情显示-所有人；
+	 * 【功能说明】
+	 * 	1.取用户信息，如果用户不存在则返回应用主页；
+	 * @param userId	文章ID
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value="/{username}/detail",method=RequestMethod.GET)
+	public String showUser(@PathVariable("username")String username,Operator operator,Map<String,Object> map){
+		UserFullInfo userInfo = userService.getUserFullInfo(username);
+		if(userInfo == null){	//无该用户
+			return "redirect:/";
+		}
+		if(operator.getUserId() == userInfo.getId()){ 	//用户自己
+			if("D".equals(userInfo.getEnabled())){
+				return "redirect:/";
+			}
+		}else{	//其他人
+			if(operator.getUserId()<1 && !"0".equals(userInfo.getEnabled()) ){ //访问非正式用户
+				return "redirect:/";
+			}
+			if(!"0".equals(userInfo.getEnabled())){	//非正式用户
+				return "redirect:/";
+			}
+		}
+		map.put("userInfo", userInfo);	
+	
+		return "userShow";
+	}
 }

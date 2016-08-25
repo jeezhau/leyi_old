@@ -14,7 +14,7 @@ public interface ThemeClassMapper {
 
     ThemeClass selectByPrimaryKey(Integer id);
     
-    ThemeClass selectByName(@Param("name")String name,@Param("parentId")Integer parentId );
+    ThemeClass selectByNameAndOpr(@Param("name")String name,@Param("parentId")Integer parentId ,@Param("oprId")int oprId);
 
     int updateByPrimaryKey(ThemeClass record);
     

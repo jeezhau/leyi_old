@@ -3,13 +3,16 @@ package me.jeekhan.leyi.service.impl;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import me.jeekhan.leyi.common.SunSHAUtils;
+import me.jeekhan.leyi.dao.ReviewInfoMapper;
 import me.jeekhan.leyi.dao.UserBaseInfoMapper;
 import me.jeekhan.leyi.dao.UserFullInfoMapper;
+import me.jeekhan.leyi.model.ReviewInfo;
 import me.jeekhan.leyi.model.UserBaseInfo;
 import me.jeekhan.leyi.model.UserFullInfo;
 import me.jeekhan.leyi.service.UserService;
@@ -20,6 +23,8 @@ public class UserServiceImpl implements UserService{
 	private UserBaseInfoMapper userBaseInfoMapper;
 	@Autowired
 	private UserFullInfoMapper userFullInfoMapper;
+	@Autowired
+	private ReviewInfoMapper reviewInfoMapper;
 	/**
 	 * 提取用户基本信息
 	 * @param	用户ID
@@ -114,4 +119,31 @@ public class UserServiceImpl implements UserService{
 	public int get4ReviewUsersCnt() {
 		return userFullInfoMapper.countUsers4Review();
 	}
+	
+	/**
+	 * 取10条待审核的用户
+	 * @return
+	 */
+	public List<UserFullInfo> getUsers4Review(){
+		return userFullInfoMapper.selectUsers4Review();
+	}
+	
+	/**
+	 * 用户审核
+	 * @param userId   用户ID
+	 * @param result	审核结果:0-通过,R-拒绝
+	 * @param reviewInfo	审核说明
+	 */
+	@Override
+	public int reviewUser(int userId,String result,ReviewInfo reviewInfo){
+		String usrInfo = userFullInfoMapper.selectByPrimaryKey(userId).toString();
+		reviewInfo.setObjName("tb_user_full_info");
+		reviewInfo.setKeyId(userId);
+		reviewInfo.setOriginalInfo(usrInfo);
+		reviewInfo.setResult(result);
+		reviewInfo.setReviewTime(new Date());
+		reviewInfoMapper.insert(reviewInfo);
+		return userFullInfoMapper.updateEnabledStatus(userId, result);
+	}
+
 }

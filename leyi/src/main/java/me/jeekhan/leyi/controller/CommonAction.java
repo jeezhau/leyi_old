@@ -37,7 +37,7 @@ public class CommonAction {
 	
 	
 	/**
-	 * 上传图片
+	 * Ckeditor上传图片
 	 * 【权限】
 	 * 	1、登录用户；
 	 * 【功能说明】

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="me.jeekhan.leyi.model.ThemeClass,java.util.*,me.jeekhan.leyi.common.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -37,61 +38,53 @@
   </c:if>
   </div>
   <div class="row">
-   <!-- 左侧边栏 -->
      <div class="col-md-3" >
       <div class="row" style="height:250px;overflow:auto ;padding:3px;border:3px #CECEF6 solid ;border-radius:5px;">
        <img style="float:left;margin:3px;" src="/leyi/common/showPic/${userInfo.username}/${userInfo.picture }" width="150" height="150" alt="Profile Photo" >  
-         <a href="/leyi/${userInfo.username}"><b>&nbsp;&nbsp;&nbsp;${userInfo.username} 的主页</b></a><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
+        <a href="/leyi/${userInfo.username}"><b>&nbsp;&nbsp;&nbsp;${userInfo.username} 的主页</b></a><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
        </div>
-	</div>
+	 </div>
    <!--======================中间主要内容  ===================--> 
     <div class="col-md-9 light-gray-bg">
-      <!-- =====================顶部主题分类=================== -->
-	  <ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin:10px 0;">
-	   <c:forEach items="${topThemes}" var="item">
-        <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/${userInfo.username}/theme/${item.id}">${item.name}</a></li></c:if>
-        <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/${userInfo.username}/theme/${item.id}">${item.name}</a></li></c:if>
-       </c:forEach>
-	  </ul>
 	  <div class="panel panel-info">
-        <div class="panel-heading text-center"><h3 class="panel-title">${brief.name}</h3></div>
+        <div class="panel-heading text-center"><h3 class="panel-title">个人详情</h3></div>
 	    <div class="panel-body">
-	     <article>
-			  <div class="row">
-			  	<div class="col-sm-12 "> 关键词：${brief.keywords} </div>
-			  </div>
-			  <div class="row">
-			    <hr>
-			    <div class="col-sm-6 "> 来&nbsp;&nbsp;&nbsp;&nbsp;源：
-			     <c:choose>
-			     	<c:when test="${brief.source == 0}">自创</c:when>
-			     	<c:when test="${brief.source == 1}">转摘</c:when>
-			     	<c:when test="${brief.source == 2}">其他</c:when>
-			     </c:choose>   
-			     </div>
-			  	 <div class="col-sm-6 "> 类&nbsp;&nbsp;&nbsp;&nbsp;型：
-			  	 <c:choose>
-			     	<c:when test="${brief.type == 0}">文本</c:when>
-			     	<c:when test="${brief.type == 1}">图册</c:when>
-			     	<c:when test="${brief.type == 2}">视频</c:when>
-			     	<c:when test="${brief.type == 3}">语音</c:when>
-			     	<c:when test="${brief.type == 4}">混合</c:when>
-			     </c:choose>
-			     </div>
-			  </div>
-			  <div class="row">
-			    <hr>
-			  	<div class="col-sm-12 "> 简&nbsp;&nbsp;&nbsp;&nbsp;介：${brief.brief} </div>
-			  </div> 
-			  <div class="row">
-			    <hr>
-			    <div class="col-sm-12 "> ${content.content} </div>
-			  </div>
-			  <c:if test="${mode == 'review'}">
+		  <div class="row">
+		  	<div class="col-sm-6 "> 用户名：${userInfo.username} </div>
+		    <div class="col-sm-6 "> 邮箱：${userInfo.email }</div>
+		  </div> 
+		  <div class="row">
+		    <hr>
+		    <div class="col-sm-6 "> 生日：<fmt:formatDate value="${userInfo.birthday }" pattern="yyyy-MM-dd"/></div>
+		    <div class="col-sm-6 "> 性别： 
+		     <c:choose>
+		     	<c:when test="${userInfo.sex == 0}">男</c:when>
+		     	<c:when test="${userInfo.sex == 1}">女</c:when>
+		     	<c:when test="${userInfo.sex == 2}">其他</c:when>
+		     </c:choose>   
+		     </div>
+		   </div>
+		   <div class="row">
+		     <hr>
+		  	 <div class="col-sm-12 ">所在城市：${userInfo.city}</div>
+		  </div>
+		  <div class="row">
+		    <hr>
+		  	<div class="col-sm-12 "> 兴趣爱好：${userInfo.favourite} </div>
+		  </div> 
+		  <div class="row">
+		    <hr>
+		    <div class="col-sm-12 "> 职业：${userInfo.profession} </div>
+		  </div>
+		  <div class="row">
+		    <hr>
+		    <div class="col-sm-12 "> &nbsp; &nbsp; &nbsp; &nbsp;${userInfo.introduce} </div>
+		  </div>
+		  <c:if test="${mode == 'review'}">
 			  <div class="row">
 			     <hr>
 			     <form id="reviewForm" method="post" action="">
-			     <input type="hidden" name="articleId" value="${brief.id }">
+			     <input type="hidden" name="userId" value="${userInfo.id }">
 			     <div class="form-group">
 			        <label  class="col-sm-2 control-label">审核说明</label>
 			        <div class="col-sm-10">
@@ -106,25 +99,24 @@
 		         <script type="text/javascript">
 		         $(function(){ 
 			 		$("#accept").click(function(){
-						$("#reviewForm").attr('action','/leyi/${operator.username}/article_mgr/accept');
+						$("#reviewForm").attr('action','/leyi/${operator.username}/user_mgr/accept');
 						$("#reviewForm").submit();
 					});
 			 		$("#refuse").click(function(){
-						$("#reviewForm").attr('action','/leyi/${operator.username}/article_mgr/refuse');
+						$("#reviewForm").attr('action','/leyi/${operator.username}/user_mgr/refuse');
 						$("#reviewForm").submit();
 					});
 		         });
 		         </script>
       		  </div>
       		  </c:if>
-		  </article>
 	    </div>
-	  </div> <!-- 文章panel -->
+	  </div> <!-- panel -->
     </div>
   </div><!-- end of row -->
   
 </div>
- <c:if test="${not empty param.error}">
+<c:if test="${not empty param.error}">
 <!-- 错误提示模态框（Modal） -->
 <div class="modal fade " id="tipModal" tabindex="-1" role="dialog" aria-labelledby="tipTitle" aria-hidden="false" data-backdrop="static">
    <div class="modal-dialog">
@@ -144,6 +136,9 @@
       </div><!-- /.modal-content -->
    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script>
+$("#tipModal").modal('show');
+</script>
 </c:if>
 
 </body>

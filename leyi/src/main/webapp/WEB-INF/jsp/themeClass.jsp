@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -23,6 +24,12 @@
 </div>
 <div class="container">
   <div class="row">
+    <ul class="nav nav-tabs pull-right" >
+     <li><a href="/leyi/${operator.username }">我的主页</a></li>
+     <li><a href="/leyi/logout">退出</a></li>
+	</ul>
+  </div>
+  <div class="row">
    <!-- =====================顶部主题分类=================== -->
 	<ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin:10px 0;">
 	   <c:forEach items="${topThemes}" var="item">
@@ -37,6 +44,9 @@
 	       <c:if test="${currTheme.id==item.id}"> <li class="active">${item.name}</li> </c:if>
 	       <c:if test="${currTheme.id!=item.id}"> <li><a href="${item.id}">${item.name}</a></li> </c:if>
 	     </c:forEach>
+	     <c:if test="${fn:length(themeTreeUp)<=0 }">
+		   还没有主题，请添加！
+		 </c:if>
 	   </ol>
 	   <div class="btn-toolbar btn-toolbar-info" role="toolbar">
   		<div class="btn-group">
@@ -48,12 +58,12 @@
    </div>
    <div class="panel-body">
     <p id="themeDesc-show">&nbsp;&nbsp;&nbsp;&nbsp;${currTheme.descInfo}</p>
-    <p id="keywords-show">关键词：${currTheme.keywords}</p>
+    <p id="keywords-show"><c:if test="${not empty currTheme.id}"> 关键词：${currTheme.keywords}</c:if></p>
     
    </div>
    <table class="table table-striped  table-bordered table-hover ">
        <thead>
-   	      <tr><th>主题名称</th><th>关键词 </th><th>更新时间 </th></tr>
+   	      <tr><th width="25%">主题名称</th><th>关键词 </th><th width="14%">更新时间 </th></tr>
        </thead>
        <tbody> 
         <c:forEach items="${children}" var="item">
@@ -115,7 +125,7 @@
       </div><!-- /.modal-content -->
    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<c:if test="param.error">
+<c:if test="${not empty param.error}">
 <!-- 错误提示模态框（Modal） -->
 <div class="modal fade " id="tipModal" tabindex="-1" role="dialog" aria-labelledby="tipTitle" aria-hidden="false" data-backdrop="static">
    <div class="modal-dialog">
@@ -135,6 +145,9 @@
       </div><!-- /.modal-content -->
    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script>
+$("#tipModal").modal('show');
+</script>
 </c:if>
 <script>
 	$(function(){ 

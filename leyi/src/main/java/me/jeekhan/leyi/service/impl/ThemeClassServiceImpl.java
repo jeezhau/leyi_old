@@ -36,10 +36,10 @@ public class ThemeClassServiceImpl implements ThemeClassService {
 		}
 		themeClass.setEnabled("1");
 		themeClass.setUpdateTime(new Date());
-		ThemeClass old = themeClassMapper.selectByName(themeClass.getName(),themeClass.getParentId());
+		ThemeClass old = themeClassMapper.selectByNameAndOpr(themeClass.getName(),themeClass.getParentId(),themeClass.getUpdateOpr());
 		if(themeClass.getId() == null){
 			int  topcount = 0;
-			if(themeClass.getParentId() == null){
+			if(themeClass.getParentId() == null){ //顶层主题
 				topcount = themeClassMapper.countUserTopTheme(themeClass.getUpdateOpr());
 				if(topcount >= 6){  //顶层主题个数大于6个
 					return -2;  
@@ -55,8 +55,8 @@ public class ThemeClassServiceImpl implements ThemeClassService {
 					return -3;	
 				}
 			}else{
-				themeClassMapper.insert(themeClass);
-				ThemeClass lastest = themeClassMapper.selectByName(themeClass.getName(),themeClass.getParentId());
+				int id = themeClassMapper.insert(themeClass);
+				ThemeClass lastest = themeClassMapper.selectByNameAndOpr(themeClass.getName(),themeClass.getParentId(),themeClass.getUpdateOpr());
 				return lastest.getId();
 			}
 			
@@ -96,8 +96,8 @@ public class ThemeClassServiceImpl implements ThemeClassService {
 		return themeClassMapper.selectByPrimaryKey(themeId);
 	}
 	@Override
-	public ThemeClass getThemeClass(String themeName,int parentId) {
-		return themeClassMapper.selectByName(themeName,parentId);
+	public ThemeClass getThemeClass(String themeName,int parentId,int userId) {
+		return themeClassMapper.selectByNameAndOpr(themeName,parentId,userId);
 	}
 	
 	@Override

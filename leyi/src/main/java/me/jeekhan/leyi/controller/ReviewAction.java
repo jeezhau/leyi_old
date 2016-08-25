@@ -53,7 +53,8 @@ public class ReviewAction {
 			map.put("articles", articles);
 			List<ThemeClass> themes = themeClassService.getThemes4Review();
 			map.put("themes", themes);
-			
+			List<UserFullInfo> users = userService.getUsers4Review();
+			map.put("users", users);
 			return "review";
 		}else{
 			return "redirect:/";

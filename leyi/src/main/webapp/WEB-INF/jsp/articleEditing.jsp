@@ -40,6 +40,18 @@
       </div>
 	  </c:if>
 	  <div class="form-group">
+	    <label for="name" class="col-sm-2 control-label">归属主题<span style="color:red">*</span></label>
+	    <div class="col-sm-5">
+	      <input type="text" class="form-control" value="${currTheme.name}" readonly>
+	      <input type="hidden" class="form-control" name="themeId" value="${currTheme.id}" >
+	      <c:if test="${not empty themeId}">
+	      <div class="alert alert-warning alert-dismissable">${themeId}
+	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+	      </div>
+		  </c:if>
+	    </div>
+	  </div>
+	  <div class="form-group">
 	    <label for="name" class="col-sm-2 control-label">标题<span style="color:red">*</span></label>
 	    <div class="col-sm-5">
 	      <input type="hidden" name="id" value="${brief.id}">

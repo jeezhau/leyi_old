@@ -13,27 +13,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ArticleBrief {
     private Integer id;
 
-    @NotNull(message="不可为空！")
-    @Size(max=50,message="最大长度为50个字符！")
+    @NotNull(message="标题：不可为空！")
+    @Size(max=50,message="标题：最大长度为50个字符！")
     private String name;
     
-    @NotNull(message="不可为空！")
-    @Size(max=255,message="最大长度为255个字符！")
+    @NotNull(message="关键词：不可为空！")
+    @Size(max=255,message="关键词：最大长度为255个字符！")
     private String keywords;
 
-    @NotNull(message="不可为空！")
-    @Size(max=600,message="最大长度为600个字符！")
+    @NotNull(message="简介：不可为空！")
+    @Size(max=600,message="简介：最大长度为600个字符！")
     private String brief;
     
-    @NotNull(message="不可为空！")
-    @Pattern(regexp="^[0-2]$",message="值只可为【0-自创，1-转摘，2-其他】！")
+    @NotNull(message="来源：不可为空！")
+    @Pattern(regexp="^[0-2]$",message="来源：值只可为【0-自创，1-转摘，2-其他】！")
     private String source;
     
-    @NotNull(message="不可为空！")
+    @NotNull(message="主题：不可为空！")
     private Integer themeId;
     
-    @NotNull(message="不可为空！")
-    @Pattern(regexp="^[0-4]$",message="值只可为【0-文本，1-图册，2-视频，3-语音，4-混合】！")
+    @NotNull(message="类型：不可为空！")
+    @Pattern(regexp="^[0-4]$",message="类型：值只可为【0-文本，1-图册，2-视频，3-语音，4-混合】！")
     private String type;
     
     @Null

@@ -44,7 +44,7 @@
     <div class="col-md-3" >
       <div class="row" style="height:250px;overflow:auto ;padding:3px;border:3px #CECEF6 solid ;border-radius:5px;">
          <img style="float:left;margin:3px;" src="/leyi/common/showPic/${userInfo.username}/${userInfo.picture }" width="150" height="150" alt="Profile Photo" >  
-         <a href="/leyi/${userInfo.username}"><b>&nbsp;&nbsp;&nbsp;${userInfo.username}</b></a><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
+         <a href="/leyi/${userInfo.username}/detail"><b>&nbsp;&nbsp;&nbsp;${userInfo.username} 的个人信息</b></a><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
       </div>
  	</div>
 <!--======================中间主要内容  ===================--> 

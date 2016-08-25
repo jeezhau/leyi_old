@@ -20,7 +20,7 @@ public class ReviewInfoStatisticsSheduler {
 	/**
 	 * Ìí¼Ó´ýÉóºËÐÅÏ¢ÌáÐÑÓÊ¼þ¼ÇÂ¼
 	 */
-	@Scheduled(cron="0 54 * * * ? ")
+	@Scheduled(cron="0 1 8-22/2 * * ? ")
 	public void get4ReviewInfo(){
 		System.out.println("Ìí¼Ó´ýÉóºËÐÅÏ¢ÌáÐÑÓÊ¼þ¼ÇÂ¼");
 		mailSendService.add4ReviewWarn();

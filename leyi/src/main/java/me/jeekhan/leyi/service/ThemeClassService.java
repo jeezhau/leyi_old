@@ -28,7 +28,7 @@ public interface ThemeClassService {
 	 * @return
 	 */
 	public ThemeClass getThemeClass(int themeClassId);
-	public ThemeClass getThemeClass(String themeName,int parentId);
+	public ThemeClass getThemeClass(String themeName,int parentId,int userId);
 	/**
 	 * 获取指定用户所有的主题分类
 	 * @return
