@@ -27,7 +27,7 @@ import me.jeekhan.leyi.service.ArticleService;
 import me.jeekhan.leyi.service.ThemeClassService;
 import me.jeekhan.leyi.service.UserService;
 /**
- * ÎÄÕÂ¹ÜÀí
+ * æ–‡ç« ç®¡ç†
  * @author Jee Khan
  *
  */
@@ -44,16 +44,16 @@ public class ArticleMgrAction {
 	
 	
 	/**
-	 * ÏÔÊ¾ÎÄÕÂÏêÏ¸ĞÅÏ¢
-	 * ¡¾È¨ÏŞ¡¿
-	 * 	1¡¢ÏêÇéÏÔÊ¾-ËùÓĞÈË£»
-	 *  2¡¢ÉóºË-¹ÜÀíÔ±£»Èç¹ûÎª·Ç¹ÜÀíÔ±Ôò±ä¸üÄ£Ê½ÎªÏêÇéÏÔÊ¾£»
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 * Íê³ÉÎÄÕÂĞÅÏ¢ÄÚÈİÏÔÊ¾¼°ÉóºËÏÔÊ¾£ºdetail-ÏêÇéÏÔÊ¾£»review-ÉóºËÏÔÊ¾
-	 * 	1.È¡ÎÄÕÂĞÅÏ¢£¬Èç¹ûÎÄÕÂ²»´æÔÚÔò·µ»ØÓ¦ÓÃÖ÷Ò³£»
-	 * 	2.È¡ÎÄÕÂ×÷ÕßĞÅÏ¢£»
-	 * 	3.±£´æÏÔÊ¾Ä£Ê½£¨ÏêÇé»òÉóºË£©£»
-	 * @param articleId	ÎÄÕÂID
+	 * æ˜¾ç¤ºæ–‡ç« è¯¦ç»†ä¿¡æ¯
+	 * ã€æƒé™ã€‘
+	 * 	1ã€è¯¦æƒ…æ˜¾ç¤º-æ‰€æœ‰äººï¼›
+	 *  2ã€å®¡æ ¸-ç®¡ç†å‘˜ï¼›å¦‚æœä¸ºéç®¡ç†å‘˜åˆ™å˜æ›´æ¨¡å¼ä¸ºè¯¦æƒ…æ˜¾ç¤ºï¼›
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 * å®Œæˆæ–‡ç« ä¿¡æ¯å†…å®¹æ˜¾ç¤ºåŠå®¡æ ¸æ˜¾ç¤ºï¼šdetail-è¯¦æƒ…æ˜¾ç¤ºï¼›review-å®¡æ ¸æ˜¾ç¤º
+	 * 	1.å–æ–‡ç« ä¿¡æ¯ï¼Œå¦‚æœæ–‡ç« ä¸å­˜åœ¨åˆ™è¿”å›åº”ç”¨ä¸»é¡µï¼›
+	 * 	2.å–æ–‡ç« ä½œè€…ä¿¡æ¯ï¼›
+	 * 	3.ä¿å­˜æ˜¾ç¤ºæ¨¡å¼ï¼ˆè¯¦æƒ…æˆ–å®¡æ ¸ï¼‰ï¼›
+	 * @param articleId	æ–‡ç« ID
 	 * @param map
 	 * @return
 	 */
@@ -85,14 +85,14 @@ public class ArticleMgrAction {
 	}
 
 	/**
-	 * ´ò¿ªÎÄÕÂ±à¼­
-	 * ¡¾È¨ÏŞ¡¿
-	 * 		1.µÇÂ¼£»
-	 * 		2.ÎÄÕÂËùÊôÓÃ»§¿É±à¼­,·ñÔò·µ»ØÊ×Ò³£»
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 * 		Èç¹ûÓĞÖ¸¶¨µÄÎÄÕÂId£¬Ôò»ñÈ¡ÎÄÕÂ¼ò½éºÍÄÚÈİ£»·ñÔòÖ±½Ó·µ»Ø
-	 * ¡¾ÊäÈëÊä³ö¡¿
-	 * @param articleId	ÎÄÕÂID
+	 * æ‰“å¼€æ–‡ç« ç¼–è¾‘
+	 * ã€æƒé™ã€‘
+	 * 		1.ç™»å½•ï¼›
+	 * 		2.æ–‡ç« æ‰€å±ç”¨æˆ·å¯ç¼–è¾‘,å¦åˆ™è¿”å›é¦–é¡µï¼›
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 * 		å¦‚æœæœ‰æŒ‡å®šçš„æ–‡ç« Idï¼Œåˆ™è·å–æ–‡ç« ç®€ä»‹å’Œå†…å®¹ï¼›å¦åˆ™ç›´æ¥è¿”å›
+	 * ã€è¾“å…¥è¾“å‡ºã€‘
+	 * @param articleId	æ–‡ç« ID
 	 * @param map
 	 * @return
 	 */
@@ -115,28 +115,28 @@ public class ArticleMgrAction {
 		return "articleEditing";
 	}
 	/**
-	 * ±£´æĞÂÔöÎÄÕÂ
-	 * ¡¾È¨ÏŞ¡¿
-	 * 		1.µÇÂ¼
-	 * ¡¾ÊäÈëÊä³ö¡¿ 
-	 * @param brief		ÎÄÕÂ¼ò½éĞÅÏ¢
-	 * @param content	ÎÄÕÂÄÚÈİ
+	 * ä¿å­˜æ–°å¢æ–‡ç« 
+	 * ã€æƒé™ã€‘
+	 * 		1.ç™»å½•
+	 * ã€è¾“å…¥è¾“å‡ºã€‘ 
+	 * @param brief		æ–‡ç« ç®€ä»‹ä¿¡æ¯
+	 * @param content	æ–‡ç« å†…å®¹
 	 * @param map
 	 * @return
 	 */
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String addArticle(@Valid ArticleBrief brief,BindingResult result,String content,
 			@ModelAttribute("operator")Operator operator,Map<String,Object> map){
-		if(result.hasErrors()){	//ÑéÖ¤³ö´í
+		if(result.hasErrors()){	//éªŒè¯å‡ºé”™
 			List<ObjectError> list = result.getAllErrors();
 			for(ObjectError e :list){
 				String field = e.getCodes()[0].substring(e.getCodes()[0].lastIndexOf('.')+1);
-				map.put(field, e.getDefaultMessage());
+				map.put("valid."+field, e.getDefaultMessage());
 			}
 			return "articleEditing";
 		}
 		if(content.length()>10240){
-			map.put("content", "ÄÚÈİ£º×î´ó³¤¶ÈÎª10K¸ö×Ö·û£¡");
+			map.put("content", "å†…å®¹ï¼šæœ€å¤§é•¿åº¦ä¸º10Kä¸ªå­—ç¬¦ï¼");
 			return "articleEditing";
 		}
 		ThemeClass theme = (ThemeClass) map.get("currTheme");
@@ -153,31 +153,31 @@ public class ArticleMgrAction {
 		return "redirect:/"+operator.getUsername()+"/article_mgr/theme/" + themeId;
 	}
 	/**
-	 * ±£´æÎÄÕÂ±à¼­
-	 * @param brief		ÎÄÕÂ¼ò½éĞÅÏ¢
-	 * @param content	ÎÄÕÂÄÚÈİ
+	 * ä¿å­˜æ–‡ç« ç¼–è¾‘
+	 * @param brief		æ–‡ç« ç®€ä»‹ä¿¡æ¯
+	 * @param content	æ–‡ç« å†…å®¹
 	 * @return
 	 */
 	@RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String editArticle(@Valid ArticleBrief brief,BindingResult result,String content,
 			@ModelAttribute("operator")Operator operator,Map<String,String> map){
-		if(result.hasErrors()){	//ÑéÖ¤³ö´í
+		if(result.hasErrors()){	//éªŒè¯å‡ºé”™
 			List<ObjectError> list = result.getAllErrors();
 			for(ObjectError e :list){
-				String filed = e.getCodes()[0].substring(e.getCodes()[0].lastIndexOf('.')+1);
-				map.put(filed, e.getDefaultMessage());
+				String field = e.getCodes()[0].substring(e.getCodes()[0].lastIndexOf('.')+1);
+				map.put("valid." + field, e.getDefaultMessage());
 			}
 			return "articleEditing";
 		}
 		if(content.length()>10240){
-			map.put("content", "ÄÚÈİ£º×î´ó³¤¶ÈÎª10K¸ö×Ö·û£¡");
+			map.put("content", "å†…å®¹ï¼šæœ€å¤§é•¿åº¦ä¸º10Kä¸ªå­—ç¬¦ï¼");
 			return "articleEditing";
 		}
 		String redirectUrl = "redirect:/"+operator.getUsername()+"/article_mgr/theme/";
 		int id = brief.getId();
 		ArticleBrief old = articleService.getArticleBref(id);
-		if(old == null || old.getUpdateOpr()!= operator.getUserId()){ //ÎŞ¸ÃÎÄÕÂ»ò·ÇÊôÖ÷
-			map.put("error", "ÄúÎŞÈ¨ÏŞÖ´ĞĞ¸Ã²Ù×÷£¡");
+		if(old == null || old.getUpdateOpr()!= operator.getUserId()){ //æ— è¯¥æ–‡ç« æˆ–éå±ä¸»
+			map.put("error", "æ‚¨æ— æƒé™æ‰§è¡Œè¯¥æ“ä½œï¼");
 			return "articleEditing";
 		}else{
 			old.setName(brief.getName());
@@ -193,8 +193,8 @@ public class ArticleMgrAction {
 		}
 	}
 	/**
-	 * É¾³ıÖ¸¶¨ÎÄÕÂ
-	 * @param id	ÎÄÕÂID
+	 * åˆ é™¤æŒ‡å®šæ–‡ç« 
+	 * @param id	æ–‡ç« ID
 	 * @return
 	 */
 	@RequestMapping(value="/delete",method=RequestMethod.GET)
@@ -202,7 +202,7 @@ public class ArticleMgrAction {
 		String redirectUrl = "redirect:/"+operator.getUsername()+"/article_mgr/theme/";
 		ArticleBrief old = articleService.getArticleBref(articleId);
 		if(old == null || old.getUpdateOpr()!= operator.getUserId()){ 
-			return redirectUrl + "?error=ÄúÎŞÈ¨ÏŞÖ´ĞĞ¸Ã²Ù×÷£¡";
+			return redirectUrl + "?error=æ‚¨æ— æƒé™æ‰§è¡Œè¯¥æ“ä½œï¼";
 		}else{
 			articleService.deleteArticle(articleId);
 		}
@@ -210,11 +210,11 @@ public class ArticleMgrAction {
 	}
 	
 	/**
-	 * È¡ÓÃ»§µÄÖ¸¶¨Ö÷ÌâÏÂµÄËùÓĞÎÄÕÂ
-	 * 	ÉèÖÃÓÃ»§µÄµÚÒ»¸ö¶¥²ãÖ÷ÌâÎªµ±Ç°Ö÷Ìâ£»
-	 * 	¸üĞÂÖ÷ÌâÏòÉÏ²ã´ÎÊ÷£»
-	 * 	È¡µ±Ç°Ö÷ÌâµÄËùÓĞÖ±½ÓÏÂÊôÖ÷Ìâ
-	 *  È¡µ±Ç°Ö÷ÌâÏÂµÄËùÓĞÎÄÕÂ¼ò½é
+	 * å–ç”¨æˆ·çš„æŒ‡å®šä¸»é¢˜ä¸‹çš„æ‰€æœ‰æ–‡ç« 
+	 * 	è®¾ç½®ç”¨æˆ·çš„ç¬¬ä¸€ä¸ªé¡¶å±‚ä¸»é¢˜ä¸ºå½“å‰ä¸»é¢˜ï¼›
+	 * 	æ›´æ–°ä¸»é¢˜å‘ä¸Šå±‚æ¬¡æ ‘ï¼›
+	 * 	å–å½“å‰ä¸»é¢˜çš„æ‰€æœ‰ç›´æ¥ä¸‹å±ä¸»é¢˜
+	 *  å–å½“å‰ä¸»é¢˜ä¸‹çš„æ‰€æœ‰æ–‡ç« ç®€ä»‹
 	 * @param map
 	 * @return
 	 */
@@ -236,11 +236,11 @@ public class ArticleMgrAction {
 		return "articleMgr";
 	}
 	/**
-	 * È¡ÓÃ»§µÄÄ¬ÈÏÖ÷ÌâÏÂµÄËùÓĞÎÄÕÂ
-	 * 	ÉèÖÃÓÃ»§µÄµÚÒ»¶¥²ã¸öÖ÷ÌâÎªµ±Ç°Ö÷Ìâ£»
-	 * 	¸üĞÂÖ÷ÌâÏòÉÏ²ã´ÎÊ÷£»
-	 * 	È¡µ±Ç°Ö÷ÌâµÄËùÓĞÖ±½ÓÏÂÊôÖ÷Ìâ
-	 *  È¡µ±Ç°Ö÷ÌâÏÂµÄËùÓĞÎÄÕÂ¼ò½é
+	 * å–ç”¨æˆ·çš„é»˜è®¤ä¸»é¢˜ä¸‹çš„æ‰€æœ‰æ–‡ç« 
+	 * 	è®¾ç½®ç”¨æˆ·çš„ç¬¬ä¸€é¡¶å±‚ä¸ªä¸»é¢˜ä¸ºå½“å‰ä¸»é¢˜ï¼›
+	 * 	æ›´æ–°ä¸»é¢˜å‘ä¸Šå±‚æ¬¡æ ‘ï¼›
+	 * 	å–å½“å‰ä¸»é¢˜çš„æ‰€æœ‰ç›´æ¥ä¸‹å±ä¸»é¢˜
+	 *  å–å½“å‰ä¸»é¢˜ä¸‹çš„æ‰€æœ‰æ–‡ç« ç®€ä»‹
 	 * @param map
 	 * @return
 	 */
@@ -265,12 +265,12 @@ public class ArticleMgrAction {
 		return "articleMgr";
 	}
 	/**
-	 * ÎÄÕÂÉóºË£ºÍ¨¹ı
-	 * ¡¾È¨ÏŞ¡¿
-	 * 	1¡¢½öµÇÂ¼µÄ¹ÜÀíÔ±¿ÉÖ´ĞĞ¸Ã²Ù×÷£»
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 *  1¡¢ÅĞ¶ÏÉóºËµÄÎÄÕÂÊÇ·ñ´æÔÚ£»
-	 *  2¡¢Ö´ĞĞÉóºËÍ¨¹ı
+	 * æ–‡ç« å®¡æ ¸ï¼šé€šè¿‡
+	 * ã€æƒé™ã€‘
+	 * 	1ã€ä»…ç™»å½•çš„ç®¡ç†å‘˜å¯æ‰§è¡Œè¯¥æ“ä½œï¼›
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 *  1ã€åˆ¤æ–­å®¡æ ¸çš„æ–‡ç« æ˜¯å¦å­˜åœ¨ï¼›
+	 *  2ã€æ‰§è¡Œå®¡æ ¸é€šè¿‡
 	 * @param articleId
 	 * @param remark
 	 * @param operator
@@ -279,18 +279,18 @@ public class ArticleMgrAction {
 	@RequestMapping(value="/accept",method=RequestMethod.POST)
 	public String accept(Integer articleId,String remark,@ModelAttribute("operator")Operator operator){
 		String redirectUrl = "redirect:/"+operator.getUsername()+"/article_mgr/review/" + articleId;
-		if(operator == null || operator.getLevel() < 9){ //ÎŞÈ¨ÏŞ
-			return redirectUrl + "?error=ÄúÎŞÈ¨ÏŞÖ´ĞĞ¸Ã²Ù×÷£¡";
+		if(operator == null || operator.getLevel() < 9){ //æ— æƒé™
+			return redirectUrl + "?error=æ‚¨æ— æƒé™æ‰§è¡Œè¯¥æ“ä½œï¼";
 		}
-		if(articleId == null){ //ÎÄÕÂÎª¿Õ
+		if(articleId == null){ //æ–‡ç« ä¸ºç©º
 			return redirectUrl;
 		}
 		if(remark !=null && remark.length()>600){
-			return redirectUrl + "?error=" + "ÉóºËËµÃ÷£º²»¿É³¬¹ı600¸ö×Ö·û£¡";
+			return redirectUrl + "?error=" + "å®¡æ ¸è¯´æ˜ï¼šä¸å¯è¶…è¿‡600ä¸ªå­—ç¬¦ï¼";
 		}
 		ArticleBrief brief = articleService.getArticleBref(articleId);
-		if(brief == null){ //ÎŞ¸ÃÎÄÕÂ
-			return redirectUrl + "?error=ÏµÍ³ÖĞÎŞ¸ÃÎÄÕÂĞÅÏ¢£¡";
+		if(brief == null){ //æ— è¯¥æ–‡ç« 
+			return redirectUrl + "?error=ç³»ç»Ÿä¸­æ— è¯¥æ–‡ç« ä¿¡æ¯ï¼";
 		}
 		ReviewInfo reviewInfo = new ReviewInfo();
 		reviewInfo.setReviewInfo(remark);
@@ -299,12 +299,12 @@ public class ArticleMgrAction {
 		return "redirect:/"+operator.getUsername()+ "/review/";
 	}
 	/**
-	 * ÎÄÕÂÉóºË£º¾Ü¾ø
-	 * ¡¾È¨ÏŞ¡¿
-	 * 	1¡¢½öµÇÂ¼µÄ¹ÜÀíÔ±¿ÉÖ´ĞĞ¸Ã²Ù×÷£»
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 *  1¡¢ÅĞ¶ÏÉóºËµÄÎÄÕÂÊÇ·ñ´æÔÚ£»
-	 *  2¡¢Ö´ĞĞÉóºË¾Ü¾ø
+	 * æ–‡ç« å®¡æ ¸ï¼šæ‹’ç»
+	 * ã€æƒé™ã€‘
+	 * 	1ã€ä»…ç™»å½•çš„ç®¡ç†å‘˜å¯æ‰§è¡Œè¯¥æ“ä½œï¼›
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 *  1ã€åˆ¤æ–­å®¡æ ¸çš„æ–‡ç« æ˜¯å¦å­˜åœ¨ï¼›
+	 *  2ã€æ‰§è¡Œå®¡æ ¸æ‹’ç»
 	 * @param articleId
 	 * @param remark
 	 * @param operator
@@ -313,20 +313,20 @@ public class ArticleMgrAction {
 	@RequestMapping(value="/refuse",method=RequestMethod.POST)
 	public String refuse(Integer articleId,String remark,@ModelAttribute("operator")Operator operator){
 		String redirectUrl = "redirect:/"+operator.getUsername()+"/article_mgr/review/" + articleId ;
-		if(operator == null || operator.getLevel() < 9){ //ÎŞÈ¨ÏŞ
-			return redirectUrl + "?error=ÄúÎŞÈ¨ÏŞÖ´ĞĞ¸Ã²Ù×÷£¡";
+		if(operator == null || operator.getLevel() < 9){ //æ— æƒé™
+			return redirectUrl + "?error=æ‚¨æ— æƒé™æ‰§è¡Œè¯¥æ“ä½œï¼";
 		}
 		
-		if(articleId == null || remark == null || remark.trim().length()<1){ //Ö÷Ìâ»òÉóºËËµÃ÷Îª¿Õ
-			return redirectUrl + "?error=" + ((articleId == null)? "ÎÄÕÂID£º²»¿ÉÎª¿Õ£¡" : "ÉóºËËµÃ÷£º²»¿ÉÎª¿Õ£¡");
+		if(articleId == null || remark == null || remark.trim().length()<1){ //ä¸»é¢˜æˆ–å®¡æ ¸è¯´æ˜ä¸ºç©º
+			return redirectUrl + "?error=" + ((articleId == null)? "æ–‡ç« IDï¼šä¸å¯ä¸ºç©ºï¼" : "å®¡æ ¸è¯´æ˜ï¼šä¸å¯ä¸ºç©ºï¼");
 		}
 		if(remark.length()>600){
-			return redirectUrl + "?error=" + "ÉóºËËµÃ÷£º²»¿É³¬¹ı600¸ö×Ö·û£¡";
+			return redirectUrl + "?error=" + "å®¡æ ¸è¯´æ˜ï¼šä¸å¯è¶…è¿‡600ä¸ªå­—ç¬¦ï¼";
 		}
 		
 		ArticleBrief brief = articleService.getArticleBref(articleId);
-		if(brief == null){ //ÎŞ¸ÃÎÄÕÂ
-			return redirectUrl + "?error=ÏµÍ³ÖĞÎŞ¸ÃÎÄÕÂĞÅÏ¢£¡";
+		if(brief == null){ //æ— è¯¥æ–‡ç« 
+			return redirectUrl + "?error=ç³»ç»Ÿä¸­æ— è¯¥æ–‡ç« ä¿¡æ¯ï¼";
 		}
 		ReviewInfo reviewInfo = new ReviewInfo();
 		reviewInfo.setReviewInfo(remark);

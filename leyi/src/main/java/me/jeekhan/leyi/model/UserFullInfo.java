@@ -16,37 +16,37 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class UserFullInfo {
     private Integer id;
-    @NotNull(message="²»¿ÉÎª¿Õ£¡")
-    @Size(min=3,max=50,message="³¤¶ÈÎª3-50¸ö×Ö·û£¡")	
+    @NotNull(message="ä¸å¯ä¸ºç©ºï¼")
+    @Size(min=3,max=50,message="é•¿åº¦ä¸º3-50ä¸ªå­—ç¬¦ï¼")	
     private String username;
     
-    @NotNull(message="²»¿ÉÎª¿Õ£¡")
-    @Size(max=100,message="×î³¤100¸ö×Ö·û£¡")
+    @NotNull(message="ä¸å¯ä¸ºç©ºï¼")
+    @Size(max=100,message="æœ€é•¿100ä¸ªå­—ç¬¦ï¼")
     @Email
     //@Pattern(regexp="^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$")
     private String email;
     
-    @Past(message="²»¿É´óÓÚµ±Ç°ÈÕÆÚ£¡")
+    @Past(message="ä¸å¯å¤§äºå½“å‰æ—¥æœŸï¼")
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date birthday;
     
-    @Pattern(regexp="^[0-3]$",message="ÖµÖ»¿ÉÎª¡¾0-ÄĞ£¬1-Å®£¬2-ÆäËû¡¿£¡")
+    @Pattern(regexp="^[0-3]$",message="å€¼åªå¯ä¸ºã€0-ç”·ï¼Œ1-å¥³ï¼Œ2-å…¶ä»–ã€‘ï¼")
     private String sex;
     
-    @NotNull(message="ÃÜÂë²»¿ÉÎª¿Õ£¡")
-    @Size(min=6,max=20,message="³¤¶ÈÎª6-20¸ö×Ö·û£¡")
+    @NotNull(message="å¯†ç ä¸å¯ä¸ºç©ºï¼")
+    @Size(min=6,max=20,message="é•¿åº¦ä¸º6-20ä¸ªå­—ç¬¦ï¼")
     private String passwd;
     
-    @Size(max=50,message="×î³¤Îª50¸ö×Ö·û£¡")
+    @Size(max=50,message="æœ€é•¿ä¸º50ä¸ªå­—ç¬¦ï¼")
     private String city;
     
-    @Size(max=100,message="×î³¤Îª100¸ö×Ö·û£¡")
+    @Size(max=100,message="æœ€é•¿ä¸º100ä¸ªå­—ç¬¦ï¼")
     private String favourite;
     
-    @Size(max=100,message="×î³¤Îª100¸ö×Ö·û£¡")
+    @Size(max=100,message="æœ€é•¿ä¸º100ä¸ªå­—ç¬¦ï¼")
     private String profession;
     
-    @Size(max=600,message="×î³¤Îª600¸ö×Ö·û£¡")
+    @Size(max=600,message="æœ€é•¿ä¸º600ä¸ªå­—ç¬¦ï¼")
     private String introduce;
     
     @Null
@@ -171,7 +171,7 @@ public class UserFullInfo {
     public void setPicture(String picture) {
         this.picture = picture;
     }
-    //·µ»ØJSON×Ö·û´®
+    //è¿”å›JSONå­—ç¬¦ä¸²
     public String toString(){
     	ObjectMapper mapper = new ObjectMapper();
     	try {

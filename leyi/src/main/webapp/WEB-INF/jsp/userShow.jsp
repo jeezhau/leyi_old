@@ -39,9 +39,9 @@
   </div>
   <div class="row">
      <div class="col-md-3" >
-      <div class="row" style="height:250px;overflow:auto ;padding:3px;border:3px #CECEF6 solid ;border-radius:5px;">
-       <img style="float:left;margin:3px;" src="/leyi/common/showPic/${userInfo.username}/${userInfo.picture }" width="150" height="150" alt="Profile Photo" >  
-        <a href="/leyi/${userInfo.username}"><b>&nbsp;&nbsp;&nbsp;${userInfo.username} 的主页</b></a><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
+       <div class="row" style="height:250px;padding:0px;border:0px #CECEF6 solid ;border-radius:0px;">
+         <p><img style="margin:0px;" src="/leyi/common/showPic/${userInfo.username}/${userInfo.picture }" width="100%" height="200" alt="Profile Photo" ></p>  
+     	 <p class="text-center"><a href="/leyi/${userInfo.username}"><b>&nbsp;&nbsp;&nbsp;${userInfo.username} 的主页</b></a></p>
        </div>
 	 </div>
    <!--======================中间主要内容  ===================--> 

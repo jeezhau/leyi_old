@@ -25,12 +25,12 @@ public class LogInterceptor extends HandlerInterceptorAdapter{
         log.info("contextPath:"+contextPath);    
         log.info("url:"+url);  
 //		Enumeration<String> attrs = request.getAttributeNames();
-//		System.out.println("===========ÊôĞÔ£º==============");
+//		System.out.println("===========å±æ€§ï¼š==============");
 //		while(attrs.hasMoreElements()){
 //			String attr = attrs.nextElement();
 //			System.out.println(attrs + ":" + request.getAttribute(attr));
 //		}
-//		System.out.println("===========²ÎÊı£º==============");
+//		System.out.println("===========å‚æ•°ï¼š==============");
 //		Map<String,String[]> params = request.getParameterMap();
 //		for(Map.Entry<String, String[]> entry:params.entrySet()){
 //			System.out.println(entry.getKey() + Arrays.toString(entry.getValue()));

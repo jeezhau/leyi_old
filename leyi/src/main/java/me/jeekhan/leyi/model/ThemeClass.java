@@ -16,16 +16,16 @@ public class ThemeClass {
 
     private Integer parentId;
     
-    @NotEmpty(message="Ãû³Æ£º²»¿ÉÎª¿Õ£¡")
-    @Size(max=20,message="Ãû³Æ£º×î´ó³¤¶ÈÎª20¸ö×Ö·û£¡")
+    @NotEmpty(message="åç§°ï¼šä¸å¯ä¸ºç©ºï¼")
+    @Size(max=20,message="åç§°ï¼šæœ€å¤§é•¿åº¦ä¸º20ä¸ªå­—ç¬¦ï¼")
     private String name;
 
-    @NotEmpty(message="¹Ø¼ü´Ê£º²»¿ÉÎª¿Õ£¡")
-    @Size(max=255,message="¹Ø¼ü´Ê£º×î´ó³¤¶ÈÎª255¸ö×Ö·û£¡")
+    @NotEmpty(message="å…³é”®è¯ï¼šä¸å¯ä¸ºç©ºï¼")
+    @Size(max=255,message="å…³é”®è¯ï¼šæœ€å¤§é•¿åº¦ä¸º255ä¸ªå­—ç¬¦ï¼")
     private String keywords;
     
-    @NotEmpty(message="ÃèÊö£º²»¿ÉÎª¿Õ£¡")
-    @Size(max=600,message="ÃèÊö£º×î´ó³¤¶ÈÎª600¸ö×Ö·û£¡")
+    @NotEmpty(message="æè¿°ï¼šä¸å¯ä¸ºç©ºï¼")
+    @Size(max=600,message="æè¿°ï¼šæœ€å¤§é•¿åº¦ä¸º600ä¸ªå­—ç¬¦ï¼")
     private String descInfo;
 
     @Null
@@ -100,7 +100,7 @@ public class ThemeClass {
     public void setEnabled(String enabled) {
         this.enabled = enabled;
     }
-    //·µ»ØJSON×Ö·û´®
+    //è¿”å›JSONå­—ç¬¦ä¸²
     public String toString(){
     	ObjectMapper mapper = new ObjectMapper();
     	try {

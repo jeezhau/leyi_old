@@ -1,33 +1,31 @@
 package me.jeekhan.leyi.common;
-import java.util.Properties;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.Address;
 import javax.mail.Authenticator;
-import javax.mail.BodyPart; 
-import javax.mail.Message; 
-import javax.mail.MessagingException; 
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
-import javax.mail.Session; 
-import javax.mail.Transport; 
-import javax.mail.internet.InternetAddress; 
-import javax.mail.internet.MimeBodyPart; 
-import javax.mail.internet.MimeMessage; 
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import me.jeekhan.leyi.scheduler.SendMailSheduler; 
+import org.slf4j.LoggerFactory; 
 
 public class SendEmailUtil {
 	private static Logger log = LoggerFactory.getLogger(SendEmailUtil.class);
@@ -47,33 +45,33 @@ public class SendEmailUtil {
 		bccAddr.add("aoksen@hotmail.com");
 		
 		List<File> attachFiles = new ArrayList<File>();
-		File file = new File("D:/123/²âÊÔ½á¹û");
-		File file2 = new File("C:/Users/Jee Khan/Pictures/²âÊÔĞ¡Í¼Æ¬.zip");
+		File file = new File("D:/123/æµ‹è¯•ç»“æœ");
+		File file2 = new File("C:/Users/Jee Khan/Pictures/æµ‹è¯•å°å›¾ç‰‡.zip");
 		attachFiles.add(file);
 		attachFiles.add(file2);
-		sendMail("Ò»·â²âÊÔÓÊ¼ş","²âÊÔÊÇ·ñ·¢ËÍ³É¹¦99999999999",addresses,ccAddr,bccAddr,attachFiles);
+		sendMail("ä¸€å°æµ‹è¯•é‚®ä»¶","æµ‹è¯•æ˜¯å¦å‘é€æˆåŠŸ99999999999",addresses,ccAddr,bccAddr,attachFiles);
 	} 
 	/**
 	 * 
-	 * @param subject	ÓÊ¼şÖ÷Ìâ	
-	 * @param content	ÓÊ¼şÄÚÈİ
-	 * @param toAddr	ÊÕ¼şÈËÁĞ±í
-	 * @param ccAddr	³­ËÍÁĞ±í
-	 * @param bccAddr	ÃÜËÍÁĞ±í 
-	 * @param attachFiles	¸½¼şÁĞ±í£¨ÎÄ¼ş²»ÄÜÊÇÄ¿Â¼ÇÒÓĞ¿É¶ÁÈ¨ÏŞ£©
+	 * @param subject	é‚®ä»¶ä¸»é¢˜	
+	 * @param content	é‚®ä»¶å†…å®¹
+	 * @param toAddr	æ”¶ä»¶äººåˆ—è¡¨
+	 * @param ccAddr	æŠ„é€åˆ—è¡¨
+	 * @param bccAddr	å¯†é€åˆ—è¡¨ 
+	 * @param attachFiles	é™„ä»¶åˆ—è¡¨ï¼ˆæ–‡ä»¶ä¸èƒ½æ˜¯ç›®å½•ä¸”æœ‰å¯è¯»æƒé™ï¼‰
 	 * @return
 	 */
 	public static String sendMail(String subject,String content,List<String> toAddr,List<String> ccAddr,List<String> bccAddr,List<File> attachFiles){
 		if(subject == null || content == null || subject.trim().length()<1 || content.trim().length()<1 || toAddr == null || toAddr.isEmpty()){
-			return "ÓÊ¼şÒªËØ£¨Ö÷Ìâ¡¢ÄÚÈİ¡¢ÊÕ¼şÈË£©²»ÍêÕû£¡";
+			return "é‚®ä»¶è¦ç´ ï¼ˆä¸»é¢˜ã€å†…å®¹ã€æ”¶ä»¶äººï¼‰ä¸å®Œæ•´ï¼";
 		}
-		//Õâ¸öÀàÖ÷ÒªÊÇÉèÖÃÓÊ¼ş
+		//è¿™ä¸ªç±»ä¸»è¦æ˜¯è®¾ç½®é‚®ä»¶
 		MailSenderInfo mailInfo = new MailSenderInfo(); 
 		mailInfo.setMailServerHost(host); 
 		mailInfo.setMailServerPort(port); 
 		mailInfo.setValidate(true); 
 		mailInfo.setUserName(username); 
-		mailInfo.setPassword(password);//ÄúµÄÓÊÏäÃÜÂë 
+		mailInfo.setPassword(password);//æ‚¨çš„é‚®ç®±å¯†ç  
 		mailInfo.setFromAddress(username); 
 		mailInfo.setToAddresses(toAddr); 
 		mailInfo.setCcAddresses(ccAddr);
@@ -81,41 +79,41 @@ public class SendEmailUtil {
 		mailInfo.setSubject(subject); 
 		mailInfo.setContent(content); 
 		mailInfo.setAttachFiles(attachFiles);
-		//Õâ¸öÀàÖ÷ÒªÀ´·¢ËÍÓÊ¼ş
-		return sendHtmlMail(mailInfo);//·¢ËÍhtml¸ñÊ½
+		//è¿™ä¸ªç±»ä¸»è¦æ¥å‘é€é‚®ä»¶
+		return sendHtmlMail(mailInfo);//å‘é€htmlæ ¼å¼
 	}
 	
 	/** 
-	  * ÒÔHTML¸ñÊ½·¢ËÍÓÊ¼ş 
-	  * @param mailInfo ´ı·¢ËÍµÄÓÊ¼şĞÅÏ¢ 
-	  * @return 00-³É¹¦
+	  * ä»¥HTMLæ ¼å¼å‘é€é‚®ä»¶ 
+	  * @param mailInfo å¾…å‘é€çš„é‚®ä»¶ä¿¡æ¯ 
+	  * @return 00-æˆåŠŸ
 	  */ 
 	private static String sendHtmlMail(MailSenderInfo mailInfo){ 
-		// ÅĞ¶ÏÊÇ·ñĞèÒªÉí·İÈÏÖ¤ 
+		// åˆ¤æ–­æ˜¯å¦éœ€è¦èº«ä»½è®¤è¯ 
 		MyAuthenticator authenticator = null;
 		Properties pro = mailInfo.getProperties();
-		//Èç¹ûĞèÒªÉí·İÈÏÖ¤£¬Ôò´´½¨Ò»¸öÃÜÂëÑéÖ¤Æ÷  
+		//å¦‚æœéœ€è¦èº«ä»½è®¤è¯ï¼Œåˆ™åˆ›å»ºä¸€ä¸ªå¯†ç éªŒè¯å™¨  
 		if (mailInfo.isValidate()) { 
 			authenticator = new MyAuthenticator(mailInfo.getUserName(), mailInfo.getPassword());
 		} 
-		// ¸ù¾İÓÊ¼ş»á»°ÊôĞÔºÍÃÜÂëÑéÖ¤Æ÷¹¹ÔìÒ»¸ö·¢ËÍÓÊ¼şµÄsession 
+		// æ ¹æ®é‚®ä»¶ä¼šè¯å±æ€§å’Œå¯†ç éªŒè¯å™¨æ„é€ ä¸€ä¸ªå‘é€é‚®ä»¶çš„session 
 		Session sendMailSession = Session.getDefaultInstance(pro,authenticator); 
 		try { 
-			// ¸ù¾İsession´´½¨Ò»¸öÓÊ¼şÏûÏ¢ 
+			// æ ¹æ®sessionåˆ›å»ºä¸€ä¸ªé‚®ä»¶æ¶ˆæ¯ 
 			Message mailMessage = new MimeMessage(sendMailSession); 
-			// ´´½¨ÓÊ¼ş·¢ËÍÕßµØÖ· 
+			// åˆ›å»ºé‚®ä»¶å‘é€è€…åœ°å€ 
 			Address from = new InternetAddress(mailInfo.getFromAddress()); 
-			// ÉèÖÃÓÊ¼şÏûÏ¢µÄ·¢ËÍÕß 
+			// è®¾ç½®é‚®ä»¶æ¶ˆæ¯çš„å‘é€è€… 
 			mailMessage.setFrom(from); 
-			// ´´½¨ÓÊ¼şµÄ½ÓÊÕÕßµØÖ·£¬²¢ÉèÖÃµ½ÓÊ¼şÏûÏ¢ÖĞ 
+			// åˆ›å»ºé‚®ä»¶çš„æ¥æ”¶è€…åœ°å€ï¼Œå¹¶è®¾ç½®åˆ°é‚®ä»¶æ¶ˆæ¯ä¸­ 
 			InternetAddress[] addresses = new InternetAddress[mailInfo.getToAddresses().size()];  
 			int i=0;
 			for (String addr : mailInfo.getToAddresses()) {  
 				addresses[i++] = new InternetAddress(addr);  
 			} 
-			// Message.RecipientType.TOÊôĞÔ±íÊ¾½ÓÊÕÕßµÄÀàĞÍÎªTO 
+			// Message.RecipientType.TOå±æ€§è¡¨ç¤ºæ¥æ”¶è€…çš„ç±»å‹ä¸ºTO 
 			mailMessage.setRecipients(Message.RecipientType.TO,addresses); 
-			//´´½¨ÓÊ¼ş³­ËÍµØÖ·
+			//åˆ›å»ºé‚®ä»¶æŠ„é€åœ°å€
 			if(mailInfo.getCcAddresses()!=null && !mailInfo.getCcAddresses().isEmpty()){
 				i=0;
 				InternetAddress[] ccAddr = new InternetAddress[mailInfo.getCcAddresses().size()];
@@ -124,7 +122,7 @@ public class SendEmailUtil {
 				}
 				mailMessage.setRecipients(Message.RecipientType.CC,ccAddr);
 			}
-			//´´½¨ÃÜËÍµØÖ·
+			//åˆ›å»ºå¯†é€åœ°å€
 			if(mailInfo.getBccAddresses()!=null && !mailInfo.getBccAddresses().isEmpty()){
 				i=0;
 				InternetAddress[] bccAddr = new InternetAddress[mailInfo.getBccAddresses().size()];
@@ -133,37 +131,37 @@ public class SendEmailUtil {
 				}
 				mailMessage.setRecipients(Message.RecipientType.BCC,bccAddr);
 			}
-			// ÉèÖÃÓÊ¼şÏûÏ¢µÄÖ÷Ìâ 
+			// è®¾ç½®é‚®ä»¶æ¶ˆæ¯çš„ä¸»é¢˜ 
 			mailMessage.setSubject(mailInfo.getSubject()); 
-			// ÉèÖÃÓÊ¼şÏûÏ¢·¢ËÍµÄÊ±¼ä 
+			// è®¾ç½®é‚®ä»¶æ¶ˆæ¯å‘é€çš„æ—¶é—´ 
 			mailMessage.setSentDate(new Date()); 
-			// MiniMultipartÀàÊÇÒ»¸öÈİÆ÷Àà£¬°üº¬MimeBodyPartÀàĞÍµÄ¶ÔÏó 
+			// MiniMultipartç±»æ˜¯ä¸€ä¸ªå®¹å™¨ç±»ï¼ŒåŒ…å«MimeBodyPartç±»å‹çš„å¯¹è±¡ 
 			Multipart multiPart = new MimeMultipart(); 
-			// ´´½¨Ò»¸ö°üº¬HTMLÄÚÈİµÄMimeBodyPart 
+			// åˆ›å»ºä¸€ä¸ªåŒ…å«HTMLå†…å®¹çš„MimeBodyPart 
 			BodyPart html = new MimeBodyPart(); 
-			// ÉèÖÃHTMLÄÚÈİ 
+			// è®¾ç½®HTMLå†…å®¹ 
 			html.setContent(mailInfo.getContent(), "text/html; charset=utf-8"); 
 			multiPart.addBodyPart(html); 
-			// ½«MiniMultipart¶ÔÏóÉèÖÃÎªÓÊ¼şÄÚÈİ 
+			// å°†MiniMultipartå¯¹è±¡è®¾ç½®ä¸ºé‚®ä»¶å†…å®¹ 
 			mailMessage.setContent(multiPart); 
-			// Ìí¼Ó¸½¼şµÄÄÚÈİ
+			// æ·»åŠ é™„ä»¶çš„å†…å®¹
 			if (mailInfo.getAttachFiles()!= null && !mailInfo.getAttachFiles().isEmpty()) {
 				for(File attachment : mailInfo.getAttachFiles()){
 					BodyPart attachmentBodyPart = new MimeBodyPart();
 					DataSource source = new FileDataSource(attachment);
 					attachmentBodyPart.setDataHandler(new DataHandler(source));
-					// ÕâÀïºÜÖØÒª£¬Í¨¹ıÏÂÃæµÄBase64±àÂëµÄ×ª»»¿ÉÒÔ±£Ö¤ÄãµÄÖĞÎÄ¸½¼ş±êÌâÃûÔÚ·¢ËÍÊ±²»»á±ä³ÉÂÒÂë
+					// è¿™é‡Œå¾ˆé‡è¦ï¼Œé€šè¿‡ä¸‹é¢çš„Base64ç¼–ç çš„è½¬æ¢å¯ä»¥ä¿è¯ä½ çš„ä¸­æ–‡é™„ä»¶æ ‡é¢˜ååœ¨å‘é€æ—¶ä¸ä¼šå˜æˆä¹±ç 
 					//sun.misc.BASE64Encoder enc = new sun.misc.BASE64Encoder();
 					//messageBodyPart.setFileName("=?GBK?B?" + enc.encode(attachment.getName().getBytes()) + "?=");
-					//MimeUtility.encodeWord¿ÉÒÔ±ÜÃâÎÄ¼şÃûÂÒÂë
+					//MimeUtility.encodeWordå¯ä»¥é¿å…æ–‡ä»¶åä¹±ç 
 					attachmentBodyPart.setFileName(MimeUtility.encodeWord(attachment.getName()));
 					multiPart.addBodyPart(attachmentBodyPart);
 				}
 			}
-			/*// ÉèÖÃÓÊ¼şÏûÏ¢µÄÖ÷ÒªÄÚÈİ :Ê¹ÓÃÎÄ±¾
+			/*// è®¾ç½®é‚®ä»¶æ¶ˆæ¯çš„ä¸»è¦å†…å®¹ :ä½¿ç”¨æ–‡æœ¬
 			String mailContent = mailInfo.getContent(); 
 			mailMessage.setText(mailContent);*/
-			// ·¢ËÍÓÊ¼ş 
+			// å‘é€é‚®ä»¶ 
 			Transport.send(mailMessage); 
 			return "00"; 
 		} catch (MessagingException | UnsupportedEncodingException ex) { 
@@ -173,7 +171,7 @@ public class SendEmailUtil {
 } 
 
    /**
-      ÃÜÂëÑéÖ¤Æ÷
+      å¯†ç éªŒè¯å™¨
    */
   class MyAuthenticator extends Authenticator{
  	String userName=null;
@@ -192,41 +190,41 @@ public class SendEmailUtil {
  }
   
 /** 
-* ·¢ËÍÓÊ¼şĞèÒªÊ¹ÓÃµÄ»ù±¾ĞÅÏ¢ 
+* å‘é€é‚®ä»¶éœ€è¦ä½¿ç”¨çš„åŸºæœ¬ä¿¡æ¯ 
 */ 
 class MailSenderInfo { 
 	
-	// ·¢ËÍÓÊ¼şµÄ·şÎñÆ÷µÄIPºÍ¶Ë¿Ú 
+	// å‘é€é‚®ä»¶çš„æœåŠ¡å™¨çš„IPå’Œç«¯å£ 
 	private String mailServerHost; 
 	private String mailServerPort = "25"; 
 	
-	// ÓÊ¼ş·¢ËÍÕßµÄµØÖ· 
+	// é‚®ä»¶å‘é€è€…çš„åœ°å€ 
 	private String fromAddress; 
 	
-	// ÓÊ¼ş½ÓÊÕÕßµÄµØÖ· 
+	// é‚®ä»¶æ¥æ”¶è€…çš„åœ°å€ 
 	private List<String> toAddresses; 
-	// ÓÊ¼ş³­ËÍµÄµØÖ· 
+	// é‚®ä»¶æŠ„é€çš„åœ°å€ 
 	private List<String> ccAddresses; 
-	// ÓÊ¼şÃÜËÍµÄµØÖ· 
+	// é‚®ä»¶å¯†é€çš„åœ°å€ 
 	private List<String> bccAddresses; 
 	
-	// µÇÂ½ÓÊ¼ş·¢ËÍ·şÎñÆ÷µÄÓÃ»§ÃûºÍÃÜÂë 
+	// ç™»é™†é‚®ä»¶å‘é€æœåŠ¡å™¨çš„ç”¨æˆ·åå’Œå¯†ç  
 	private String userName; 
 	private String password; 
 	
-	// ÊÇ·ñĞèÒªÉí·İÑéÖ¤ 
+	// æ˜¯å¦éœ€è¦èº«ä»½éªŒè¯ 
 	private boolean validate = false; 
 	
-	// ÓÊ¼şÖ÷Ìâ 
+	// é‚®ä»¶ä¸»é¢˜ 
 	private String subject; 
 	
-	// ÓÊ¼şµÄÎÄ±¾ÄÚÈİ 
+	// é‚®ä»¶çš„æ–‡æœ¬å†…å®¹ 
 	private String content; 
 	
-	// ÓÊ¼ş¸½¼ş
+	// é‚®ä»¶é™„ä»¶
 	private List<File> attachFiles; 	
 	/** 
-	  * »ñµÃÓÊ¼ş»á»°ÊôĞÔ 
+	  * è·å¾—é‚®ä»¶ä¼šè¯å±æ€§ 
 	  */ 
 	public Properties getProperties(){ 
 	  Properties p = new Properties(); 

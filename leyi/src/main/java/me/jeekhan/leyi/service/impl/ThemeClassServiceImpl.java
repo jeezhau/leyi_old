@@ -13,7 +13,7 @@ import me.jeekhan.leyi.model.ThemeClass;
 import me.jeekhan.leyi.service.ThemeClassService;
 
 /**
- * Ö÷Ìâ·ÖÀà·şÎñ
+ * ä¸»é¢˜åˆ†ç±»æœåŠ¡
  * @author Jee Khan
  *
  */
@@ -24,14 +24,14 @@ public class ThemeClassServiceImpl implements ThemeClassService {
 	@Autowired
 	private ReviewInfoMapper reviewInfoMapper;
 	/**
-	 * ±£´æÖ÷Ìâ
-	 *  0¡¢¶¥²ãÖ÷Ìâ×î¶àÎª6¸ö£»
-	 *  1¡¢´æÔÚIDÔò¸üĞÅÏ¢£»ÎŞIDÔòĞÂÔö£»
-	 *  2¡¢Í¬ÃûÍ¬²ãÖ÷ÌâÊ¹ÓÃ¸üĞÂ£»
+	 * ä¿å­˜ä¸»é¢˜
+	 *  0ã€é¡¶å±‚ä¸»é¢˜æœ€å¤šä¸º6ä¸ªï¼›
+	 *  1ã€å­˜åœ¨IDåˆ™æ›´ä¿¡æ¯ï¼›æ— IDåˆ™æ–°å¢ï¼›
+	 *  2ã€åŒååŒå±‚ä¸»é¢˜ä½¿ç”¨æ›´æ–°ï¼›
 	 */
 	@Override
 	public Integer saveThemeClass(ThemeClass themeClass) {
-		if(themeClass == null ){	//Êı¾İÎª¿Õ
+		if(themeClass == null ){	//æ•°æ®ä¸ºç©º
 			return -1;
 		}
 		themeClass.setEnabled("1");
@@ -39,9 +39,9 @@ public class ThemeClassServiceImpl implements ThemeClassService {
 		ThemeClass old = themeClassMapper.selectByNameAndOpr(themeClass.getName(),themeClass.getParentId(),themeClass.getUpdateOpr());
 		if(themeClass.getId() == null){
 			int  topcount = 0;
-			if(themeClass.getParentId() == null){ //¶¥²ãÖ÷Ìâ
+			if(themeClass.getParentId() == null){ //é¡¶å±‚ä¸»é¢˜
 				topcount = themeClassMapper.countUserTopTheme(themeClass.getUpdateOpr());
-				if(topcount >= 6){  //¶¥²ãÖ÷Ìâ¸öÊı´óÓÚ6¸ö
+				if(topcount >= 6){  //é¡¶å±‚ä¸»é¢˜ä¸ªæ•°å¤§äº6ä¸ª
 					return -2;  
 				}
 			}
@@ -51,7 +51,7 @@ public class ThemeClassServiceImpl implements ThemeClassService {
 					themeClass.setId(old.getId());
 					themeClassMapper.updateByPrimaryKey(themeClass);
 					return old.getId();
-				}else{	//´æÔÚÍ¬²ãÍ¬ÃûµÄ»î¶¯Ö÷Ìâ
+				}else{	//å­˜åœ¨åŒå±‚åŒåçš„æ´»åŠ¨ä¸»é¢˜
 					return -3;	
 				}
 			}else{
@@ -62,17 +62,17 @@ public class ThemeClassServiceImpl implements ThemeClassService {
 			
 		}else{
 			ThemeClass tmp = themeClassMapper.selectByPrimaryKey(themeClass.getId());
-			if(tmp == null || tmp.getParentId() != themeClass.getParentId()){ //Ö÷ÌâÎª¿Õ»òÉÏ²ãÖ÷Ìâ²»Ò»ÖÂ£¬Êı¾İÓĞÎÊÌâ
+			if(tmp == null || tmp.getParentId() != themeClass.getParentId()){ //ä¸»é¢˜ä¸ºç©ºæˆ–ä¸Šå±‚ä¸»é¢˜ä¸ä¸€è‡´ï¼Œæ•°æ®æœ‰é—®é¢˜
 				return -1;
 			}else{
-				if( old == null || old != null && themeClass.getId() == old.getId()  ){	//Í¬ÃûÍ¬ID»òÎŞÍ¬Ãû
+				if( old == null || old != null && themeClass.getId() == old.getId()  ){	//åŒååŒIDæˆ–æ— åŒå
 					themeClassMapper.updateByPrimaryKey(themeClass);
 					return old.getId();
-				}else{ //´æÔÚÍ¬²ãÍ¬ÃûµÄ»î¶¯Ö÷Ìâ
+				}else{ //å­˜åœ¨åŒå±‚åŒåçš„æ´»åŠ¨ä¸»é¢˜
 					if("D".equals(old.getEnabled())){
 						themeClassMapper.updateByPrimaryKey(themeClass);
 						return old.getId();
-					}else{	//´æÔÚÍ¬²ãÍ¬ÃûµÄ»î¶¯Ö÷Ìâ
+					}else{	//å­˜åœ¨åŒå±‚åŒåçš„æ´»åŠ¨ä¸»é¢˜
 						return -3;	
 					}
 				}
@@ -81,8 +81,8 @@ public class ThemeClassServiceImpl implements ThemeClassService {
 		
 	}
 	/**
-	 * Âß¼­É¾³ıÖ÷Ìâ
-	 *  ÉèÖÃÖ÷Ìâ×´Ì¬Îª'D'
+	 * é€»è¾‘åˆ é™¤ä¸»é¢˜
+	 *  è®¾ç½®ä¸»é¢˜çŠ¶æ€ä¸º'D'
 	 */
 	@Override
 	public Integer deleteThemeClass(int themeClassId) {
@@ -120,7 +120,7 @@ public class ThemeClassServiceImpl implements ThemeClassService {
 	}
 	
 	/**
-	 * »ñÈ¡´ıÉóºËµÄ10ÌõÖ÷Ìâ
+	 * è·å–å¾…å®¡æ ¸çš„10æ¡ä¸»é¢˜
 	 * @return
 	 */
 	@Override
@@ -129,10 +129,10 @@ public class ThemeClassServiceImpl implements ThemeClassService {
 	}
 	
 	/**
-	 * Ö÷ÌâÉóºË
-	 * @param themeId   Ö÷ÌâID
-	 * @param result	ÉóºË½á¹û:0-Í¨¹ı,R-¾Ü¾ø
-	 * @param reviewInfo	ÉóºËËµÃ÷
+	 * ä¸»é¢˜å®¡æ ¸
+	 * @param themeId   ä¸»é¢˜ID
+	 * @param result	å®¡æ ¸ç»“æœ:0-é€šè¿‡,R-æ‹’ç»
+	 * @param reviewInfo	å®¡æ ¸è¯´æ˜
 	 */
 	@Override
 	public int reviewTheme(int themeId,String result,ReviewInfo reviewInfo){
@@ -148,7 +148,7 @@ public class ThemeClassServiceImpl implements ThemeClassService {
 	}
 	
 	/**
-	 * È¡´ıÉóºËÖ÷ÌâÊıÁ¿
+	 * å–å¾…å®¡æ ¸ä¸»é¢˜æ•°é‡
 	 * @return
 	 */
 	@Override

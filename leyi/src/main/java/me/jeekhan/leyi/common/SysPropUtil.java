@@ -12,7 +12,7 @@ public class SysPropUtil {
 	private static  ResourceBundle BUNDLE = ResourceBundle.getBundle(prop_file);
 	
 	/**
-	 * ¸ù¾İÖ¸¶¨key»ñÈ¡¶ÔÓ¦µÄÖµ
+	 * æ ¹æ®æŒ‡å®škeyè·å–å¯¹åº”çš„å€¼
 	 * @param key
 	 * @param params
 	 * @return

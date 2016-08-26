@@ -6,26 +6,26 @@ import me.jeekhan.leyi.model.MailSendInfo;
 
 public interface MailSendService {
 	/**
-	 * ±£´æÓÊ¼ş·¢ËÍĞÅÏ¢
+	 * ä¿å­˜é‚®ä»¶å‘é€ä¿¡æ¯
 	 * @param mailSendInfo
 	 * @return
 	 */
 	public int saveMailInfo(MailSendInfo mailSendInfo);
 	
 	/**
-	 * ±£´æÓÊ¼ş·¢ËÍĞÅÏ¢
+	 * ä¿å­˜é‚®ä»¶å‘é€ä¿¡æ¯
 	 * @param mailSendInfo
 	 * @return
 	 */
 	public int updateMailInfo(MailSendInfo mailSendInfo);
 	/**
-	 * ´ıÉóºËĞÅÏ¢ÌáÏÖÓÊ¼şÌí¼Ó
+	 * å¾…å®¡æ ¸ä¿¡æ¯æç°é‚®ä»¶æ·»åŠ 
 	 * @return
 	 */
 	public int add4ReviewWarn();
 	
 	/**
-	 * »ñÈ¡´ı·¢ËÍÓÊ¼ş£¨100Ìõ£©
+	 * è·å–å¾…å‘é€é‚®ä»¶ï¼ˆ100æ¡ï¼‰
 	 * @return
 	 */
 	List<MailSendInfo> getMails4Send();

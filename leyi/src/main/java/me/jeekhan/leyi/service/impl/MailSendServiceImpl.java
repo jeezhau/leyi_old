@@ -31,7 +31,7 @@ public class MailSendServiceImpl implements MailSendService{
 
 	@Override
 	public int saveMailInfo(MailSendInfo mailSendInfo){
-		//ÓÊ¼şÊı¾İ¸ñÊ½ÑéÖ¤
+		//é‚®ä»¶æ•°æ®æ ¼å¼éªŒè¯
 		return mailSendInfoMapper.insert(mailSendInfo);
 	}
 	@Override
@@ -39,27 +39,30 @@ public class MailSendServiceImpl implements MailSendService{
 		int userCnt = userService.get4ReviewUsersCnt();
 		int themeCnt = themeClassService.get4ReviewThemesCnt();
 		int articleCnt = articleService.get4ReviewArticlesCnt();
-		MailSendInfo mailInfo = new MailSendInfo();
-		String subject = getForamtValue("send_review_info_subject",null);;
-		String content = getForamtValue("send_review_info_content",new Object[]{userCnt,themeCnt,articleCnt});;
-		String toAddr = getForamtValue("send_review_info_toAdddr",null);
-		mailInfo.setSubject(subject);
-		mailInfo.setContent(content);
-		mailInfo.setToAddr(toAddr);
-		mailInfo.setCrtTime(new Date());
-		mailInfo.setSendNum(0);
-		mailInfo.setStatus("1");
-		return saveMailInfo(mailInfo);
+		if(userCnt>0 || themeCnt>0 || articleCnt>0){
+			MailSendInfo mailInfo = new MailSendInfo();
+			String subject = getForamtValue("send_review_info_subject",null);;
+			String content = getForamtValue("send_review_info_content",new Object[]{userCnt,themeCnt,articleCnt});;
+			String toAddr = getForamtValue("send_review_info_toAdddr",null);
+			mailInfo.setSubject(subject);
+			mailInfo.setContent(content);
+			mailInfo.setToAddr(toAddr);
+			mailInfo.setCrtTime(new Date());
+			mailInfo.setSendNum(0);
+			mailInfo.setStatus("1");
+			return saveMailInfo(mailInfo);
+		}
+		return 0;
 	}
 	/**
-	 * ¸üĞÂÓÊ¼ş·¢ËÍ×´Ì¬ĞÅÏ¢
+	 * æ›´æ–°é‚®ä»¶å‘é€çŠ¶æ€ä¿¡æ¯
 	 */
 	public int updateMailInfo(MailSendInfo mailSendInfo){
 		return mailSendInfoMapper.updateByPrimaryKey(mailSendInfo);
 	}
 	
 	/**
-	 * »ñÈ¡´ı·¢ËÍÓÊ¼ş
+	 * è·å–å¾…å‘é€é‚®ä»¶
 	 */
 	@Override
 	public List<MailSendInfo> getMails4Send(){
@@ -69,7 +72,7 @@ public class MailSendServiceImpl implements MailSendService{
 	
 	
 	/**
-	 * ¸ù¾İÖ¸¶¨key»ñÈ¡¶ÔÓ¦µÄÖµ
+	 * æ ¹æ®æŒ‡å®škeyè·å–å¯¹åº”çš„å€¼
 	 * @param key
 	 * @param params
 	 * @return

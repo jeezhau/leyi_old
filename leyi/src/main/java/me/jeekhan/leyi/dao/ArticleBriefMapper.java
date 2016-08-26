@@ -8,9 +8,9 @@ import me.jeekhan.leyi.common.PageCond;
 import me.jeekhan.leyi.model.ArticleBrief;
 
 public interface ArticleBriefMapper {
-	//±ä¸üÎÄÕÂ×´Ì¬
+	//å˜æ›´æ–‡ç« çŠ¶æ€
     int updateEnabledStatus(@Param("id")Integer id,@Param("enabled")String enabled);
-    //ĞÂ²åÈëÒ»ÌõÎÄÕÂ¼ÇÂ¼
+    //æ–°æ’å…¥ä¸€æ¡æ–‡ç« è®°å½•
     int insert(ArticleBrief record);
     
     ArticleBrief selectByPrimaryKey(Integer id);
@@ -22,10 +22,10 @@ public interface ArticleBriefMapper {
     List<ArticleBrief> selectArticles(@Param("isSelf")boolean isSelf,@Param("pageCond") PageCond pageCond);
     
     List<ArticleBrief> selectArticlesByTheme(@Param("themeId") int themeId,@Param("isSelf")boolean isSelf,@Param("pageCond") PageCond pageCond);
-    //È¡×î½ü±£´æµÄÒ»Ìõ¼ÇÂ¼
+    //å–æœ€è¿‘ä¿å­˜çš„ä¸€æ¡è®°å½•
     ArticleBrief selectLatestRecrod(ArticleBrief record);
-    //È¡×îĞÂ´ıÉóºËµÄ20Ìõ¼ÇÂ¼
+    //å–æœ€æ–°å¾…å®¡æ ¸çš„20æ¡è®°å½•
     List<ArticleBrief> selectArticles4Review();
-    //Í³¼Æ´ıÉóºËÎÄÕÂÊıÁ¿
+    //ç»Ÿè®¡å¾…å®¡æ ¸æ–‡ç« æ•°é‡
     int countArticles4Review();
 }

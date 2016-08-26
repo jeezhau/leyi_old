@@ -26,7 +26,7 @@ import me.jeekhan.leyi.common.FileFilter;
 import me.jeekhan.leyi.common.SysPropUtil;
 import me.jeekhan.leyi.dto.Operator;
 /**
- * Í¨ÓÃ´¦Àí
+ * é€šç”¨å¤„ç†
  * @author Jee Khan
  *
  */
@@ -37,14 +37,14 @@ public class CommonAction {
 	
 	
 	/**
-	 * CkeditorÉÏ´«Í¼Æ¬
-	 * ¡¾È¨ÏŞ¡¿
-	 * 	1¡¢µÇÂ¼ÓÃ»§£»
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 * 	1.È¡ÎÄÕÂĞÅÏ¢£¬Èç¹ûÎÄÕÂ²»´æÔÚÔò·µ»ØÓ¦ÓÃÖ÷Ò³£»
-	 * 	2.È¡ÎÄÕÂ×÷ÕßĞÅÏ¢£»
-	 * 	3.±£´æÏÔÊ¾Ä£Ê½£¨ÏêÇé»òÉóºË£©£»
-	 * @param articleId	ÎÄÕÂID
+	 * Ckeditorä¸Šä¼ å›¾ç‰‡
+	 * ã€æƒé™ã€‘
+	 * 	1ã€ç™»å½•ç”¨æˆ·ï¼›
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 * 	1.å–æ–‡ç« ä¿¡æ¯ï¼Œå¦‚æœæ–‡ç« ä¸å­˜åœ¨åˆ™è¿”å›åº”ç”¨ä¸»é¡µï¼›
+	 * 	2.å–æ–‡ç« ä½œè€…ä¿¡æ¯ï¼›
+	 * 	3.ä¿å­˜æ˜¾ç¤ºæ¨¡å¼ï¼ˆè¯¦æƒ…æˆ–å®¡æ ¸ï¼‰ï¼›
+	 * @param articleId	æ–‡ç« ID
 	 * @param map
 	 * @return
 	 * @throws IOException 
@@ -57,14 +57,14 @@ public class CommonAction {
 			String path = SysPropUtil.getParam("DIR_USER_UPLOAD") + operator.getUsername() + "/";  
 			
 			response.setCharacterEncoding("utf-8");  
-		    // CKEditor»Øµ÷²ÎÊı
+		    // CKEditorå›è°ƒå‚æ•°
 			String callback = request.getParameter("CKEditorFuncNum");  
 //			if (imgType.equals("jpeg")|| imgType.equals("jpg")||imgType.equals("gif") || imgType.equals("image/png")) {  
 //		           
 //		    }  
 	        if (upload.getSize() > 3*1024*1024) {  
 	            //out.println("<script type=\"text/javascript\">");  
-	            out.println("function(){window.parent.CKEDITOR.tools.callFunction(" + callback + ",''," + "'ÎÄ¼ş´óĞ¡²»µÃ´óÓÚ3M')}();");  
+	            out.println("function(){window.parent.CKEDITOR.tools.callFunction(" + callback + ",''," + "'æ–‡ä»¶å¤§å°ä¸å¾—å¤§äº3M')}();");  
 	            //out.println("</script>");  
 	            return;
 	        }  
@@ -72,8 +72,8 @@ public class CommonAction {
 			if(!dir.exists()){
 				dir.mkdirs();
 			}
-			//Í¼Æ¬ÉÏ´«Â·¾¶  
-	        String fileName = java.util.UUID.randomUUID().toString(); // ²ÉÓÃÊ±¼ä+UUIDµÄ·½Ê½Ëæ¼´ÃüÃû
+			//å›¾ç‰‡ä¸Šä¼ è·¯å¾„  
+	        String fileName = java.util.UUID.randomUUID().toString(); // é‡‡ç”¨æ—¶é—´+UUIDçš„æ–¹å¼éšå³å‘½å
 	        fileName += "." + imgType;
 			FileOutputStream outFile = new FileOutputStream(path + fileName);
 			InputStream in = upload.getInputStream();
@@ -85,7 +85,7 @@ public class CommonAction {
 			outFile.close();
 
 		  
-	        // ·µ»ØÏÔÊ¾Í¼Æ¬Â·¾¶   
+	        // è¿”å›æ˜¾ç¤ºå›¾ç‰‡è·¯å¾„   
 			String showPath = request.getContextPath() + "/common/showPic/" + operator.getUsername() + "/" + fileName;
 	        out.println("<script type=\"text/javascript\">");  
 	        out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + showPath + "','')");  
@@ -94,7 +94,7 @@ public class CommonAction {
 		}
 	}
 	/**
-	 * ÏÔÊ¾Í¼Æ¬
+	 * æ˜¾ç¤ºå›¾ç‰‡
 	 * @param username
 	 * @param picName
 	 * @param out

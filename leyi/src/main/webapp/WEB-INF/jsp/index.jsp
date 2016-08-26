@@ -27,7 +27,7 @@
   <div class="row">
    <c:if test="${empty operator.userId or operator.userId < 1}">
   	<ul class="nav nav-tabs pull-right" >
-     <li><a href="login.jsp" target="_blank">登录</a></li>
+     <li><a href="login.jsp">登录</a></li>
      <li><a href="/leyi/register"  target="_blank">注册</a></li>
 	</ul>
 	</c:if>
@@ -42,9 +42,9 @@
   <div class="row">
 <!--=============================左边个人简介  ===================================--> 
     <div class="col-md-3" >
-      <div class="row" style="height:250px;overflow:auto ;padding:3px;border:3px #CECEF6 solid ;border-radius:5px;">
-         <img style="float:left;margin:3px;" src="/leyi/common/showPic/${userInfo.username}/${userInfo.picture }" width="150" height="150" alt="Profile Photo" >  
-         <a href="/leyi/${userInfo.username}/detail"><b>&nbsp;&nbsp;&nbsp;${userInfo.username} 的个人信息</b></a><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
+      <div class="row" style="height:250px;padding:0px;border:0px #CECEF6 solid ;border-radius:0px;">
+         <p><img style="margin:0px;" src="/leyi/common/showPic/${userInfo.username}/${userInfo.picture }" width="100%" height="200" alt="Profile Photo" ></p>  
+     	 <p class="text-center"><a href="/leyi/${userInfo.username}/detail"><b>&nbsp;&nbsp;&nbsp;${userInfo.username}</b></a></p>
       </div>
  	</div>
 <!--======================中间主要内容  ===================--> 

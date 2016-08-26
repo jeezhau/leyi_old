@@ -26,7 +26,7 @@ public class ArticleContent {
     public void setContent(String content) {
         this.content = content;
     }
-    //·µ»ØJSON×Ö·û´®
+    //è¿”å›žJSONå­—ç¬¦ä¸²
     public String toString(){
     	ObjectMapper mapper = new ObjectMapper();
     	try {

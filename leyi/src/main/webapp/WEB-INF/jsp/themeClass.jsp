@@ -31,7 +31,7 @@
   </div>
   <div class="row">
    <!-- =====================顶部主题分类=================== -->
-	<ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin:10px 0;">
+	<ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin-bottom:10px;">
 	   <c:forEach items="${topThemes}" var="item">
 	       <c:if test="${themeTreeUp[0].id==item.id}"> <li class="active"><a href="${item.id}">${item.name}</a></li> </c:if>
 	       <c:if test="${themeTreeUp[0].id!=item.id}"> <li><a href="${item.id}">${item.name}</a></li> </c:if>

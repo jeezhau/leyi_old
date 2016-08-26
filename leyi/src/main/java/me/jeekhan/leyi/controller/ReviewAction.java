@@ -1,29 +1,24 @@
 package me.jeekhan.leyi.controller;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import me.jeekhan.leyi.common.PageCond;
 import me.jeekhan.leyi.dto.Operator;
 import me.jeekhan.leyi.model.ArticleBrief;
-import me.jeekhan.leyi.model.ArticleContent;
 import me.jeekhan.leyi.model.ThemeClass;
 import me.jeekhan.leyi.model.UserFullInfo;
 import me.jeekhan.leyi.service.ArticleService;
 import me.jeekhan.leyi.service.ThemeClassService;
 import me.jeekhan.leyi.service.UserService;
 /**
- * ĞÅÏ¢ÉóºË
+ * ä¿¡æ¯å®¡æ ¸
  * @author Jee Khan
  *
  */
@@ -38,9 +33,9 @@ public class ReviewAction {
 	@Autowired
 	private UserService userService;
 	/**
-	 * ÉóºË³õÊ¼»¯
-	 * ¡¾È¨ÏŞ¡¿
-	 * 	1¡¢½öµÇÂ¼µÄ¹ÜÀíÔ±¿ÉÖ´ĞĞ¸Ã²Ù×÷£»
+	 * å®¡æ ¸åˆå§‹åŒ–
+	 * ã€æƒé™ã€‘
+	 * 	1ã€ä»…ç™»å½•çš„ç®¡ç†å‘˜å¯æ‰§è¡Œè¯¥æ“ä½œï¼›
 	 *  
 	 * @param operator
 	 * @param map

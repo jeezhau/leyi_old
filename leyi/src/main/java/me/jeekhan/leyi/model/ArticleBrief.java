@@ -13,27 +13,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ArticleBrief {
     private Integer id;
 
-    @NotNull(message="±êÌâ£º²»¿ÉÎª¿Õ£¡")
-    @Size(max=50,message="±êÌâ£º×î´ó³¤¶ÈÎª50¸ö×Ö·û£¡")
+    @NotNull(message="æ ‡é¢˜ï¼šä¸å¯ä¸ºç©ºï¼")
+    @Size(max=50,message="æ ‡é¢˜ï¼šæœ€å¤§é•¿åº¦ä¸º50ä¸ªå­—ç¬¦ï¼")
     private String name;
     
-    @NotNull(message="¹Ø¼ü´Ê£º²»¿ÉÎª¿Õ£¡")
-    @Size(max=255,message="¹Ø¼ü´Ê£º×î´ó³¤¶ÈÎª255¸ö×Ö·û£¡")
+    @NotNull(message="å…³é”®è¯ï¼šä¸å¯ä¸ºç©ºï¼")
+    @Size(max=255,message="å…³é”®è¯ï¼šæœ€å¤§é•¿åº¦ä¸º255ä¸ªå­—ç¬¦ï¼")
     private String keywords;
 
-    @NotNull(message="¼ò½é£º²»¿ÉÎª¿Õ£¡")
-    @Size(max=600,message="¼ò½é£º×î´ó³¤¶ÈÎª600¸ö×Ö·û£¡")
+    @NotNull(message="ç®€ä»‹ï¼šä¸å¯ä¸ºç©ºï¼")
+    @Size(max=600,message="ç®€ä»‹ï¼šæœ€å¤§é•¿åº¦ä¸º600ä¸ªå­—ç¬¦ï¼")
     private String brief;
     
-    @NotNull(message="À´Ô´£º²»¿ÉÎª¿Õ£¡")
-    @Pattern(regexp="^[0-2]$",message="À´Ô´£ºÖµÖ»¿ÉÎª¡¾0-×Ô´´£¬1-×ªÕª£¬2-ÆäËû¡¿£¡")
+    @NotNull(message="æ¥æºï¼šä¸å¯ä¸ºç©ºï¼")
+    @Pattern(regexp="^[0-2]$",message="æ¥æºï¼šå€¼åªå¯ä¸ºã€0-è‡ªåˆ›ï¼Œ1-è½¬æ‘˜ï¼Œ2-å…¶ä»–ã€‘ï¼")
     private String source;
     
-    @NotNull(message="Ö÷Ìâ£º²»¿ÉÎª¿Õ£¡")
+    @NotNull(message="ä¸»é¢˜ï¼šä¸å¯ä¸ºç©ºï¼")
     private Integer themeId;
     
-    @NotNull(message="ÀàĞÍ£º²»¿ÉÎª¿Õ£¡")
-    @Pattern(regexp="^[0-4]$",message="ÀàĞÍ£ºÖµÖ»¿ÉÎª¡¾0-ÎÄ±¾£¬1-Í¼²á£¬2-ÊÓÆµ£¬3-ÓïÒô£¬4-»ìºÏ¡¿£¡")
+    @NotNull(message="ç±»å‹ï¼šä¸å¯ä¸ºç©ºï¼")
+    @Pattern(regexp="^[0-4]$",message="ç±»å‹ï¼šå€¼åªå¯ä¸ºã€0-æ–‡æœ¬ï¼Œ1-å›¾å†Œï¼Œ2-è§†é¢‘ï¼Œ3-è¯­éŸ³ï¼Œ4-æ··åˆã€‘ï¼")
     private String type;
     
     @Null
@@ -124,7 +124,7 @@ public class ArticleBrief {
     public void setEnabled(String enabled) {
         this.enabled = enabled;
     }
-    //·µ»ØJSON×Ö·û´®
+    //è¿”å›JSONå­—ç¬¦ä¸²
     public String toString(){
     	ObjectMapper mapper = new ObjectMapper();
     	try {

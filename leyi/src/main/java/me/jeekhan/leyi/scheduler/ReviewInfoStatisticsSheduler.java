@@ -18,17 +18,17 @@ public class ReviewInfoStatisticsSheduler {
 	private MailSendService mailSendService;
 	
 	/**
-	 * Ìí¼Ó´ıÉóºËĞÅÏ¢ÌáĞÑÓÊ¼ş¼ÇÂ¼
+	 * æ·»åŠ å¾…å®¡æ ¸ä¿¡æ¯æé†’é‚®ä»¶è®°å½•
 	 */
 	@Scheduled(cron="0 1 8-22/2 * * ? ")
 	public void get4ReviewInfo(){
-		System.out.println("Ìí¼Ó´ıÉóºËĞÅÏ¢ÌáĞÑÓÊ¼ş¼ÇÂ¼");
+		System.out.println("æ·»åŠ å¾…å®¡æ ¸ä¿¡æ¯æé†’é‚®ä»¶è®°å½•");
 		mailSendService.add4ReviewWarn();
 	}
 	
 	
 	/**
-	 * ¸ù¾İÖ¸¶¨key»ñÈ¡¶ÔÓ¦µÄÖµ
+	 * æ ¹æ®æŒ‡å®škeyè·å–å¯¹åº”çš„å€¼
 	 * @param key
 	 * @param params
 	 * @return

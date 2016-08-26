@@ -11,7 +11,7 @@ public interface MailSendInfoMapper {
     int insert(MailSendInfo mailSendInfo);
 
     int updateByPrimaryKey(MailSendInfo record);
-    //»ñÈ¡100ÌõÓÊ¼ş¼ÇÂ¼ÓÃÓÚ·¢ËÍ
+    //è·å–100æ¡é‚®ä»¶è®°å½•ç”¨äºå‘é€
     List<MailSendInfo> selectMails4Send();
     
 }

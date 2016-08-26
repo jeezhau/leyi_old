@@ -43,9 +43,9 @@
   <div class="row">
 <!--=============================左边菜单链接  ===================================--> 
     <div class="col-md-3" >
-      <div class="row" style="height:250px;overflow:auto ;padding:3px;border:3px #CECEF6 solid ;border-radius:5px;">
-         <img style="float:left;margin:3px;" src="/leyi/common/showPic/${userInfo.username}/${userInfo.picture }" width="150" height="150" alt="Profile Photo" class="img-responsive">  
-          <a href="/leyi/${userInfo.username}/detail"><b>&nbsp;&nbsp;&nbsp;${userInfo.username} 的个人信息</b></a><br>&nbsp;&nbsp;&nbsp; ${userInfo.introduce}
+       <div class="row" style="height:250px;padding:0px;border:0px #CECEF6 solid ;border-radius:0px;">
+         <p><img style="margin:0px;" src="/leyi/common/showPic/${userInfo.username}/${userInfo.picture }" width="100%" height="200" alt="Profile Photo" ></p>  
+      	 <p class="text-center"><a href="/leyi/${userInfo.username}/detail"><b>&nbsp;&nbsp;&nbsp;${userInfo.username}</b></a></p>
       </div>
 	  <div class="row light-gray-bg">
 	      <ol class="breadcrumb " style="margin:10px 0;">
@@ -67,7 +67,7 @@
     <!--======================中间主要内容  ===================--> 
     <div class="col-md-9 light-gray-bg">
       <!-- =====================顶部主题分类=================== -->
-	  <ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin:10px 0;">
+	  <ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin-bottom:10px;">
 	   <c:forEach items="${topThemes}" var="item">
         <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/${userInfo.username}/theme/${item.id}">${item.name}</a></li></c:if>
         <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/${userInfo.username}/theme/${item.id}">${item.name}</a></li></c:if>

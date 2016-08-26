@@ -5,49 +5,49 @@ import java.util.List;
 import me.jeekhan.leyi.model.ReviewInfo;
 import me.jeekhan.leyi.model.ThemeClass;
 /**
- *  Ö÷Ìâ·ÖÀà·şÎñÀà
+ *  ä¸»é¢˜åˆ†ç±»æœåŠ¡ç±»
  * @author Jee Khan
  *
  */
 public interface ThemeClassService {
 	/**
-	 * ±£´æÖ÷Ìâ·ÖÀà
+	 * ä¿å­˜ä¸»é¢˜åˆ†ç±»
 	 * @param theme
-	 * @return Ö÷ÌâID
+	 * @return ä¸»é¢˜ID
 	 */
 	public Integer saveThemeClass(ThemeClass theme);
 	/**
-	 * É¾³ıÖ÷Ìâ·ÖÀà
+	 * åˆ é™¤ä¸»é¢˜åˆ†ç±»
 	 * @param themeId
-	 * @return ¸¸Ö÷ÌâID
+	 * @return çˆ¶ä¸»é¢˜ID
 	 */
 	public Integer deleteThemeClass(int themeClassId);
 	/**
-	 * »ñÈ¡Ö¸¶¨µÄÖ÷Ìâ·ÖÀà
+	 * è·å–æŒ‡å®šçš„ä¸»é¢˜åˆ†ç±»
 	 * @param ThemeClassId
 	 * @return
 	 */
 	public ThemeClass getThemeClass(int themeClassId);
 	public ThemeClass getThemeClass(String themeName,int parentId,int userId);
 	/**
-	 * »ñÈ¡Ö¸¶¨ÓÃ»§ËùÓĞµÄÖ÷Ìâ·ÖÀà
+	 * è·å–æŒ‡å®šç”¨æˆ·æ‰€æœ‰çš„ä¸»é¢˜åˆ†ç±»
 	 * @return
 	 */
 	public List<ThemeClass> getUserThemes(int userId,boolean isSlef);
 	
 	/**
-	 * »ñÈ¡Ö¸¶¨ÓÃ»§ËùÓĞ¶¥²ãÖ÷Ìâ·ÖÀà
+	 * è·å–æŒ‡å®šç”¨æˆ·æ‰€æœ‰é¡¶å±‚ä¸»é¢˜åˆ†ç±»
 	 * @return
 	 */
 	public List<ThemeClass> getUserTopThemes(int userId,boolean isSlef);
 	
 	/**
-	 * »ñÈ¡Ö¸¶¨Ö÷ÌâÏÂµÄËùÓĞµÄ×ÓÖ÷Ìâ·ÖÀà
+	 * è·å–æŒ‡å®šä¸»é¢˜ä¸‹çš„æ‰€æœ‰çš„å­ä¸»é¢˜åˆ†ç±»
 	 * @return
 	 */
 	public List<ThemeClass> getChildThemes(int parentId,boolean isSlef);
 	/**
-	 * ÏòÉÏ»ñÈ¡Ö÷Ìâ·ÖÀàÊô
+	 * å‘ä¸Šè·å–ä¸»é¢˜åˆ†ç±»å±
 	 * @param themeId
 	 * @return
 	 */
@@ -55,21 +55,21 @@ public interface ThemeClassService {
 	
 	
 	/**
-	 * »ñÈ¡´ıÉóºËµÄ10ÌõÖ÷Ìâ
+	 * è·å–å¾…å®¡æ ¸çš„10æ¡ä¸»é¢˜
 	 * @return
 	 */
 	public List<ThemeClass> getThemes4Review();
 	
 	/**
-	 * Ö÷ÌâÉóºË
-	 * @param themeId   Ö÷ÌâID
-	 * @param result	ÉóºË½á¹û:0-Í¨¹ı,R-¾Ü¾ø
-	 * @param reviewInfo	ÉóºËËµÃ÷
+	 * ä¸»é¢˜å®¡æ ¸
+	 * @param themeId   ä¸»é¢˜ID
+	 * @param result	å®¡æ ¸ç»“æœ:0-é€šè¿‡,R-æ‹’ç»
+	 * @param reviewInfo	å®¡æ ¸è¯´æ˜
 	 */
 	public int reviewTheme(int themeId,String result,ReviewInfo reviewInfo);
 	
 	/**
-	 * È¡´ıÉóºËÖ÷ÌâÊıÁ¿
+	 * å–å¾…å®¡æ ¸ä¸»é¢˜æ•°é‡
 	 * @return
 	 */
 	public int get4ReviewThemesCnt();

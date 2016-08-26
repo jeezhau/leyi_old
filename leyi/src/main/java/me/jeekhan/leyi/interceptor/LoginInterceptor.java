@@ -23,7 +23,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
           
        Operator operator =  (Operator)request.getSession().getAttribute("operator");   
         if(operator == null || operator.getUserId() == 0){  
-            log.info("Interceptor£ºÌø×ªµ½loginÒ³Ãæ£¡");  
+            log.info("Interceptorï¼šè·³è½¬åˆ°loginé¡µé¢ï¼");  
             response.sendRedirect(contextPath + "/login.jsp");
             return false;  
         }else {

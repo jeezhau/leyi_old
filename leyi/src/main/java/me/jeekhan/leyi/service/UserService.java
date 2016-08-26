@@ -22,22 +22,22 @@ public interface UserService {
 	public UserFullInfo getIndexShowUser();
 
 	/**
-	 * È¡´ıÉóºËÓÃ»§ÊıÁ¿
+	 * å–å¾…å®¡æ ¸ç”¨æˆ·æ•°é‡
 	 * @return
 	 */
 	public int get4ReviewUsersCnt();
 	
 	/**
-	 * È¡10Ìõ´ıÉóºËµÄÓÃ»§
+	 * å–10æ¡å¾…å®¡æ ¸çš„ç”¨æˆ·
 	 * @return
 	 */
 	public List<UserFullInfo> getUsers4Review();
 	
 	/**
-	 * ÓÃ»§ÉóºË
-	 * @param userId   ÓÃ»§ID
-	 * @param result	ÉóºË½á¹û:0-Í¨¹ı,R-¾Ü¾ø
-	 * @param reviewInfo	ÉóºËËµÃ÷
+	 * ç”¨æˆ·å®¡æ ¸
+	 * @param userId   ç”¨æˆ·ID
+	 * @param result	å®¡æ ¸ç»“æœ:0-é€šè¿‡,R-æ‹’ç»
+	 * @param reviewInfo	å®¡æ ¸è¯´æ˜
 	 */
 	public int reviewUser(int userId,String result,ReviewInfo reviewInfo);
 

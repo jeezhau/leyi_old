@@ -24,7 +24,7 @@ public class SendMailSheduler {
 	private MailSendService mailSendService;
 	
 	/**
-	 * ·¢ËÍÓÊ¼ş
+	 * å‘é€é‚®ä»¶
 	 */
 	@Scheduled(cron="0 31 8-22/2 * * ? ")
 	public void BatchSendEmails(){
@@ -33,7 +33,7 @@ public class SendMailSheduler {
 		if(mails == null || mails.isEmpty()){
 			return;
 		}
-		log.info("=====Åú´¦ÀíÓÊ¼ş·¢ËÍ¿ªÊ¼=====");
+		log.info("=====æ‰¹å¤„ç†é‚®ä»¶å‘é€å¼€å§‹=====");
 		for(MailSendInfo mail:mails){
 			String subject = mail.getSubject();
 			String content = mail.getContent();
@@ -47,7 +47,7 @@ public class SendMailSheduler {
 					mail.setSendNum(4);
 					mail.setSendTime(new Date());
 					mail.setStatus("F");
-					mail.setFailMsg("Ö÷Ìâ¡¢ÄÚÈİ¡¢ÊÕ¼şÈË²»¿ÉÎª¿Õ£¡");
+					mail.setFailMsg("ä¸»é¢˜ã€å†…å®¹ã€æ”¶ä»¶äººä¸å¯ä¸ºç©ºï¼");
 					mailSendService.updateMailInfo(mail);
 					return;
 				}else{
@@ -57,7 +57,7 @@ public class SendMailSheduler {
 				return;
 			}
 		}
-		log.info("=====Åú´¦ÀíÓÊ¼ş·¢ËÍ½áÊø=====");
+		log.info("=====æ‰¹å¤„ç†é‚®ä»¶å‘é€ç»“æŸ=====");
 	}
 	
 	private void sendOneMail(MailSendInfo mail){
@@ -73,7 +73,7 @@ public class SendMailSheduler {
 			if(str.matches(regexp)){
 				listToAddr.add(str);
 			}else if(str.trim().length()>0){
-				failMsg.append("ÊÕ¼şÈËµØÖ·¡¾" + str + "¡¿¸ñÊ½²»ÕıÈ·£¡") ;
+				failMsg.append("æ”¶ä»¶äººåœ°å€ã€" + str + "ã€‘æ ¼å¼ä¸æ­£ç¡®ï¼") ;
 			}
 		}
 		List<String> listCCAddr = null;
@@ -84,7 +84,7 @@ public class SendMailSheduler {
 				if(str.matches(regexp)){
 					listCCAddr.add(str);
 				}else if(str.trim().length()>0){
-					failMsg.append("³­ËÍµØÖ·¡¾" + str + "¡¿¸ñÊ½²»ÕıÈ·£¡") ;
+					failMsg.append("æŠ„é€åœ°å€ã€" + str + "ã€‘æ ¼å¼ä¸æ­£ç¡®ï¼") ;
 				}
 			}
 		}
@@ -97,7 +97,7 @@ public class SendMailSheduler {
 				if(str.matches(regexp)){
 					listBCCAddr.add(str);
 				}else if(str.trim().length()>0){
-					failMsg.append("ÃÜËÍµØÖ·¡¾" + str + "¡¿¸ñÊ½²»ÕıÈ·£¡") ;
+					failMsg.append("å¯†é€åœ°å€ã€" + str + "ã€‘æ ¼å¼ä¸æ­£ç¡®ï¼") ;
 				}
 			}
 		}
@@ -111,17 +111,17 @@ public class SendMailSheduler {
 				if(file.exists() && !file.isDirectory() && file.canRead()){
 					attachFiles.add(file);
 				}else if(name.trim().length()>0){
-					failMsg.append("¸½¼şĞëÎª¡¾" + name + "¡¿¿É¶ÁµÄÆÕÍ¨ÎÄ¼ş£¨·ÇÄ¿Â¼£©£¡");
+					failMsg.append("é™„ä»¶é¡»ä¸ºã€" + name + "ã€‘å¯è¯»çš„æ™®é€šæ–‡ä»¶ï¼ˆéç›®å½•ï¼‰ï¼");
 				}
 			}
 		}
-		//ÊÕ¼şÈËµØÖ·Îª¿Õ
+		//æ”¶ä»¶äººåœ°å€ä¸ºç©º
 		if(listToAddr == null || listToAddr.isEmpty()){
 			mail.setSendNum(4);
 			mail.setSendTime(new Date());
 			mail.setStatus("F");
 			if(failMsg.length()<1){
-				failMsg.append("ÊÕ¼şÈËµØÖ·¸ñÊ½²»ÕıÈ·(Îª¿Õ)£¡");
+				failMsg.append("æ”¶ä»¶äººåœ°å€æ ¼å¼ä¸æ­£ç¡®(ä¸ºç©º)ï¼");
 			}
 			mail.setFailMsg(failMsg.toString());
 			mailSendService.updateMailInfo(mail);

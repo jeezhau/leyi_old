@@ -8,99 +8,99 @@ import me.jeekhan.leyi.model.ArticleContent;
 import me.jeekhan.leyi.model.ReviewInfo;
 
 /**
- * ÎÄÕÂÏà¹Ø·şÎñ
+ * æ–‡ç« ç›¸å…³æœåŠ¡
  * @author Jee Khan
  *
  */
 public interface ArticleService {
 	
 	/**
-	 * ±£´æÎÄÕÂ¼ò½éĞÅÏ¢
-	 * @param articleBrief	ÎÄÕÂ¼ò½é
+	 * ä¿å­˜æ–‡ç« ç®€ä»‹ä¿¡æ¯
+	 * @param articleBrief	æ–‡ç« ç®€ä»‹
 	 * @return
 	 */
 	public int saveArticleBrief(ArticleBrief articleBrief);
 	/**
-	 * ±£´æÎÄÕÂÄÚÈİ
-	 * @param articleContent	ÎÄÕÂÄÚÈİ
+	 * ä¿å­˜æ–‡ç« å†…å®¹
+	 * @param articleContent	æ–‡ç« å†…å®¹
 	 * @return
 	 */
 	public int saveArticleContent(ArticleContent articleContent);
 	/**
-	 * ±£´æÎÄÕÂÈ«²¿ĞÅÏ¢
-	 * @param articleBrief		ÎÄÕÂ¼ò½é
-	 * @param articleContent	ÎÄÕÂÄÚÈİ
+	 * ä¿å­˜æ–‡ç« å…¨éƒ¨ä¿¡æ¯
+	 * @param articleBrief		æ–‡ç« ç®€ä»‹
+	 * @param articleContent	æ–‡ç« å†…å®¹
 	 * @return
 	 */
 	public int saveArticleInfo(ArticleBrief articleBrief,ArticleContent articleContent);
 	/**
-	 * Âß¼­É¾³ıÖ¸¶¨µÄÎÄÕÂ
+	 * é€»è¾‘åˆ é™¤æŒ‡å®šçš„æ–‡ç« 
 	 * @param articleId
 	 * @return
 	 */
 	public int deleteArticle(int articleId);
 	
 	/**
-	 * »ñÈ¡Ö¸¶¨ÎÄÕÂµÄ¼ò½éĞÅÏ¢
-	 * @param id	ÎÄÕÂID
+	 * è·å–æŒ‡å®šæ–‡ç« çš„ç®€ä»‹ä¿¡æ¯
+	 * @param id	æ–‡ç« ID
 	 * @return
 	 */
 	public ArticleBrief getArticleBref(int id);
 	/**
-	 * »ñÈ¡Ö¸¶¨ÎÄÕÂµÄÄÚÈİ
-	 * @param id	ÎÄÕÂID
+	 * è·å–æŒ‡å®šæ–‡ç« çš„å†…å®¹
+	 * @param id	æ–‡ç« ID
 	 * @return
 	 */
 	public ArticleContent getArticleContent(int id);
 	
 	/**
-	 * ·ÖÒ³²éÑ¯Ö¸¶¨ÓÃ»§µÄËùÓĞÎÄÕÂĞÅÏ¢£¬°´¸üĞÂÊ±¼ä£¬ÆÀÂÛÊıÁ¿½µĞòÅÅÁĞ;
-	 * ·ÖÒ³ÏÔÊ¾
-	 * @param userId	ÓÃ»§ID
-	 * @param isSelf ÊÇ·ñ°üº¬ÉóºËÖĞµÄ¼ÇÂ¼
-	 * @param pageCond	·ÖÒ³Ìõ¼ş
+	 * åˆ†é¡µæŸ¥è¯¢æŒ‡å®šç”¨æˆ·çš„æ‰€æœ‰æ–‡ç« ä¿¡æ¯ï¼ŒæŒ‰æ›´æ–°æ—¶é—´ï¼Œè¯„è®ºæ•°é‡é™åºæ’åˆ—;
+	 * åˆ†é¡µæ˜¾ç¤º
+	 * @param userId	ç”¨æˆ·ID
+	 * @param isSelf æ˜¯å¦åŒ…å«å®¡æ ¸ä¸­çš„è®°å½•
+	 * @param pageCond	åˆ†é¡µæ¡ä»¶
 	 * @return
 	 */
 	public List<ArticleBrief> getArticlesByUser(int userId,boolean isSelf,PageCond pageCond);
 	
 	/**
-	 * ·ÖÒ³²éÑ¯ÏÔÊ¾ËùÓĞÓÃ»§µÄËùÓĞÎÄÕÂĞÅÏ¢£¬°´¸üĞÂÊ±¼ä£¬ÆÀÂÛÊıÁ¿½µĞòÅÅÁĞ
-	 * @param isSelf ÊÇ·ñ°üº¬ÉóºËÖĞµÄ¼ÇÂ¼
-	 * @param pageCond	·ÖÒ³Ìõ¼ş
+	 * åˆ†é¡µæŸ¥è¯¢æ˜¾ç¤ºæ‰€æœ‰ç”¨æˆ·çš„æ‰€æœ‰æ–‡ç« ä¿¡æ¯ï¼ŒæŒ‰æ›´æ–°æ—¶é—´ï¼Œè¯„è®ºæ•°é‡é™åºæ’åˆ—
+	 * @param isSelf æ˜¯å¦åŒ…å«å®¡æ ¸ä¸­çš„è®°å½•
+	 * @param pageCond	åˆ†é¡µæ¡ä»¶
 	 * @return
 	 */
 	public List<ArticleBrief> getArticles(boolean isSelf,PageCond pageCond);
 	
 	/**
-	 * ·ÖÒ³²éÑ¯ÏÔÊ¾Ö¸¶¨Ö÷ÌâÏÂµÄËùÓĞÎÄÕÂĞÅÏ¢£¬°´¸üĞÂÊ±¼ä£¬ÆÀÂÛÊıÁ¿½µĞòÅÅÁĞ
+	 * åˆ†é¡µæŸ¥è¯¢æ˜¾ç¤ºæŒ‡å®šä¸»é¢˜ä¸‹çš„æ‰€æœ‰æ–‡ç« ä¿¡æ¯ï¼ŒæŒ‰æ›´æ–°æ—¶é—´ï¼Œè¯„è®ºæ•°é‡é™åºæ’åˆ—
 	 * @param themeId
-	 * @param isSelf ÊÇ·ñ°üº¬ÉóºËÖĞµÄ¼ÇÂ¼
+	 * @param isSelf æ˜¯å¦åŒ…å«å®¡æ ¸ä¸­çš„è®°å½•
 	 * @return
 	 */
 	public List<ArticleBrief> getArticlesByTheme(int themeId,boolean isSelf,PageCond pageCond);
 	
 	/**
-	 * È¡×îĞÂ×îÈÈÃÅµÄÎÄÕÂ20Ìõ
+	 * å–æœ€æ–°æœ€çƒ­é—¨çš„æ–‡ç« 20æ¡
 	 * @return
 	 */
     public List<ArticleBrief> getHotNewArticles();
     
 	/**
-	 * È¡×îĞÂ´ıÉóºËµÄÎÄÕÂ20Ìõ
+	 * å–æœ€æ–°å¾…å®¡æ ¸çš„æ–‡ç« 20æ¡
 	 * @return
 	 */
     public List<ArticleBrief> getArticles4Review();
 
 	/**
-	 * ÎÄÕÂÉóºË
-	 * @param articleId	  ÎÄÕÂID
-	 * @param result	  ÉóºË½á¹û£º0-Í¨¹ı£¬R-¾Ü¾ø
-	 * @param reviewInfo ÉóºËĞÅÏ¢
+	 * æ–‡ç« å®¡æ ¸
+	 * @param articleId	  æ–‡ç« ID
+	 * @param result	  å®¡æ ¸ç»“æœï¼š0-é€šè¿‡ï¼ŒR-æ‹’ç»
+	 * @param reviewInfo å®¡æ ¸ä¿¡æ¯
 	 */
 	public int reviewArticle(int articleId,String result,ReviewInfo reviewInfo);
 	
 	/**
-	 * È¡´ıÉóºËÎÄÕÂÊıÁ¿
+	 * å–å¾…å®¡æ ¸æ–‡ç« æ•°é‡
 	 * @return
 	 */
 	public int get4ReviewArticlesCnt();

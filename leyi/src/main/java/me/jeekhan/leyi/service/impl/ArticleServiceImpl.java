@@ -16,8 +16,8 @@ import me.jeekhan.leyi.model.ReviewInfo;
 import me.jeekhan.leyi.service.ArticleService;
 
 /**
- * ÎÄÕÂÏà¹Ø·şÎñ
- * ¹¦ÄÜÈ¨ÏŞ²¿·ÖÊ¹ÓÃÆäËû·½Ê½¿ØÖÆ
+ * æ–‡ç« ç›¸å…³æœåŠ¡
+ * åŠŸèƒ½æƒé™éƒ¨åˆ†ä½¿ç”¨å…¶ä»–æ–¹å¼æ§åˆ¶
  * @author Jee Khan
  *
  */
@@ -30,21 +30,21 @@ public class ArticleServiceImpl implements ArticleService {
 	@Autowired
 	private ReviewInfoMapper reviewInfoMapper;
 	/**
-	 * »ñÈ¡Ö¸¶¨ÎÄÕÂĞÅÏ¢
+	 * è·å–æŒ‡å®šæ–‡ç« ä¿¡æ¯
 	 */
 	@Override
 	public ArticleBrief getArticleBref(int articleId) {
 		return articleBriefMapper.selectByPrimaryKey(articleId);
 	}
 	/**
-	 * »ñÈ¡Ö¸¶¨ÎÄÕÂÄÚÈİ
+	 * è·å–æŒ‡å®šæ–‡ç« å†…å®¹
 	 */
 	@Override
 	public ArticleContent getArticleContent(int articleId) {
 		return articleContentMapper.selectByPrimaryKey(articleId);
 	}
 	/**
-	 * ²éÑ¯Ö¸¶¨ÓÃ»§ÏÂµÄËùÓĞÎÄÕÂ
+	 * æŸ¥è¯¢æŒ‡å®šç”¨æˆ·ä¸‹çš„æ‰€æœ‰æ–‡ç« 
 	 */
 	@Override
 	public List<ArticleBrief> getArticlesByUser(int userId,boolean isSelf,PageCond pageCond){
@@ -55,7 +55,7 @@ public class ArticleServiceImpl implements ArticleService {
 		return list;
 	}
 	/**
-	 * ²éÑ¯ËùÓĞÎÄÕÂĞÅÏ¢
+	 * æŸ¥è¯¢æ‰€æœ‰æ–‡ç« ä¿¡æ¯
 	 */
 	public List<ArticleBrief> getArticles(boolean isSelf,PageCond pageCond){
 		if(pageCond == null){
@@ -65,9 +65,9 @@ public class ArticleServiceImpl implements ArticleService {
 		return list;
 	}
 	/**
-	 * ±£´æÎÄÕÂĞÅÏ¢£ºÓĞÔò¸üĞÂ£¬ÎŞÔò²åÈë
-	 * @param articleBrief	ÎÄÕÂ¼ò½é
-	 * @return ÎÄÕÂID
+	 * ä¿å­˜æ–‡ç« ä¿¡æ¯ï¼šæœ‰åˆ™æ›´æ–°ï¼Œæ— åˆ™æ’å…¥
+	 * @param articleBrief	æ–‡ç« ç®€ä»‹
+	 * @return æ–‡ç« ID
 	 */
 	@Override
 	public int saveArticleBrief(ArticleBrief articleBrief) {
@@ -85,9 +85,9 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 	}
 	/**
-	 * ±£´æÎÄÕÂÄÚÈİ£ºÓĞÔò¸üĞÂ£¬ÎŞÔò²åÈë
-	 * @param articleContent	ÎÄÕÂÄÚÈİ
-	 * @return ÎÄÕÂID
+	 * ä¿å­˜æ–‡ç« å†…å®¹ï¼šæœ‰åˆ™æ›´æ–°ï¼Œæ— åˆ™æ’å…¥
+	 * @param articleContent	æ–‡ç« å†…å®¹
+	 * @return æ–‡ç« ID
 	 */
 	@Override
 	public int saveArticleContent(ArticleContent articleContent) {
@@ -106,10 +106,10 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 	}
 	/**
-	 * ±£´æÎÄÕÂÈ«²¿ĞÅÏ¢£ºÓĞÔò¸üĞÂ£¬ÎŞÔò²åÈë
-	 * @param articleBrief	ÎÄÕÂ¼ò½é
-	 * @param articleContent	ÎÄÕÂÄÚÈİ  
-	 * @return ÎÄÕÂID 
+	 * ä¿å­˜æ–‡ç« å…¨éƒ¨ä¿¡æ¯ï¼šæœ‰åˆ™æ›´æ–°ï¼Œæ— åˆ™æ’å…¥
+	 * @param articleBrief	æ–‡ç« ç®€ä»‹
+	 * @param articleContent	æ–‡ç« å†…å®¹  
+	 * @return æ–‡ç« ID 
 	 */
 	@Override
 	public int saveArticleInfo(ArticleBrief articleBrief, ArticleContent articleContent) {
@@ -124,7 +124,7 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleBrief.getId();
 	}
 	/**
-	 * Âß¼­É¾³ıÖ¸¶¨ÎÄÕÂ
+	 * é€»è¾‘åˆ é™¤æŒ‡å®šæ–‡ç« 
 	 */
 	@Override
 	public int deleteArticle(int articleId) {
@@ -132,29 +132,29 @@ public class ArticleServiceImpl implements ArticleService {
 	}	
 	
 	/**
-	 * »ñÈ¡Ö¸¶¨Ö÷ÌâÏÂµÄËùÓĞÎÄÕÂ¼ò½éĞÅÏ¢
+	 * è·å–æŒ‡å®šä¸»é¢˜ä¸‹çš„æ‰€æœ‰æ–‡ç« ç®€ä»‹ä¿¡æ¯
 	 */
 	@Override
 	public List<ArticleBrief> getArticlesByTheme(int themeId,boolean isSelf,PageCond pageCond){
 		return articleBriefMapper.selectArticlesByTheme(themeId, isSelf,pageCond);
 	}
 	/**
-	 * È¡×îĞÂ×îÈÈÃÅµÄÎÄÕÂ20Ìõ
+	 * å–æœ€æ–°æœ€çƒ­é—¨çš„æ–‡ç« 20æ¡
 	 */
 	public List<ArticleBrief> getHotNewArticles(){
 		return articleBriefMapper.selectArticles(false, new PageCond());
 	}
 	/**
-	 * È¡×îĞÂ´ıÉóºËµÄ20Ìõ¼ÇÂ¼
+	 * å–æœ€æ–°å¾…å®¡æ ¸çš„20æ¡è®°å½•
 	 */
 	public List<ArticleBrief> getArticles4Review(){
 		return articleBriefMapper.selectArticles4Review();
 	}
 	/**
-	 * ÎÄÕÂÉóºË
-	 * @param articleId	  ÎÄÕÂID
-	 * @param result	  ÉóºË½á¹û£º0-Í¨¹ı£¬R-¾Ü¾ø
-	 * @param reviewInfo ÉóºËĞÅÏ¢
+	 * æ–‡ç« å®¡æ ¸
+	 * @param articleId	  æ–‡ç« ID
+	 * @param result	  å®¡æ ¸ç»“æœï¼š0-é€šè¿‡ï¼ŒR-æ‹’ç»
+	 * @param reviewInfo å®¡æ ¸ä¿¡æ¯
 	 */
 	public int reviewArticle(int articleId,String result,ReviewInfo reviewInfo) {
 		String briefInfo = articleBriefMapper.selectByPrimaryKey(articleId).toString();
@@ -177,7 +177,7 @@ public class ArticleServiceImpl implements ArticleService {
 		
 	}
 	/**
-	 * È¡´ıÉóºËÎÄÕÂÊıÁ¿
+	 * å–å¾…å®¡æ ¸æ–‡ç« æ•°é‡
 	 * @return
 	 */
 	@Override

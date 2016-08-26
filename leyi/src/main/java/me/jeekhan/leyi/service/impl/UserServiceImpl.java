@@ -26,24 +26,24 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private ReviewInfoMapper reviewInfoMapper;
 	/**
-	 * ÌáÈ¡ÓÃ»§»ù±¾ĞÅÏ¢
-	 * @param	ÓÃ»§ID
+	 * æå–ç”¨æˆ·åŸºæœ¬ä¿¡æ¯
+	 * @param	ç”¨æˆ·ID
 	 */
 	@Override
 	public UserBaseInfo getUserBaseInfo(int id){
 		return userBaseInfoMapper.selectByPrimaryKey(id);
 	}
 	/**
-	 * ÌáÈ¡ÓÃ»§»ù±¾ĞÅÏ¢
-	 * @param	ÓÃ»§Ãû»òÓÊÏä
+	 * æå–ç”¨æˆ·åŸºæœ¬ä¿¡æ¯
+	 * @param	ç”¨æˆ·åæˆ–é‚®ç®±
 	 */
 	public UserFullInfo getUserFullInfo(String username){
 		return userFullInfoMapper.selectByName(username);
 	}
 	/**
-	 * ÓÃ»§Éí·İÑéÖ¤
-	 * @param	userBaseInfo	ÓÃ»§»ù±¾ĞÅÏ¢
-	 * @param	passwd			ÓÃ»§ÃÜÂë£¨Ã÷ÎÄ£©
+	 * ç”¨æˆ·èº«ä»½éªŒè¯
+	 * @param	userBaseInfo	ç”¨æˆ·åŸºæœ¬ä¿¡æ¯
+	 * @param	passwd			ç”¨æˆ·å¯†ç ï¼ˆæ˜æ–‡ï¼‰
 	 */
 	@Override
 	public boolean authentification(String username, String passwd) {
@@ -62,8 +62,8 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 	/**
-	 * »ñÈ¡ÓÃ»§µÄÏêÏ¸ĞÅÏ¢
-	 * @param	ÓÃ»§ID
+	 * è·å–ç”¨æˆ·çš„è¯¦ç»†ä¿¡æ¯
+	 * @param	ç”¨æˆ·ID
 	 */
 	@Override
 	public UserFullInfo getUserFullInfo(int id) {
@@ -71,9 +71,9 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	/**
-	 * ±£´æÓÃ»§£ºÓĞÔò¸üĞÂ£¬ÎŞÔòĞŞ¸Ä
-	 * @param	ÓÃ»§ÏêÏ¸ĞÅÏ¢
-	 * @return  ÓÃ»§ID,0-È±ÉÙĞÅÏ¢£¬-1-ÓÃ»§ÃûÒÑ±»Ê¹ÓÃ,-2-ÓÊÏäÒÑ±»Ê¹ÓÃ
+	 * ä¿å­˜ç”¨æˆ·ï¼šæœ‰åˆ™æ›´æ–°ï¼Œæ— åˆ™ä¿®æ”¹
+	 * @param	ç”¨æˆ·è¯¦ç»†ä¿¡æ¯
+	 * @return  ç”¨æˆ·ID,0-ç¼ºå°‘ä¿¡æ¯ï¼Œ-1-ç”¨æˆ·åå·²è¢«ä½¿ç”¨,-2-é‚®ç®±å·²è¢«ä½¿ç”¨
 	 * @throws UnsupportedEncodingException 
 	 * @throws NoSuchAlgorithmException 
 	 */
@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 	/**
-	 * Ëæ»ú»ñÈ¡Ò»¸ö¿ÉÓÃÓÚÏÔÊ¾ÓÚÊ×Ò³µÄÓÃ»§
+	 * éšæœºè·å–ä¸€ä¸ªå¯ç”¨äºæ˜¾ç¤ºäºé¦–é¡µçš„ç”¨æˆ·
 	 * @return
 	 */
 	@Override
@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	/**
-	 * È¡´ıÉóºËÓÃ»§ÊıÁ¿
+	 * å–å¾…å®¡æ ¸ç”¨æˆ·æ•°é‡
 	 * @return
 	 */
 	@Override
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	/**
-	 * È¡10Ìõ´ıÉóºËµÄÓÃ»§
+	 * å–10æ¡å¾…å®¡æ ¸çš„ç”¨æˆ·
 	 * @return
 	 */
 	public List<UserFullInfo> getUsers4Review(){
@@ -129,10 +129,10 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	/**
-	 * ÓÃ»§ÉóºË
-	 * @param userId   ÓÃ»§ID
-	 * @param result	ÉóºË½á¹û:0-Í¨¹ı,R-¾Ü¾ø
-	 * @param reviewInfo	ÉóºËËµÃ÷
+	 * ç”¨æˆ·å®¡æ ¸
+	 * @param userId   ç”¨æˆ·ID
+	 * @param result	å®¡æ ¸ç»“æœ:0-é€šè¿‡,R-æ‹’ç»
+	 * @param reviewInfo	å®¡æ ¸è¯´æ˜
 	 */
 	@Override
 	public int reviewUser(int userId,String result,ReviewInfo reviewInfo){

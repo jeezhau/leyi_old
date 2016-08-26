@@ -1,6 +1,5 @@
 package me.jeekhan.leyi.controller;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -18,13 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import me.jeekhan.leyi.dto.Operator;
-import me.jeekhan.leyi.model.ArticleBrief;
 import me.jeekhan.leyi.model.ReviewInfo;
 import me.jeekhan.leyi.model.ThemeClass;
 import me.jeekhan.leyi.service.ThemeClassService;
 
 /**
- * Ö÷ÌâÏà¹Ø·ÃÎÊ¿ØÖÆÀà
+ * ä¸»é¢˜ç›¸å…³è®¿é—®æ§åˆ¶ç±»
  * @author Jee Khan
  *
  */
@@ -36,14 +34,14 @@ public class ThemeClassAction {
 	private ThemeClassService themeClassService;
 	
 	/**
-	 * È¡ÓÃ»§×Ô¼ºµÄÖ¸¶¨Ö÷ÌâĞÅÏ¢£¬°üÀ¨ËùÓĞÖ±½ÓÏÂ¼¶Ö÷Ìâ·ÖÀà
-	 * ¡¾È¨ÏŞ¡¿
-	 *  1¡¢µÇÂ¼ÓÃ»§
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 * 	1¡¢¸üĞÂÓÃ»§µÄ¶¥²ãÖ÷Ìâ£»
-	 * 	2¡¢ÉèÖÃÖ¸¶¨Ö÷ÌâÎªµ±Ç°Ö÷Ìâ£»
-	 * 	3¡¢¸üĞÂµ±Ç°Ö÷ÌâµÄÏòÉÏÖ÷Ìâ²ã´ÎÊ÷£»
-	 * 	4¡¢»ñÈ¡µ±Ç°Ö÷ÌâµÄËùÓĞÖ±½ÓÏÂÊôÖ÷Ìâ£»
+	 * å–ç”¨æˆ·è‡ªå·±çš„æŒ‡å®šä¸»é¢˜ä¿¡æ¯ï¼ŒåŒ…æ‹¬æ‰€æœ‰ç›´æ¥ä¸‹çº§ä¸»é¢˜åˆ†ç±»
+	 * ã€æƒé™ã€‘
+	 *  1ã€ç™»å½•ç”¨æˆ·
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 * 	1ã€æ›´æ–°ç”¨æˆ·çš„é¡¶å±‚ä¸»é¢˜ï¼›
+	 * 	2ã€è®¾ç½®æŒ‡å®šä¸»é¢˜ä¸ºå½“å‰ä¸»é¢˜ï¼›
+	 * 	3ã€æ›´æ–°å½“å‰ä¸»é¢˜çš„å‘ä¸Šä¸»é¢˜å±‚æ¬¡æ ‘ï¼›
+	 * 	4ã€è·å–å½“å‰ä¸»é¢˜çš„æ‰€æœ‰ç›´æ¥ä¸‹å±ä¸»é¢˜ï¼›
 	 * @param themeId
 	 * @return
 	 */
@@ -65,13 +63,13 @@ public class ThemeClassAction {
 			
 			return "themeClass";
 		}else{
-			return redirectUrl + "?error=ÏµÍ³ÖĞÎŞ¸ÃÖ÷ÌâĞÅÏ¢£¡";
+			return redirectUrl + "?error=ç³»ç»Ÿä¸­æ— è¯¥ä¸»é¢˜ä¿¡æ¯ï¼";
 		}
 		
 	}
 	
 	/**
-	 * ½ö³¬¼¶ÓÃ»§²Å¿ÉÊ¹ÓÃ¸Ã¹¦ÄÜ
+	 * ä»…è¶…çº§ç”¨æˆ·æ‰å¯ä½¿ç”¨è¯¥åŠŸèƒ½
 	 * @return
 	 */
 	@RequestMapping(value="/all",method=RequestMethod.GET)
@@ -81,12 +79,12 @@ public class ThemeClassAction {
 	}
 	
 	/**
-	 * Ìí¼ÓÖ÷Ìâ
-	 * ¡¾È¨ÏŞ¡¿
-	 *  1¡¢µÇÂ¼ÓÃ»§
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 *  1¡¢ÓĞIdÔò¸üĞÂ£¬ÎŞIDÔòĞÂ²å£»
-	 *  2¡¢Í¬²ãÏÂ²»¿É´æÔÚÍ¬ÃûµÄÖ÷Ìâ£»
+	 * æ·»åŠ ä¸»é¢˜
+	 * ã€æƒé™ã€‘
+	 *  1ã€ç™»å½•ç”¨æˆ·
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 *  1ã€æœ‰Idåˆ™æ›´æ–°ï¼Œæ— IDåˆ™æ–°æ’ï¼›
+	 *  2ã€åŒå±‚ä¸‹ä¸å¯å­˜åœ¨åŒåçš„ä¸»é¢˜ï¼›
 	 * @param theme
 	 * @return
 	 */
@@ -101,7 +99,7 @@ public class ThemeClassAction {
 			}
 			return redirectUrl + "?error=" + errors;
 		}
-		theme.setParentId(theme.getId());	//ÉèÖÃ¸¸Ö÷Ìâ
+		theme.setParentId(theme.getId());	//è®¾ç½®çˆ¶ä¸»é¢˜
 		theme.setId(null);
 		theme.setUpdateOpr(operator.getUserId());
 		int id = themeClassService.saveThemeClass(theme);
@@ -111,13 +109,13 @@ public class ThemeClassAction {
 			String msg = "";
 			switch(id){
 				case -1:
-					msg = "Êı¾İ²»ÕıÈ·£¡";
+					msg = "æ•°æ®ä¸æ­£ç¡®ï¼";
 					break;
 				case -2:
-					msg = "¶¥²ãÖ÷Ìâ¸öÊı´óÓÚ6¸ö£¡";
+					msg = "é¡¶å±‚ä¸»é¢˜ä¸ªæ•°å¤§äº6ä¸ªï¼";
 					break;
 				case -3:
-					msg = "´æÔÚÍ¬²ãÍ¬ÃûµÄ»î¶¯Ö÷Ìâ£¡";
+					msg = "å­˜åœ¨åŒå±‚åŒåçš„æ´»åŠ¨ä¸»é¢˜ï¼";
 					break;
 			}
 			return redirectUrl + "?error=" + msg;
@@ -125,11 +123,11 @@ public class ThemeClassAction {
 	}
 	
 	/**
-	 * ¸üĞÂÖ÷Ìâ
-	 * ¡¾È¨ÏŞ¡¿
-	 *  1¡¢µÇÂ¼ÓÃ»§
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 *  1¡¢ÑéÖ¤È¨ÏŞ£º½öÓµÓĞÕß¿É¸üĞÂ£»
+	 * æ›´æ–°ä¸»é¢˜
+	 * ã€æƒé™ã€‘
+	 *  1ã€ç™»å½•ç”¨æˆ·
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 *  1ã€éªŒè¯æƒé™ï¼šä»…æ‹¥æœ‰è€…å¯æ›´æ–°ï¼›
 	 * @param theme
 	 * @param operator
 	 * @return
@@ -138,7 +136,7 @@ public class ThemeClassAction {
 	public String updateTheme(@Valid ThemeClass theme,BindingResult result,@ModelAttribute("operator") Operator operator,Map<String,String> map){
 		String redirectUrl = "redirect:/" + operator.getUsername() + "/theme_mgr/";
 		if(theme == null || theme.getId()==null){
-			return redirectUrl + "?error=Ã»ÓĞÖ¸¶¨Ö÷Ìâ£¡";
+			return redirectUrl + "?error=æ²¡æœ‰æŒ‡å®šä¸»é¢˜ï¼";
 		}
 		if(result.hasErrors()){
 			String errors = "";
@@ -159,29 +157,29 @@ public class ThemeClassAction {
 				String msg = "";
 				switch(id){
 					case -1:
-						msg = "Êı¾İ²»ÕıÈ·£¡";
+						msg = "æ•°æ®ä¸æ­£ç¡®ï¼";
 						break;
 					case -2:
-						msg = "¶¥²ãÖ÷Ìâ¸öÊı´óÓÚ6¸ö£¡";
+						msg = "é¡¶å±‚ä¸»é¢˜ä¸ªæ•°å¤§äº6ä¸ªï¼";
 						break;
 					case -3:
-						msg = "´æÔÚÍ¬²ãÍ¬ÃûµÄ»î¶¯Ö÷Ìâ£¡";
+						msg = "å­˜åœ¨åŒå±‚åŒåçš„æ´»åŠ¨ä¸»é¢˜ï¼";
 						break;
 				}
 				map.put("error", msg);
 				return  redirectUrl + "?error=" + msg;
 			}
 		}else{	
-			return redirectUrl + "?error=ÄúÎŞÈ¨ÏŞÖ´ĞĞ¸Ã²Ù×÷£¡";
+			return redirectUrl + "?error=æ‚¨æ— æƒé™æ‰§è¡Œè¯¥æ“ä½œï¼";
 		}
 	}
 	
 	/**
-	 * É¾³ıÖ÷Ìâ
-	 * ¡¾È¨ÏŞ¡¿
-	 *  1¡¢µÇÂ¼ÓÃ»§
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 *  1¡¢ÑéÖ¤È¨ÏŞ£º½öÓµÓĞÕß¿ÉÉ¾³ı£»
+	 * åˆ é™¤ä¸»é¢˜
+	 * ã€æƒé™ã€‘
+	 *  1ã€ç™»å½•ç”¨æˆ·
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 *  1ã€éªŒè¯æƒé™ï¼šä»…æ‹¥æœ‰è€…å¯åˆ é™¤ï¼›
 	 * @param themeId
 	 * @param operator
 	 * @return
@@ -190,25 +188,25 @@ public class ThemeClassAction {
 	public String deleteTheme(ThemeClass theme,@ModelAttribute("operator") Operator operator){
 		String redirectUrl = "redirect:/" + operator.getUsername() + "/theme_mgr/";
 		if(theme == null || theme.getId()==null){
-			return redirectUrl + "?error=Ã»ÓĞÖ¸¶¨Ö÷Ìâ£¡";
+			return redirectUrl + "?error=æ²¡æœ‰æŒ‡å®šä¸»é¢˜ï¼";
 		}
 		ThemeClass tmp = themeClassService.getThemeClass(theme.getId());
 		if(tmp!=null && tmp.getUpdateOpr() == operator.getUserId()){
 			Integer id = themeClassService.deleteThemeClass(theme.getId());
 			return redirectUrl;
 		}else{
-			return redirectUrl + "?error=ÄúÎŞÈ¨ÏŞÖ´ĞĞ¸Ã²Ù×÷£¡";
+			return redirectUrl + "?error=æ‚¨æ— æƒé™æ‰§è¡Œè¯¥æ“ä½œï¼";
 		}
 	}
 	
 	/**
-	 * ÓÃ»§Ö÷Ìâ¹ÜÀíÊ×Ò³
-	 * ¡¾È¨ÏŞ¡¿
-	 *  1¡¢µÇÂ¼ÓÃ»§
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 * 	1¡¢Ä¬ÈÏÉèÖÃµÚÒ»¸ö¶¥²ãÖ÷ÌâÎªµ±Ç°Ö÷Ìâ£»
-	 * 	2¡¢ÉèÖÃµ±Ç°Ö÷ÌâµÄÏòÉÏÖ÷Ìâ²ã´ÎÊ÷£»
-	 *  3¡¢»ñÈ¡µ±Ç°Ö÷ÌâµÄËùÓĞÖ±½ÓÏÂÊôÖ÷Ìâ£»
+	 * ç”¨æˆ·ä¸»é¢˜ç®¡ç†é¦–é¡µ
+	 * ã€æƒé™ã€‘
+	 *  1ã€ç™»å½•ç”¨æˆ·
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 * 	1ã€é»˜è®¤è®¾ç½®ç¬¬ä¸€ä¸ªé¡¶å±‚ä¸»é¢˜ä¸ºå½“å‰ä¸»é¢˜ï¼›
+	 * 	2ã€è®¾ç½®å½“å‰ä¸»é¢˜çš„å‘ä¸Šä¸»é¢˜å±‚æ¬¡æ ‘ï¼›
+	 *  3ã€è·å–å½“å‰ä¸»é¢˜çš„æ‰€æœ‰ç›´æ¥ä¸‹å±ä¸»é¢˜ï¼›
 	 * @param themeId
 	 * @return
 	 */
@@ -227,12 +225,12 @@ public class ThemeClassAction {
 		return "themeClass";
 	}
 	/**
-	 * Ö÷ÌâÉóºË£ºÍ¨¹ı
-	 * ¡¾È¨ÏŞ¡¿
-	 * 	1¡¢½öµÇÂ¼µÄ¹ÜÀíÔ±¿ÉÖ´ĞĞ¸Ã²Ù×÷£»
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 *  1¡¢ÅĞ¶ÏÉóºËµÄÖ÷ÌâÊÇ·ñ´æÔÚ£»
-	 *  2¡¢Ö´ĞĞÉóºËÍ¨¹ı
+	 * ä¸»é¢˜å®¡æ ¸ï¼šé€šè¿‡
+	 * ã€æƒé™ã€‘
+	 * 	1ã€ä»…ç™»å½•çš„ç®¡ç†å‘˜å¯æ‰§è¡Œè¯¥æ“ä½œï¼›
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 *  1ã€åˆ¤æ–­å®¡æ ¸çš„ä¸»é¢˜æ˜¯å¦å­˜åœ¨ï¼›
+	 *  2ã€æ‰§è¡Œå®¡æ ¸é€šè¿‡
 	 * @param themeId
 	 * @param remark
 	 * @param operator
@@ -241,18 +239,18 @@ public class ThemeClassAction {
 	@RequestMapping(value="/accept",method=RequestMethod.POST)
 	public String accept(Integer themeId,String remark,@ModelAttribute("operator")Operator operator){
 		String redirectUrl = "redirect:/"+operator.getUsername()+"/review";
-		if(operator == null || operator.getLevel() < 9){ //ÎŞÈ¨ÏŞ
-			return redirectUrl + "?error=ÄúÎŞÈ¨ÏŞÖ´ĞĞ¸Ã²Ù×÷£¡";
+		if(operator == null || operator.getLevel() < 9){ //æ— æƒé™
+			return redirectUrl + "?error=æ‚¨æ— æƒé™æ‰§è¡Œè¯¥æ“ä½œï¼";
 		}
-		if(themeId == null){ //Ö÷ÌâÎª¿Õ
+		if(themeId == null){ //ä¸»é¢˜ä¸ºç©º
 			return redirectUrl;
 		}
 		if(remark !=null && remark.length()>600){
-			return redirectUrl + "?error=" + "ÉóºËËµÃ÷£º²»¿É³¬¹ı600¸ö×Ö·û£¡";
+			return redirectUrl + "?error=" + "å®¡æ ¸è¯´æ˜ï¼šä¸å¯è¶…è¿‡600ä¸ªå­—ç¬¦ï¼";
 		}
 		ThemeClass theme = themeClassService.getThemeClass(themeId);
-		if(theme == null){ //ÎŞ¸ÃÖ÷Ìâ
-			return redirectUrl + "?error=ÏµÍ³ÖĞÎŞ¸ÃÖ÷ÌâĞÅÏ¢£¡";
+		if(theme == null){ //æ— è¯¥ä¸»é¢˜
+			return redirectUrl + "?error=ç³»ç»Ÿä¸­æ— è¯¥ä¸»é¢˜ä¿¡æ¯ï¼";
 		}
 		ReviewInfo reviewInfo = new ReviewInfo();
 		reviewInfo.setReviewInfo(remark);
@@ -261,12 +259,12 @@ public class ThemeClassAction {
 		return redirectUrl;
 	}
 	/**
-	 * Ö÷ÌâÉóºË£º¾Ü¾ø
-	 * ¡¾È¨ÏŞ¡¿
-	 * 	1¡¢½öµÇÂ¼µÄ¹ÜÀíÔ±¿ÉÖ´ĞĞ¸Ã²Ù×÷£»
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 *  1¡¢ÅĞ¶ÏÉóºËµÄÖ÷ÌâÊÇ·ñ´æÔÚ£»
-	 *  2¡¢Ö´ĞĞÉóºË¾Ü¾ø
+	 * ä¸»é¢˜å®¡æ ¸ï¼šæ‹’ç»
+	 * ã€æƒé™ã€‘
+	 * 	1ã€ä»…ç™»å½•çš„ç®¡ç†å‘˜å¯æ‰§è¡Œè¯¥æ“ä½œï¼›
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 *  1ã€åˆ¤æ–­å®¡æ ¸çš„ä¸»é¢˜æ˜¯å¦å­˜åœ¨ï¼›
+	 *  2ã€æ‰§è¡Œå®¡æ ¸æ‹’ç»
 	 * @param themeId
 	 * @param remark
 	 * @param operator
@@ -275,19 +273,19 @@ public class ThemeClassAction {
 	@RequestMapping(value="/refuse",method=RequestMethod.POST)
 	public String refuse(Integer themeId,String remark,@ModelAttribute("operator")Operator operator){
 		String redirectUrl = "redirect:/"+operator.getUsername()+"/review";
-		if(operator == null || operator.getLevel() < 9){ //ÎŞÈ¨ÏŞ
-			return redirectUrl + "?error=ÄúÎŞÈ¨ÏŞÖ´ĞĞ¸Ã²Ù×÷£¡";
+		if(operator == null || operator.getLevel() < 9){ //æ— æƒé™
+			return redirectUrl + "?error=æ‚¨æ— æƒé™æ‰§è¡Œè¯¥æ“ä½œï¼";
 		}
 		
-		if(themeId == null || remark == null || remark.trim().length()<1){ //Ö÷Ìâ»òÉóºËËµÃ÷Îª¿Õ
-			return redirectUrl + "?error=" + ((themeId == null)? "Ö÷ÌâID£º²»¿ÉÎª¿Õ£¡" : "ÉóºËËµÃ÷£º²»¿ÉÎª¿Õ£¡");
+		if(themeId == null || remark == null || remark.trim().length()<1){ //ä¸»é¢˜æˆ–å®¡æ ¸è¯´æ˜ä¸ºç©º
+			return redirectUrl + "?error=" + ((themeId == null)? "ä¸»é¢˜IDï¼šä¸å¯ä¸ºç©ºï¼" : "å®¡æ ¸è¯´æ˜ï¼šä¸å¯ä¸ºç©ºï¼");
 		}
 		if(remark.length()>600){
-			return redirectUrl + "?error=" + "ÉóºËËµÃ÷²»¿É³¬¹ı600¸ö×Ö·û£¡";
+			return redirectUrl + "?error=" + "å®¡æ ¸è¯´æ˜ä¸å¯è¶…è¿‡600ä¸ªå­—ç¬¦ï¼";
 		}
 		ThemeClass theme = themeClassService.getThemeClass(themeId);
-		if(theme == null){ //ÎŞ¸ÃÖ÷Ìâ
-			return redirectUrl + "?error=ÏµÍ³ÖĞÎŞ¸ÃÖ÷ÌâĞÅÏ¢£¡";
+		if(theme == null){ //æ— è¯¥ä¸»é¢˜
+			return redirectUrl + "?error=ç³»ç»Ÿä¸­æ— è¯¥ä¸»é¢˜ä¿¡æ¯ï¼";
 		}
 		ReviewInfo reviewInfo = new ReviewInfo();
 		reviewInfo.setReviewInfo(remark);

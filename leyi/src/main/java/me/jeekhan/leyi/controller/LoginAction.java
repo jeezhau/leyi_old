@@ -1,41 +1,27 @@
 package me.jeekhan.leyi.controller;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
-import me.jeekhan.leyi.common.FileFilter;
-import me.jeekhan.leyi.common.SunSHAUtils;
 import me.jeekhan.leyi.common.SysPropUtil;
 import me.jeekhan.leyi.dto.Operator;
 import me.jeekhan.leyi.model.ArticleBrief;
@@ -52,17 +38,17 @@ public class LoginAction {
 	private ArticleService articleService;
 	
 	/**
-	 * ÓÃ»§µÇÂ¼
-	 * ¡¾È¨ÏŞ¡¿
-	 * 		ËùÓÃÈË
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 * 		1¡¢ÓÃ»§Ê¹ÓÃÓÃ»§Ãû»òÓÊÏä¼ÓÃÜÂë½øĞĞµÇÂ¼
-	 * 		2¡¢µÇÂ¼³É¹¦ÖØ¶¨ÏòÖÁ¸öÈËÖ÷Ò³£¬·ñÔò·µ»ØÊ×Ò³
-	 * ¡¾ÊäÈëÊä³ö¡¿
+	 * ç”¨æˆ·ç™»å½•
+	 * ã€æƒé™ã€‘
+	 * 		æ‰€ç”¨äºº
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 * 		1ã€ç”¨æˆ·ä½¿ç”¨ç”¨æˆ·åæˆ–é‚®ç®±åŠ å¯†ç è¿›è¡Œç™»å½•
+	 * 		2ã€ç™»å½•æˆåŠŸé‡å®šå‘è‡³ä¸ªäººä¸»é¡µï¼Œå¦åˆ™è¿”å›é¦–é¡µ
+	 * ã€è¾“å…¥è¾“å‡ºã€‘
 	 * @param username
 	 * @param password
 	 * @param map
-	 * @return	Ä¿±êÒ³Ãæ
+	 * @return	ç›®æ ‡é¡µé¢
 	 */
 	@RequestMapping(value="/login")
 	public String login(String username,String password,Map<String,Object>map,HttpServletRequest request){
@@ -80,15 +66,15 @@ public class LoginAction {
 		}
 	}
 	/**
-	 * ÓÃ»§×¢ÏúµÇÂ¼
-	 * ¡¾È¨ÏŞ¡¿
-	 * 		ÒÑµÇÂ¼ÓÃ»§
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 * 		1¡¢Çå³ıµÇÂ¼ĞÅÏ¢£»
-	 * 		2¡¢ÖØ¶¨ÏòÖÁ¸öÈËÖ÷Ò³£»
-	 * ¡¾ÊäÈëÊä³ö¡¿
+	 * ç”¨æˆ·æ³¨é”€ç™»å½•
+	 * ã€æƒé™ã€‘
+	 * 		å·²ç™»å½•ç”¨æˆ·
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 * 		1ã€æ¸…é™¤ç™»å½•ä¿¡æ¯ï¼›
+	 * 		2ã€é‡å®šå‘è‡³ä¸ªäººä¸»é¡µï¼›
+	 * ã€è¾“å…¥è¾“å‡ºã€‘
 	 * @param map
-	 * @return	Ä¿±êÒ³Ãæ
+	 * @return	ç›®æ ‡é¡µé¢
 	 */
 	@RequestMapping(value="/logout")
 	public String logout(Map<String,Object>map,SessionStatus session){
@@ -101,14 +87,14 @@ public class LoginAction {
 		}
 	}
 	/**
-	 * ÓÃ»§×¢²á
-	 * ¡¾È¨ÏŞ¡¿
-	 * 		ËùÓÃÈË
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 * 		1¡¢ÑéÖ¤ÓÃ»§Ãû»òÓÊÏäÎ¨Ò»£»
-	 * 		2¡¢×¢²á³É¹¦ÖØ¶¨ÏòÖÁ¸öÈËÖ÷Ò³£¬·ñÔò·µ»Ø×¢²áÒ³Ãæ²¢ÏÔÊ¾Ïà¹Ø´íÎóĞÅÏ¢£»
-	 * 		3¡¢±£´æÓÃ»§Í¼Æ¬ÖÁÖ¸¶¨Â·¾¶£»
-	 * ¡¾ÊäÈëÊä³ö¡¿
+	 * ç”¨æˆ·æ³¨å†Œ
+	 * ã€æƒé™ã€‘
+	 * 		æ‰€ç”¨äºº
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 * 		1ã€éªŒè¯ç”¨æˆ·åæˆ–é‚®ç®±å”¯ä¸€ï¼›
+	 * 		2ã€æ³¨å†ŒæˆåŠŸé‡å®šå‘è‡³ä¸ªäººä¸»é¡µï¼Œå¦åˆ™è¿”å›æ³¨å†Œé¡µé¢å¹¶æ˜¾ç¤ºç›¸å…³é”™è¯¯ä¿¡æ¯ï¼›
+	 * 		3ã€ä¿å­˜ç”¨æˆ·å›¾ç‰‡è‡³æŒ‡å®šè·¯å¾„ï¼›
+	 * ã€è¾“å…¥è¾“å‡ºã€‘
 	 * @param userInfo
 	 * @param file
 	 * @param map
@@ -137,10 +123,10 @@ public class LoginAction {
 		int id = userService.saveUser(userInfo);
 		if(id<=0){
 			if(id == -1){
-				map.put("username", "¸ÃÓÃ»§ÃûÒÑ±»Ê¹ÓÃ");
+				map.put("username", "è¯¥ç”¨æˆ·åå·²è¢«ä½¿ç”¨");
 			}
 			if(id == -2){
-				map.put("email", "¸ÃÓÊÏäÒÑ±»Ê¹ÓÃ");
+				map.put("email", "è¯¥é‚®ç®±å·²è¢«ä½¿ç”¨");
 			}
 			return "register";
 		}
@@ -169,15 +155,15 @@ public class LoginAction {
 	}
 	
 	/**
-	 * ·ÃÎÊÊ×Ò³
-	 * ¡¾È¨ÏŞ¡¿
-	 * 		ËùÓÃÈË
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 * 		1¡¢Èç¹ûÓÃ»§Î´µÇÂ¼£¬ÔòËæ»ú»ñÈ¡Ò»¸ö¿ÉÓÃÓÚÕ¹ÏÖÓÚÊ×Ò³µÄÓÃ»§£¬ÏÔÊ¾¸ÃÓÃ»§µÄĞÅÏ¢£»
-	 * 		2¡¢»ñÈ¡×îÈÈÃÅµÄÎÄÕÂÏÔÊ¾£»
-	 * ¡¾ÊäÈëÊä³ö¡¿
+	 * è®¿é—®é¦–é¡µ
+	 * ã€æƒé™ã€‘
+	 * 		æ‰€ç”¨äºº
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 * 		1ã€å¦‚æœç”¨æˆ·æœªç™»å½•ï¼Œåˆ™éšæœºè·å–ä¸€ä¸ªå¯ç”¨äºå±•ç°äºé¦–é¡µçš„ç”¨æˆ·ï¼Œæ˜¾ç¤ºè¯¥ç”¨æˆ·çš„ä¿¡æ¯ï¼›
+	 * 		2ã€è·å–æœ€çƒ­é—¨çš„æ–‡ç« æ˜¾ç¤ºï¼›
+	 * ã€è¾“å…¥è¾“å‡ºã€‘
 	 * @param map
-	 * @return	Ä¿±êÒ³Ãæ
+	 * @return	ç›®æ ‡é¡µé¢
 	 */
 	@RequestMapping(value="/")
 	public String accessIndex(Map<String,Object>map){
@@ -191,14 +177,14 @@ public class LoginAction {
 		return "index";
 	}
 	/**
-	 * ÓÃ»§×¢²á³õÊ¼»¯
-	 * ¡¾È¨ÏŞ¡¿
-	 * 	1¡¢ËùÓÃÈË
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 * 	1¡¢ÓÃ»§×¢²á³õÊ¼»¯£»
-	 * ¡¾ÊäÈëÊä³ö¡¿
+	 * ç”¨æˆ·æ³¨å†Œåˆå§‹åŒ–
+	 * ã€æƒé™ã€‘
+	 * 	1ã€æ‰€ç”¨äºº
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 * 	1ã€ç”¨æˆ·æ³¨å†Œåˆå§‹åŒ–ï¼›
+	 * ã€è¾“å…¥è¾“å‡ºã€‘
 	 * @param map
-	 * @return	Ä¿±êÒ³Ãæ
+	 * @return	ç›®æ ‡é¡µé¢
 	 */
 	@RequestMapping(value="/register")
 	public String register(Map<String,Object>map){

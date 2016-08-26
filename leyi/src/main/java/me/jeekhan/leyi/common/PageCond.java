@@ -1,14 +1,14 @@
 package me.jeekhan.leyi.common;
 /**
- * 分页条件信息类
+ * 鍒嗛〉鏉′欢
  * @author Jee Khan
  *
  */
 public class PageCond {
 	public static int DEFAULT_PAGESIZE = 20;
-	private int begin;		//开始记录号
-	private int pageSize;	//每页大小
-	private int count;		//总记录数
+	private int begin;		//寮�濮嬭褰曞彿
+	private int pageSize;	//姣忛〉澶у皬
+	private int count;		//鎬昏褰曟暟
 	public PageCond(int begin ,int pageSize,int count){
 		this.begin = begin;
 		this.pageSize = pageSize;

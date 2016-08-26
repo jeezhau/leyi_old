@@ -32,14 +32,14 @@ public class MyPageAction {
 	UserService userService;
 
 	/**
-	 * È¡Ö¸¶¨Ö÷ÌâĞÅÏ¢¼°Ö÷ÌâÏÂµÄÎÄÕÂÏÔÊ¾ÓÚÖ÷Ò³
-	 * ¡¾È¨ÏŞ¡¿
-	 * 		ËùÓĞÈË
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 * 		1.È¡×÷ÕßĞÅÏ¢£»
-	 * 		2.È¡×÷ÕßµÄ¶¥²ãÖ÷ÌâĞÅÏ¢£»
-	 * 		3.È¡µ±Ç°Ö÷Ìâ¡¢ÏòÉÏµÄÖ÷ÌâÊ÷¡¢Ö±½ÓÏÂÊôÖ÷Ìâ£»
-	 * 		4.È¡µ±Ç°Ö÷ÌâÏÂµÄÎÄÕÂ£»
+	 * å–æŒ‡å®šä¸»é¢˜ä¿¡æ¯åŠä¸»é¢˜ä¸‹çš„æ–‡ç« æ˜¾ç¤ºäºä¸»é¡µ
+	 * ã€æƒé™ã€‘
+	 * 		æ‰€æœ‰äºº
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 * 		1.å–ä½œè€…ä¿¡æ¯ï¼›
+	 * 		2.å–ä½œè€…çš„é¡¶å±‚ä¸»é¢˜ä¿¡æ¯ï¼›
+	 * 		3.å–å½“å‰ä¸»é¢˜ã€å‘ä¸Šçš„ä¸»é¢˜æ ‘ã€ç›´æ¥ä¸‹å±ä¸»é¢˜ï¼›
+	 * 		4.å–å½“å‰ä¸»é¢˜ä¸‹çš„æ–‡ç« ï¼›
 	 * @param themeId
 	 * @param operator
 	 * @param map
@@ -52,13 +52,13 @@ public class MyPageAction {
 		ThemeClass currTheme = themeClassService.getThemeClass(themeId);
 		if(userInfo != null && currTheme != null && userInfo.getId() == currTheme.getUpdateOpr()){
 			boolean isSelf = false;
-			if(operator.getUserId() == currTheme.getUpdateOpr() ){ //×÷Õß×Ô¼º
+			if(operator.getUserId() == currTheme.getUpdateOpr() ){ //ä½œè€…è‡ªå·±
 				isSelf = true;
 			}else {
-				if(operator.getUserId()< 1 && !"0".equals(userInfo.getEnabled()) ){ //·ÃÎÊ·ÇÕıÊ½ÓÃ»§
+				if(operator.getUserId()< 1 && !"0".equals(userInfo.getEnabled()) ){ //è®¿é—®éæ­£å¼ç”¨æˆ·
 					return "redirect:/";
 				}
-				if(!"0".equals(currTheme.getEnabled())){ // ·ÇÕıÊ½Ö÷Ìâ
+				if(!"0".equals(currTheme.getEnabled())){ // éæ­£å¼ä¸»é¢˜
 					return "redirect:/" + username;
 				}
 			}
@@ -83,13 +83,13 @@ public class MyPageAction {
 		}
 	}
 	/**
-	 * È¡×÷ÕßµÄÖ÷Ò³ĞÅÏ¢
-	 * ¡¾È¨ÏŞ¡¿
-	 * 		ËùÓĞÈË
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 * 		1.È¡×÷ÕßĞÅÏ¢£»
-	 * 		2.È¡×÷ÕßµÄ¶¥²ãÖ÷Ìâ£»
-	 * 		3.È¡×÷ÕßµÄËùÓĞ×îĞÂ×îÈÈÃÅÎÄÕÂ£»
+	 * å–ä½œè€…çš„ä¸»é¡µä¿¡æ¯
+	 * ã€æƒé™ã€‘
+	 * 		æ‰€æœ‰äºº
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 * 		1.å–ä½œè€…ä¿¡æ¯ï¼›
+	 * 		2.å–ä½œè€…çš„é¡¶å±‚ä¸»é¢˜ï¼›
+	 * 		3.å–ä½œè€…çš„æ‰€æœ‰æœ€æ–°æœ€çƒ­é—¨æ–‡ç« ï¼›
 	 * @param username
 	 * @param map
 	 * @return
@@ -100,10 +100,10 @@ public class MyPageAction {
 		if(userInfo != null){
 			int id = userInfo.getId();
 			boolean isSelf = false;
-			if(operator.getUserId() == id ){ //×÷Õß×Ô¼º
+			if(operator.getUserId() == id ){ //ä½œè€…è‡ªå·±
 				isSelf = true;
 			}else{
-				if(operator.getUserId()<1 && !"0".equals(userInfo.getEnabled()) ){ //·ÃÎÊ·ÇÕıÊ½ÓÃ»§
+				if(operator.getUserId()<1 && !"0".equals(userInfo.getEnabled()) ){ //è®¿é—®éæ­£å¼ç”¨æˆ·
 					return "redirect:/";
 				}
 			}
@@ -119,36 +119,36 @@ public class MyPageAction {
 		}
 	}
 	/**
-	 * ÏÔÊ¾ÎÄÕÂÏêÏ¸ĞÅÏ¢
-	 * ¡¾È¨ÏŞ¡¿
-	 * 	1¡¢ÏêÇéÏÔÊ¾-ËùÓĞÈË£»
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 * 	1.È¡ÎÄÕÂĞÅÏ¢£¬Èç¹ûÎÄÕÂ²»´æÔÚÔò·µ»ØÓ¦ÓÃÖ÷Ò³£»
-	 * 	2.È¡ÎÄÕÂ×÷ÕßĞÅÏ¢£»
-	 * @param articleId	ÎÄÕÂID
+	 * æ˜¾ç¤ºæ–‡ç« è¯¦ç»†ä¿¡æ¯
+	 * ã€æƒé™ã€‘
+	 * 	1ã€è¯¦æƒ…æ˜¾ç¤º-æ‰€æœ‰äººï¼›
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 * 	1.å–æ–‡ç« ä¿¡æ¯ï¼Œå¦‚æœæ–‡ç« ä¸å­˜åœ¨åˆ™è¿”å›åº”ç”¨ä¸»é¡µï¼›
+	 * 	2.å–æ–‡ç« ä½œè€…ä¿¡æ¯ï¼›
+	 * @param articleId	æ–‡ç« ID
 	 * @param map
 	 * @return
 	 */
 	@RequestMapping(value="/{username}/article/{articleId}",method=RequestMethod.GET)
 	public String showArticle(@PathVariable("username")String username,@PathVariable("articleId")Integer articleId,Operator operator,Map<String,Object> map){
 		UserFullInfo userInfo = userService.getUserFullInfo(username);
-		if(userInfo == null){	//ÎŞ¸ÃÓÃ»§
+		if(userInfo == null){	//æ— è¯¥ç”¨æˆ·
 			return "redirect:/";
 		}
 		ArticleBrief brief = articleService.getArticleBref(articleId);
-		if(brief == null){	//ÎŞ¸ÃÎÄÕÂ
+		if(brief == null){	//æ— è¯¥æ–‡ç« 
 			return "redirect:/" + username;
 		}
 		ArticleContent content = articleService.getArticleContent(articleId);
-		if(operator.getUserId() == brief.getUpdateOpr()){ 	//×÷Õß×Ô¼º
+		if(operator.getUserId() == brief.getUpdateOpr()){ 	//ä½œè€…è‡ªå·±
 			if("D".equals(brief.getEnabled())){
 				return "redirect:/" + username;
 			}
-		}else{	//ÆäËûÈË
-			if(operator.getUserId()<1 && !"0".equals(userInfo.getEnabled()) ){ //·ÃÎÊ·ÇÕıÊ½ÓÃ»§
+		}else{	//å…¶ä»–äºº
+			if(operator.getUserId()<1 && !"0".equals(userInfo.getEnabled()) ){ //è®¿é—®éæ­£å¼ç”¨æˆ·
 				return "redirect:/";
 			}
-			if(!"0".equals(brief.getEnabled())){	//·ÇÕıÊ½ÎÄÕÂ
+			if(!"0".equals(brief.getEnabled())){	//éæ­£å¼æ–‡ç« 
 				return "redirect:/" + username;
 			}
 		}
@@ -159,30 +159,30 @@ public class MyPageAction {
 		return "articleShow";
 	}
 	/**
-	 * ÏÔÊ¾ÓÃ»§ÏêÏ¸ĞÅÏ¢
-	 * ¡¾È¨ÏŞ¡¿
-	 * 	1¡¢ÏêÇéÏÔÊ¾-ËùÓĞÈË£»
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 * 	1.È¡ÓÃ»§ĞÅÏ¢£¬Èç¹ûÓÃ»§²»´æÔÚÔò·µ»ØÓ¦ÓÃÖ÷Ò³£»
-	 * @param userId	ÎÄÕÂID
+	 * æ˜¾ç¤ºç”¨æˆ·è¯¦ç»†ä¿¡æ¯
+	 * ã€æƒé™ã€‘
+	 * 	1ã€è¯¦æƒ…æ˜¾ç¤º-æ‰€æœ‰äººï¼›
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 * 	1.å–ç”¨æˆ·ä¿¡æ¯ï¼Œå¦‚æœç”¨æˆ·ä¸å­˜åœ¨åˆ™è¿”å›åº”ç”¨ä¸»é¡µï¼›
+	 * @param userId	æ–‡ç« ID
 	 * @param map
 	 * @return
 	 */
 	@RequestMapping(value="/{username}/detail",method=RequestMethod.GET)
 	public String showUser(@PathVariable("username")String username,Operator operator,Map<String,Object> map){
 		UserFullInfo userInfo = userService.getUserFullInfo(username);
-		if(userInfo == null){	//ÎŞ¸ÃÓÃ»§
+		if(userInfo == null){	//æ— è¯¥ç”¨æˆ·
 			return "redirect:/";
 		}
-		if(operator.getUserId() == userInfo.getId()){ 	//ÓÃ»§×Ô¼º
+		if(operator.getUserId() == userInfo.getId()){ 	//ç”¨æˆ·è‡ªå·±
 			if("D".equals(userInfo.getEnabled())){
 				return "redirect:/";
 			}
-		}else{	//ÆäËûÈË
-			if(operator.getUserId()<1 && !"0".equals(userInfo.getEnabled()) ){ //·ÃÎÊ·ÇÕıÊ½ÓÃ»§
+		}else{	//å…¶ä»–äºº
+			if(operator.getUserId()<1 && !"0".equals(userInfo.getEnabled()) ){ //è®¿é—®éæ­£å¼ç”¨æˆ·
 				return "redirect:/";
 			}
-			if(!"0".equals(userInfo.getEnabled())){	//·ÇÕıÊ½ÓÃ»§
+			if(!"0".equals(userInfo.getEnabled())){	//éæ­£å¼ç”¨æˆ·
 				return "redirect:/";
 			}
 		}

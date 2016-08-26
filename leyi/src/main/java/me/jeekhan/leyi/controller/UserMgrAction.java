@@ -16,7 +16,7 @@ import me.jeekhan.leyi.model.UserFullInfo;
 import me.jeekhan.leyi.service.UserService;
 
 /**
- * ¸öÈËĞÅÏ¢¹ÜÀí¿ØÖÆÀà
+ * ä¸ªäººä¿¡æ¯ç®¡ç†æ§åˆ¶ç±»
  * @author Jee Khan
  *
  */
@@ -28,15 +28,15 @@ public class UserMgrAction {
 	private UserService userService;
 	
 	/**
-	 * ÏÔÊ¾ÓÃ»§ÏêÏ¸ĞÅÏ¢
-	 * ¡¾È¨ÏŞ¡¿
-	 * 	1¡¢ÏêÇéÏÔÊ¾-ÓÃ»§×Ô¼º£»
-	 *  2¡¢ÉóºË-¹ÜÀíÔ±£»Èç¹ûÎª·Ç¹ÜÀíÔ±Ôò±ä¸üÄ£Ê½ÎªÏêÇéÏÔÊ¾£»
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 * Íê³ÉÓÃ»§ĞÅÏ¢ÄÚÈİÏÔÊ¾¼°ÉóºËÏÔÊ¾£ºdetail-ÏêÇéÏÔÊ¾£»review-ÉóºËÏÔÊ¾
-	 * 	1.È¡ÓÃ»§ĞÅÏ¢£¬Èç¹ûÓÃ»§²»´æÔÚÔò·µ»ØÓ¦ÓÃÖ÷Ò³£»
-	 * 	2.±£´æÏÔÊ¾Ä£Ê½£¨ÏêÇé»òÉóºË£©£»
-	 * @param userId	ÓÃ»§ID
+	 * æ˜¾ç¤ºç”¨æˆ·è¯¦ç»†ä¿¡æ¯
+	 * ã€æƒé™ã€‘
+	 * 	1ã€è¯¦æƒ…æ˜¾ç¤º-ç”¨æˆ·è‡ªå·±ï¼›
+	 *  2ã€å®¡æ ¸-ç®¡ç†å‘˜ï¼›å¦‚æœä¸ºéç®¡ç†å‘˜åˆ™å˜æ›´æ¨¡å¼ä¸ºè¯¦æƒ…æ˜¾ç¤ºï¼›
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 * å®Œæˆç”¨æˆ·ä¿¡æ¯å†…å®¹æ˜¾ç¤ºåŠå®¡æ ¸æ˜¾ç¤ºï¼šdetail-è¯¦æƒ…æ˜¾ç¤ºï¼›review-å®¡æ ¸æ˜¾ç¤º
+	 * 	1.å–ç”¨æˆ·ä¿¡æ¯ï¼Œå¦‚æœç”¨æˆ·ä¸å­˜åœ¨åˆ™è¿”å›åº”ç”¨ä¸»é¡µï¼›
+	 * 	2.ä¿å­˜æ˜¾ç¤ºæ¨¡å¼ï¼ˆè¯¦æƒ…æˆ–å®¡æ ¸ï¼‰ï¼›
+	 * @param userId	ç”¨æˆ·ID
 	 * @param map
 	 * @return
 	 */
@@ -60,12 +60,12 @@ public class UserMgrAction {
 	
 
 	/**
-	 * ÓÃ»§ÉóºË£ºÍ¨¹ı
-	 * ¡¾È¨ÏŞ¡¿
-	 * 	1¡¢½öµÇÂ¼µÄ¹ÜÀíÔ±¿ÉÖ´ĞĞ¸Ã²Ù×÷£»
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 *  1¡¢ÅĞ¶ÏÉóºËµÄÓÃ»§ÊÇ·ñ´æÔÚ£»
-	 *  2¡¢Ö´ĞĞÉóºËÍ¨¹ı
+	 * ç”¨æˆ·å®¡æ ¸ï¼šé€šè¿‡
+	 * ã€æƒé™ã€‘
+	 * 	1ã€ä»…ç™»å½•çš„ç®¡ç†å‘˜å¯æ‰§è¡Œè¯¥æ“ä½œï¼›
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 *  1ã€åˆ¤æ–­å®¡æ ¸çš„ç”¨æˆ·æ˜¯å¦å­˜åœ¨ï¼›
+	 *  2ã€æ‰§è¡Œå®¡æ ¸é€šè¿‡
 	 * @param userId
 	 * @param remark
 	 * @param operator
@@ -74,18 +74,18 @@ public class UserMgrAction {
 	@RequestMapping(value="/accept",method=RequestMethod.POST)
 	public String accept(Integer userId,String remark,@ModelAttribute("operator")Operator operator){
 		String redirectUrl = "redirect:/"+operator.getUsername() + "/user_mgr/review/" + userId;
-		if(operator == null || operator.getLevel() < 9){ //ÎŞÈ¨ÏŞ
-			return redirectUrl + "?error=ÄúÎŞÈ¨ÏŞÖ´ĞĞ¸Ã²Ù×÷£¡";
+		if(operator == null || operator.getLevel() < 9){ //æ— æƒé™
+			return redirectUrl + "?error=æ‚¨æ— æƒé™æ‰§è¡Œè¯¥æ“ä½œï¼";
 		}
-		if(userId == null){ //ÓÃ»§Îª¿Õ
+		if(userId == null){ //ç”¨æˆ·ä¸ºç©º
 			return redirectUrl;
 		}
 		if(remark !=null && remark.length()>600){
-			return redirectUrl + "?error=" + "ÉóºËËµÃ÷£º²»¿É³¬¹ı600¸ö×Ö·û£¡";
+			return redirectUrl + "?error=" + "å®¡æ ¸è¯´æ˜ï¼šä¸å¯è¶…è¿‡600ä¸ªå­—ç¬¦ï¼";
 		}
 		UserFullInfo user = userService.getUserFullInfo(userId);
-		if(user == null){ //ÎŞ¸ÃÓÃ»§
-			return redirectUrl + "?error=ÏµÍ³ÖĞÎŞ¸ÃÓÃ»§ĞÅÏ¢£¡";
+		if(user == null){ //æ— è¯¥ç”¨æˆ·
+			return redirectUrl + "?error=ç³»ç»Ÿä¸­æ— è¯¥ç”¨æˆ·ä¿¡æ¯ï¼";
 		}
 		ReviewInfo reviewInfo = new ReviewInfo();
 		reviewInfo.setReviewInfo(remark);
@@ -95,12 +95,12 @@ public class UserMgrAction {
 	}
 	
 	/**
-	 * ÓÃ»§ÉóºË£º¾Ü¾ø
-	 * ¡¾È¨ÏŞ¡¿
-	 * 	1¡¢½öµÇÂ¼µÄ¹ÜÀíÔ±¿ÉÖ´ĞĞ¸Ã²Ù×÷£»
-	 * ¡¾¹¦ÄÜËµÃ÷¡¿
-	 *  1¡¢ÅĞ¶ÏÉóºËµÄÓÃ»§ÊÇ·ñ´æÔÚ£»
-	 *  2¡¢Ö´ĞĞÉóºË¾Ü¾ø
+	 * ç”¨æˆ·å®¡æ ¸ï¼šæ‹’ç»
+	 * ã€æƒé™ã€‘
+	 * 	1ã€ä»…ç™»å½•çš„ç®¡ç†å‘˜å¯æ‰§è¡Œè¯¥æ“ä½œï¼›
+	 * ã€åŠŸèƒ½è¯´æ˜ã€‘
+	 *  1ã€åˆ¤æ–­å®¡æ ¸çš„ç”¨æˆ·æ˜¯å¦å­˜åœ¨ï¼›
+	 *  2ã€æ‰§è¡Œå®¡æ ¸æ‹’ç»
 	 * @param userId
 	 * @param remark
 	 * @param operator
@@ -109,19 +109,19 @@ public class UserMgrAction {
 	@RequestMapping(value="/refuse",method=RequestMethod.POST)
 	public String refuse(Integer userId,String remark,@ModelAttribute("operator")Operator operator){
 		String redirectUrl = "redirect:/"+operator.getUsername()+"/user_mgr/review/" + userId;
-		if(operator == null || operator.getLevel() < 9){ //ÎŞÈ¨ÏŞ
-			return redirectUrl + "?error=ÄúÎŞÈ¨ÏŞÖ´ĞĞ¸Ã²Ù×÷£¡";
+		if(operator == null || operator.getLevel() < 9){ //æ— æƒé™
+			return redirectUrl + "?error=æ‚¨æ— æƒé™æ‰§è¡Œè¯¥æ“ä½œï¼";
 		}
 		
-		if(userId == null || remark == null || remark.trim().length()<1){ //ÓÃ»§»òÉóºËËµÃ÷Îª¿Õ
-			return redirectUrl + "?error=" + ((userId == null)? "ÓÃ»§ID£º²»¿ÉÎª¿Õ£¡" : "ÉóºËËµÃ÷£º²»¿ÉÎª¿Õ£¡");
+		if(userId == null || remark == null || remark.trim().length()<1){ //ç”¨æˆ·æˆ–å®¡æ ¸è¯´æ˜ä¸ºç©º
+			return redirectUrl + "?error=" + ((userId == null)? "ç”¨æˆ·IDï¼šä¸å¯ä¸ºç©ºï¼" : "å®¡æ ¸è¯´æ˜ï¼šä¸å¯ä¸ºç©ºï¼");
 		}
 		if(remark.length()>600){
-			return redirectUrl + "?error=" + "ÉóºËËµÃ÷²»¿É³¬¹ı600¸ö×Ö·û£¡";
+			return redirectUrl + "?error=" + "å®¡æ ¸è¯´æ˜ä¸å¯è¶…è¿‡600ä¸ªå­—ç¬¦ï¼";
 		}
 		UserFullInfo user = userService.getUserFullInfo(userId);
-		if(user == null){ //ÎŞ¸ÃÓÃ»§
-			return redirectUrl + "?error=ÏµÍ³ÖĞÎŞ¸ÃÓÃ»§ĞÅÏ¢£¡";
+		if(user == null){ //æ— è¯¥ç”¨æˆ·
+			return redirectUrl + "?error=ç³»ç»Ÿä¸­æ— è¯¥ç”¨æˆ·ä¿¡æ¯ï¼";
 		}
 		ReviewInfo reviewInfo = new ReviewInfo();
 		reviewInfo.setReviewInfo(remark);
