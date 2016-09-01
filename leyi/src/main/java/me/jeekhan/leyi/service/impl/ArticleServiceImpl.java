@@ -136,6 +136,11 @@ public class ArticleServiceImpl implements ArticleService {
 	 */
 	@Override
 	public List<ArticleBrief> getArticlesByTheme(int themeId,boolean isSelf,PageCond pageCond){
+		int cnt = articleBriefMapper.countArticlesByTheme(themeId, isSelf, pageCond);
+		pageCond.setCount(cnt);
+		if(cnt<1){
+			return null;
+		}
 		return articleBriefMapper.selectArticlesByTheme(themeId, isSelf,pageCond);
 	}
 	/**

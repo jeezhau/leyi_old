@@ -66,6 +66,13 @@
   	order by (UNIX_TIMESTAMP(b.update_time)/3600/24 + (select count(1) from tb_comments c where c.article_id = b.id and c.enabled=0)) desc
   	limit #{pageCond.begin},#{pageCond.pageSize}
   </select>
+  <!--取指定用户的所有的文章数量 -->
+  <select id="countArticlesByUser" parameterType="map" resultType="java.lang.Integer" >
+  	select count(1) CNT
+  	from tb_article_brief b
+  	where b.enabled in ('0'<if test="isSelf" >,'1','R'</if>)
+  	 and update_opr = #{userId}
+  </select>
   
   <!--取指定主题下的所有文章简介 -->
   <select id="selectArticlesByTheme" parameterType="map" resultMap="BaseResultMap">
@@ -77,6 +84,13 @@
   	order by (UNIX_TIMESTAMP(b.update_time)/3600/24 + (select count(1) from tb_comments c where c.article_id = b.id and c.enabled=0)) desc
   	limit #{pageCond.begin},#{pageCond.pageSize}
   </select> 
+    <!--取指定主题下的所有文章简介数量 -->
+  <select id="countArticlesByTheme" parameterType="map" resultType="java.lang.Integer">
+  	select count(1) CNT
+  	from tb_article_brief b
+  	where b.enabled in ('0'<if test="isSelf" >,'1','R'</if>)
+  	and b.theme_id in (select t1.id from tb_theme_class t1 where FIND_IN_SET(#{themeId,jdbcType=INTEGER},getThemeTreeUp(t1.id))) 
+  </select>
   
   <!-- 取所有用户文章 -->
   <select id="selectArticles" parameterType="map" resultMap="BaseResultMap">

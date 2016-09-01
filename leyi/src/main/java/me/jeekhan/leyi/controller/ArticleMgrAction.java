@@ -208,62 +208,6 @@ public class ArticleMgrAction {
 		}
 		return redirectUrl + old.getThemeId();
 	}
-	
-	/**
-	 * 取用户的指定主题下的所有文章
-	 * 	设置用户的第一个顶层主题为当前主题；
-	 * 	更新主题向上层次树；
-	 * 	取当前主题的所有直接下属主题
-	 *  取当前主题下的所有文章简介
-	 * @param map
-	 * @return
-	 */
-	@RequestMapping(value="/theme/{themeId}",method=RequestMethod.GET)
-	public String article(@PathVariable("themeId") int themeId,@ModelAttribute("operator")Operator operator,Map<String,Object> map){
-		ThemeClass currTheme = themeClassService.getThemeClass(themeId);
-		map.put("currTheme", currTheme);
-		List<ThemeClass> themeTreeUp = themeClassService.getThemeTreeUp(currTheme.getId());
-		map.put("themeTreeUp", themeTreeUp);
-		List<ThemeClass> children = themeClassService.getChildThemes(currTheme.getId(),true);
-		map.put("children",children);
-		boolean isSelf = false;
-		if(operator.getUserId() == currTheme.getUpdateOpr() ){
-			isSelf = true;
-		}
-		List<ArticleBrief> currArticles = articleService.getArticlesByTheme(currTheme.getId(),isSelf,new PageCond());
-		map.put("currArticles", currArticles);
-		
-		return "articleMgr";
-	}
-	/**
-	 * 取用户的默认主题下的所有文章
-	 * 	设置用户的第一顶层个主题为当前主题；
-	 * 	更新主题向上层次树；
-	 * 	取当前主题的所有直接下属主题
-	 *  取当前主题下的所有文章简介
-	 * @param map
-	 * @return
-	 */
-	@RequestMapping(value="/*",method=RequestMethod.GET)
-	public String article(@ModelAttribute("operator")Operator operator,Map<String,Object> map){
-		@SuppressWarnings("unchecked")
-		List<ThemeClass> topThemes = (List<ThemeClass>) map.get("topThemes");
-		if(topThemes !=null && topThemes.size()>0){
-			ThemeClass currTheme = topThemes.get(0);
-			map.put("currTheme", currTheme);
-			List<ThemeClass> themeTreeUp = themeClassService.getThemeTreeUp(currTheme.getId());
-			map.put("themeTreeUp", themeTreeUp);
-			List<ThemeClass> children = themeClassService.getChildThemes(currTheme.getId(),true);
-			map.put("children",children);
-			boolean isSelf = false;
-			if(operator.getUserId() == currTheme.getUpdateOpr() ){
-				isSelf = true;
-			}
-			List<ArticleBrief> currArticles = articleService.getArticlesByTheme(currTheme.getId(),isSelf, new PageCond());
-			map.put("currArticles", currArticles);
-		}
-		return "articleMgr";
-	}
 	/**
 	 * 文章审核：通过
 	 * 【权限】
@@ -334,4 +278,55 @@ public class ArticleMgrAction {
 		articleService.reviewArticle(articleId,"R",reviewInfo);
 		return "redirect:/"+operator.getUsername()+ "/review/";
 	}
+	
+	/**
+	 * 取用户的指定主题下的所有文章
+	 * 	设置用户的第一个顶层主题为当前主题；
+	 * 	更新主题向上层次树；
+	 * 	取当前主题的所有直接下属主题
+	 *  取当前主题下的所有文章简介
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value="/theme/{themeId}/{begin}",method=RequestMethod.GET)
+	public String article(@PathVariable("themeId") int themeId,@PathVariable("begin") int begin,@ModelAttribute("operator")Operator operator,Map<String,Object> map){
+		ThemeClass currTheme = themeClassService.getThemeClass(themeId);
+		map.put("currTheme", currTheme);
+		List<ThemeClass> themeTreeUp = themeClassService.getThemeTreeUp(currTheme.getId());
+		map.put("themeTreeUp", themeTreeUp);
+		List<ThemeClass> children = themeClassService.getChildThemes(currTheme.getId(),true);
+		map.put("children",children);
+		boolean isSelf = false;
+		if(operator.getUserId() == currTheme.getUpdateOpr() ){
+			isSelf = true;
+		}
+		if(begin<0){
+			begin = 0;
+		}
+		PageCond pageCond = new PageCond(begin,5);
+		List<ArticleBrief> currArticles = articleService.getArticlesByTheme(currTheme.getId(),isSelf,pageCond);
+		map.put("currArticles", currArticles);
+		map.put("pageCond", pageCond);
+		return "articleMgr";
+	}
+	/**
+	 * 取用户的默认主题下的所有文章
+	 * 	设置用户的第一顶层个主题为当前主题；
+	 * 	更新主题向上层次树；
+	 * 	取当前主题的所有直接下属主题
+	 *  取当前主题下的所有文章简介
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value="/*",method=RequestMethod.GET)
+	public String article(@ModelAttribute("operator")Operator operator,Map<String,Object> map){
+		@SuppressWarnings("unchecked")
+		List<ThemeClass> topThemes = (List<ThemeClass>) map.get("topThemes");
+		if(topThemes !=null && topThemes.size()>0){
+			ThemeClass currTheme = topThemes.get(0);
+			return "redirect:/" + operator.getUsername() + "/article_mgr/theme/" + currTheme.getId() + "/0";
+		}
+		return "articleMgr";
+	}
+
 }

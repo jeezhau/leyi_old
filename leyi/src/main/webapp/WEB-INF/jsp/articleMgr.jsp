@@ -2,6 +2,7 @@
 <%@ page import="me.jeekhan.leyi.model.ThemeClass,java.util.*,me.jeekhan.leyi.common.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -32,8 +33,8 @@
    <!-- =====================顶部主题=================== -->
 	<ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin-bottom:10px;">
 	   <c:forEach items="${topThemes}" var="item">
-	       <c:if test="${themeTreeUp[0].id==item.id}"> <li class="active"><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}">${item.name}</a></li> </c:if>
-	       <c:if test="${themeTreeUp[0].id!=item.id}"> <li><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}">${item.name}</a></li> </c:if>	
+	       <c:if test="${themeTreeUp[0].id==item.id}"> <li class="active"><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}/0">${item.name}</a></li> </c:if>
+	       <c:if test="${themeTreeUp[0].id!=item.id}"> <li><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}/0">${item.name}</a></li> </c:if>	
        </c:forEach>
 	</ul>
   </div>
@@ -46,7 +47,7 @@
           <ol class="breadcrumb" style="margin:0;">
 	      <c:forEach items="${themeTreeUp}" var="item">
 	       <c:if test="${currTheme.id==item.id}"> <li class="active">${item.name}</li> </c:if>
-	       <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}">${item.name}</a></li> </c:if>
+	       <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}/0">${item.name}</a></li> </c:if>
 	      </c:forEach>
 	      <c:if test="${fn:length(themeTreeUp)<=0 }">
 		   还没有主题，请添加！
@@ -59,7 +60,7 @@
    		</div>
 	   	<ul class="list-group">
 	     <c:forEach items="${children}" var="item">
-	       <li class="list-group-item"><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}">${item.name}</a></li>
+	       <li class="list-group-item"><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}/0">${item.name}</a></li>
 	     </c:forEach>
 	   	</ul>
   	  </div>
@@ -85,6 +86,21 @@
                 [<a href="/leyi/${operator.username}/article_mgr/detail/${item.id }"  target="_blank">显示</a>]
             </tr>
            </c:forEach>
+           <tr >
+           	<td colspan="3">
+           	 <ul class="pager" style="margin:0"> 
+           	 <c:if test="${pageCond.begin>0 }"><li class="active"><a href="${pageCond.begin-pageCond.pageSize }">上一页</a></li></c:if>
+		     <c:if test="${pageCond.begin==0 }"><li class="disabled"><a href="${pageCond.begin-pageCond.pageSize }">上一页</a></li></c:if>
+		     <li>
+		                     共有<fmt:formatNumber type="number" value="${(pageCond.count-pageCond.count%pageCond.pageSize)/pageCond.pageSize + ((pageCond.count%pageCond.pageSize>0)?1:0)}" maxFractionDigits="0"/>页 
+		     	<input type="number" id="pageNo" maxLength=3 style='width:25px' value='<fmt:formatNumber type="number" value="${(pageCond.begin-pageCond.begin%pageCond.pageSize)/pageCond.pageSize + ((pageCond.begin%pageCond.pageSize>0)?1:0)}" maxFractionDigits="0"/>'>
+		     	<button onclick="window.location.href=${pageCond.pageSize}*($('#pageNo').val()-1)">GO</button>
+		     </li>
+		     <c:if test="${pageCond.begin+pageCond.pageSize<pageCond.count }"><li class="active"><a href="${pageCond.begin+pageCond.pageSize }">下一页</a></li></c:if>
+		     <c:if test="${pageCond.begin+pageCond.pageSize>=pageCond.count }"><li class="disabled"><a href="${pageCond.begin+pageCond.pageSize }">下一页</a></li></c:if>
+		 	</ul>
+           	</td>
+           </tr>
           </tbody>
         </table>
       </div>

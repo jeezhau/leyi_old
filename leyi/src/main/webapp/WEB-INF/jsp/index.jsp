@@ -50,7 +50,7 @@
 <!--======================中间主要内容  ===================--> 
     <div class="col-md-9 light-gray-bg">
 	 <c:forEach items="${hotnew}" var="item">
-	  <div class="panel panel-info" style="margin-bottom:5px">
+	  <div class="panel panel-info" style="margin-bottom:0px;border-radius:0;">
 	    <div class="panel-heading"><h4 class="panel-title"><a target="_blank" href="/leyi/${userInfo.username}/article/${item.id}">${item.name}</a></h4></div>
 		<div class="panel-body">${item.brief}</div>
 	  </div> <!-- 文章panel -->

@@ -12,7 +12,7 @@ public class GolbalExceptionHandler {
     @ExceptionHandler(Exception.class)  
     @ResponseStatus(HttpStatus.BAD_REQUEST)  
     public String processException(NativeWebRequest request, Exception e) {  
-        System.out.println("===========应用到所有@RequestMapping注解的方法，在其抛出UnauthenticatedException异常时执行");  
+        System.out.println("全局异常：" + e.getMessage());  
         return "exception"; //返回一个逻辑视图名  
     } 
 

@@ -14,6 +14,10 @@ public class PageCond {
 		this.pageSize = pageSize;
 		this.count = count;
 	}
+	public PageCond(int begin ,int pageSize){
+		this.begin = begin;
+		this.pageSize = pageSize;
+	}
 	public PageCond(int begin){
 		this.begin = begin;
 		this.pageSize = DEFAULT_PAGESIZE;
