@@ -136,12 +136,18 @@ public class ArticleServiceImpl implements ArticleService {
 	 */
 	@Override
 	public List<ArticleBrief> getArticlesByTheme(int themeId,boolean isSelf,PageCond pageCond){
+		if(pageCond.getBegin() < 1){
+			pageCond.setBegin(1);
+		}
+		pageCond.setBegin(pageCond.getBegin()-1);
 		int cnt = articleBriefMapper.countArticlesByTheme(themeId, isSelf, pageCond);
 		pageCond.setCount(cnt);
 		if(cnt<1){
 			return null;
 		}
-		return articleBriefMapper.selectArticlesByTheme(themeId, isSelf,pageCond);
+		List<ArticleBrief> list = articleBriefMapper.selectArticlesByTheme(themeId, isSelf,pageCond);
+		pageCond.setBegin(pageCond.getBegin()+1);
+		return list;
 	}
 	/**
 	 * 取最新最热门的文章20条

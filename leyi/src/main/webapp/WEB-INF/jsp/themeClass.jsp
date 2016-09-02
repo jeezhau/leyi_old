@@ -40,7 +40,7 @@
   <div class="panel panel-info">
    <div class="panel-heading" style="margin:0">
 	   <ol class="breadcrumb" style="margin:0;">
-	     <c:forEach items="${themeTreeUp}" var="item">
+	     <c:forEach items="${themeTreeUp}" var="item" >
 	       <c:if test="${currTheme.id==item.id}"> <li class="active">${item.name}</li> </c:if>
 	       <c:if test="${currTheme.id!=item.id}"> <li><a href="${item.id}">${item.name}</a></li> </c:if>
 	     </c:forEach>
@@ -63,11 +63,12 @@
    </div>
    <table class="table table-striped  table-bordered table-hover ">
        <thead>
-   	      <tr><th width="25%">主题名称</th><th>关键词 </th><th width="14%">更新时间 </th></tr>
+   	      <tr><th width="3%"/><th width="25%">主题名称</th><th>关键词 </th><th width="14%">更新时间 </th></tr>
        </thead>
        <tbody> 
-        <c:forEach items="${children}" var="item">
+        <c:forEach items="${children}" var="item" varStatus="sta">
          <tr>
+         	  <td>${sta.count }</td>
               <td><a href="${item.id}">${item.name}</a></td>
               <td>${item.keywords }</td>
               <td><fmt:formatDate value="${item.updateTime }" pattern="yyyy-MM-dd hh:mm:ss"/></td>

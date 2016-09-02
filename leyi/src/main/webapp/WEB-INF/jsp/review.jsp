@@ -31,14 +31,16 @@
   </div>
   <div class="row">
   <c:if test="${fn:length(users)<=0 }">
+   <div class="col-md-12" >
   	<div class="alert alert-info alert-dismissable">无需要审核的用户！！！
         <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
      </div>
+   </div>
   </c:if>
   <c:if test="${fn:length(users)>0 }">
     <!-- 用户列表 -->
     <div class="col-md-12" >
-      <div class="panel panel-info">
+      <div class="panel panel-info" >
       <h3 class="text-center"><b>用户审核</b></h3>
         <table class="table table-striped table-bordered table-hover ">
           <thead>
@@ -69,14 +71,16 @@
   </div><!-- 用户审核 结束-->
   <div class="row">
   <c:if test="${fn:length(articles)<=0 }">
+   <div class="col-md-12" >
   	<div class="alert alert-info alert-dismissable">无需要审核的文章！！！
         <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
      </div>
+   </div>
   </c:if>
   <c:if test="${fn:length(articles)>0 }">
     <!-- 文章列表 -->
     <div class="col-md-12" >
-      <div class="panel panel-info">
+      <div class="panel panel-info" >
       <h3 class="text-center"><b>文章审核</b></h3>
         <table class="table table-striped table-bordered table-hover ">
           <thead>
@@ -116,9 +120,11 @@
   
   <div class="row"><!-- 主题审核列表 -->
   <c:if test="${fn:length(themes)<=0 }">
+   <div class="col-md-12" >
   	<div class="alert alert-info alert-dismissable">无需要审核的主题！！！
         <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
      </div>
+   </div>
   </c:if>
   <c:if test="${fn:length(themes)>0 }">
     <div class="col-md-12" >

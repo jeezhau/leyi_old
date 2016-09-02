@@ -300,10 +300,11 @@ public class ArticleMgrAction {
 		if(operator.getUserId() == currTheme.getUpdateOpr() ){
 			isSelf = true;
 		}
-		if(begin<0){
-			begin = 0;
+		if(begin<1){//从1开始
+			begin = 1;
+			return "redirect:"+begin;
 		}
-		PageCond pageCond = new PageCond(begin,5);
+		PageCond pageCond = new PageCond(begin);
 		List<ArticleBrief> currArticles = articleService.getArticlesByTheme(currTheme.getId(),isSelf,pageCond);
 		map.put("currArticles", currArticles);
 		map.put("pageCond", pageCond);
@@ -324,7 +325,7 @@ public class ArticleMgrAction {
 		List<ThemeClass> topThemes = (List<ThemeClass>) map.get("topThemes");
 		if(topThemes !=null && topThemes.size()>0){
 			ThemeClass currTheme = topThemes.get(0);
-			return "redirect:/" + operator.getUsername() + "/article_mgr/theme/" + currTheme.getId() + "/0";
+			return "redirect:/" + operator.getUsername() + "/article_mgr/theme/" + currTheme.getId() + "/1";
 		}
 		return "articleMgr";
 	}
