@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="jk"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -23,20 +24,9 @@
 
 </div>
 <div class="container">
+  <jk:loginMenuBar></jk:loginMenuBar>
   <div class="row">
-    <ul class="nav nav-tabs pull-right" >
-     <li><a href="/leyi/${operator.username }">我的主页</a></li>
-     <li><a href="/leyi/logout">退出</a></li>
-	</ul>
-  </div>
-  <div class="row">
-   <!-- =====================顶部主题=================== -->
-	<ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin-bottom:10px;">
-	   <c:forEach items="${topThemes}" var="item">
-	       <c:if test="${themeTreeUp[0].id==item.id}"> <li class="active"><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}/1">${item.name}</a></li> </c:if>
-	       <c:if test="${themeTreeUp[0].id!=item.id}"> <li><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}/1">${item.name}</a></li> </c:if>	
-       </c:forEach>
-	</ul>
+	<jk:topThemeBar></jk:topThemeBar>	<!-- 顶部主题 -->
   </div>
   
   <div class="row">
@@ -89,17 +79,7 @@
            </c:forEach>
            <tr >
            	<td colspan="3">
-           	 <ul class="pager" style="margin:0"> 
-           	 <c:if test="${pageCond.begin>1 }"><li class="active"><a href="${pageCond.begin-pageCond.pageSize }">上一页</a></li></c:if>
-		     <c:if test="${pageCond.begin==1 }"><li class="disabled"><a href="#">上一页</a></li></c:if>
-		     <li>
-		                     共有<span id="pageCnt"><fmt:formatNumber type="number" value="${(pageCond.count-pageCond.count%pageCond.pageSize)/pageCond.pageSize + ((pageCond.count%pageCond.pageSize>0)?1:0)}" maxFractionDigits="0"/></span>页 
-		     	<input type="number" id="pageNo" maxLength=3 min=1 style='width:25px' value='<fmt:formatNumber type="number" value="${(pageCond.begin-pageCond.begin%pageCond.pageSize)/pageCond.pageSize + ((pageCond.begin%pageCond.pageSize>0)?1:0)}" maxFractionDigits="0"/>'>
-		     	<button id="go">GO</button>
-		     </li>
-		     <c:if test="${pageCond.begin+pageCond.pageSize<=pageCond.count }"><li class="active"><a href="${pageCond.begin+pageCond.pageSize }">下一页</a></li></c:if>
-		     <c:if test="${pageCond.begin+pageCond.pageSize>pageCond.count }"><li class="disabled"><a href="#">下一页</a></li></c:if>
-		 	</ul>
+				<jk:pager></jk:pager>
            	</td>
            </tr>
           </tbody>
@@ -131,6 +111,8 @@
  </div><!-- /.modal -->
 </c:if>
 
+  <jk:copyRight></jk:copyRight>
+  
 <script>
  $('#go').click(function(){
 	 var pagSize = ${pageCond.pageSize};

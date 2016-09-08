@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.jeekhan.me/leyi/" prefix="leyi" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="jk"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -24,47 +26,20 @@
 
 </div>
 <div class="container">
+	<jk:loginMenuBar></jk:loginMenuBar>
+	
   <div class="row">
-   <c:if test="${empty operator.userId or operator.userId < 1}">
-  	<ul class="nav nav-tabs pull-right" >
-     <li><a href="login.jsp">登录</a></li>
-     <li><a href="/leyi/register"  target="_blank">注册</a></li>
-	</ul>
-	</c:if>
-	<c:if test="${not empty operator.userId and operator.userId > 0}">
-  	<ul class="nav nav-tabs pull-right" >
-     <li><a href="/leyi/${operator.username }">我的主页</a></li>
-     <li><a href="/leyi/logout">退出</a></li>
-	</ul>
-   </c:if>
-  </div>
-
-  <div class="row">
-<!--=============================左边个人简介  ===================================--> 
-    <div class="col-md-3" >
-      <div class="row" style="height:250px;padding:0px;border:0px #CECEF6 solid ;border-radius:0px;">
-         <p><img style="margin:0px;" src="/leyi/common/showPic/${userInfo.username}/${userInfo.picture }" width="100%" height="200" alt="Profile Photo" ></p>  
-     	 <p class="text-center"><a href="/leyi/${userInfo.username}/detail"><b>&nbsp;&nbsp;&nbsp;${userInfo.username}</b></a></p>
-      </div>
- 	</div>
-<!--======================中间主要内容  ===================--> 
-    <div class="col-md-9 light-gray-bg">
+    <div class="col-md-3" ><jk:individualResume></jk:individualResume></div>	<!--左边个人简介  --> 
+    <div class="col-md-9 light-gray-bg">	<!--中间主要内容 --> 
 	 <c:forEach items="${hotnew}" var="item">
 	  <div class="panel panel-info" style="margin-bottom:0px;border-radius:0;">
 	    <div class="panel-heading"><h4 class="panel-title"><a target="_blank" href="/leyi/${userInfo.username}/article/${item.id}">${item.name}</a></h4></div>
 		<div class="panel-body">${item.brief}</div>
 	  </div> <!-- 文章panel -->
-	 </c:forEach>  
+	 </c:forEach>
 	</div>
   </div><!-- end of row -->
-<!--==============================================================================    
-=======================页面底部相关说明 ===================================
-=================================================================================-->  
-  <div class="row">
-   <footer class="text-center">
-      <p> Copyright &copy; 2084 Company Name</p>
-    </footer>         
-  </div> 
+  <jk:copyRight></jk:copyRight><!--页面底部相关说明 --> 
 </div> <!-- end of container -->
  
 </body>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="me.jeekhan.leyi.model.ThemeClass,java.util.*,me.jeekhan.leyi.common.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="jk"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -22,37 +23,15 @@
 
 </div>
 <div class="container">
-  <div class="row">
-  <c:if test="${not empty operator.userId and operator.userId >0}">
-    <ul class="nav nav-tabs pull-right" >
-     <li><a href="/leyi/${operator.username }">我的主页</a></li>
-     <li><a href="/leyi/logout">退出</a></li>
-	</ul>
-  </c:if>
-  <c:if test="${empty operator.userId or operator.userId < 1}">
-    <ul class="nav nav-tabs pull-right" >
-     <li><a href="/leyi/login.jsp" target="_blank">登录</a></li>
-     <li><a href="/leyi/register.jsp"  target="_blank">注册</a></li>
-	</ul>
-  </c:if>
-  </div>
+  <jk:loginMenuBar></jk:loginMenuBar>
   <div class="row">
    <!-- 左侧边栏 -->
      <div class="col-md-3" >
-       <div class="row" style="height:250px;padding:0px;border:0px #CECEF6 solid ;border-radius:0px;">
-         <p><img style="margin:0px;" src="/leyi/common/showPic/${userInfo.username}/${userInfo.picture }" width="100%" height="200" alt="Profile Photo" ></p>  
-     	 <p class="text-center"><a href="/leyi/${userInfo.username}"><b>&nbsp;&nbsp;&nbsp;${userInfo.username} 的主页</b></a></p>
-       </div>
+       <jk:individualResume></jk:individualResume>
 	</div>
    <!--======================中间主要内容  ===================--> 
     <div class="col-md-9 light-gray-bg">
-      <!-- =====================顶部主题分类=================== -->
-	  <ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin-bottom:10px;">
-	   <c:forEach items="${topThemes}" var="item">
-        <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/${userInfo.username}/theme/${item.id}">${item.name}</a></li></c:if>
-        <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/${userInfo.username}/theme/${item.id}">${item.name}</a></li></c:if>
-       </c:forEach>
-	  </ul>
+	  <jk:topThemeBar></jk:topThemeBar><!-- 顶部主题分类 -->
 	  <div class="panel panel-info">
         <div class="panel-heading text-center"><h3 class="panel-title">${brief.name}</h3></div>
 	    <div class="panel-body">
@@ -145,6 +124,8 @@
    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 </c:if>
+
+<jk:copyRight></jk:copyRight>
 
 </body>
 </html>

@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
-
+<%@ taglib tagdir="/WEB-INF/tags" prefix="jk"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -23,22 +23,11 @@
 
 </div>
 <div class="container">
+  <jk:loginMenuBar></jk:loginMenuBar>
   <div class="row">
-    <ul class="nav nav-tabs pull-right" >
-     <li><a href="/leyi/${operator.username }">我的主页</a></li>
-     <li><a href="/leyi/logout">退出</a></li>
-	</ul>
-  </div>
-  <div class="row">
-   <!-- =====================顶部主题分类=================== -->
-	<ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin-bottom:10px;">
-	   <c:forEach items="${topThemes}" var="item">
-	       <c:if test="${themeTreeUp[0].id==item.id}"> <li class="active"><a href="${item.id}">${item.name}</a></li> </c:if>
-	       <c:if test="${themeTreeUp[0].id!=item.id}"> <li><a href="${item.id}">${item.name}</a></li> </c:if>
-       </c:forEach>
-	</ul>
-  <div class="panel panel-info">
-   <div class="panel-heading" style="margin:0">
+    <jk:topThemeBar></jk:topThemeBar>	<!-- 顶部主题分类 -->
+    <div class="panel panel-info">
+      <div class="panel-heading" style="margin:0">
 	   <ol class="breadcrumb" style="margin:0;">
 	     <c:forEach items="${themeTreeUp}" var="item" >
 	       <c:if test="${currTheme.id==item.id}"> <li class="active">${item.name}</li> </c:if>
@@ -77,6 +66,8 @@
      </table>
    </div>
   </div>
+  
+  <jk:copyRight></jk:copyRight>
 </div>
 
 <!-- 主题分类模态框（Modal） -->
@@ -126,6 +117,7 @@
       </div><!-- /.modal-content -->
    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
 <c:if test="${not empty param.error}">
 <!-- 错误提示模态框（Modal） -->
 <div class="modal fade " id="tipModal" tabindex="-1" role="dialog" aria-labelledby="tipTitle" aria-hidden="false" data-backdrop="static">

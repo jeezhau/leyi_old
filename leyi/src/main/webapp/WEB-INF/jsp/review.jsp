@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
+<%@ taglib tagdir="/WEB-INF/tags" prefix="jk"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -23,12 +24,7 @@
 
 </div>
 <div class="container">
-  <div class="row">
-    <ul class="nav nav-tabs pull-right" >
-     <li><a href="/leyi/${operator.username }">我的主页</a></li>
-     <li><a href="/leyi/logout">退出</a></li>
-	</ul>
-  </div>
+  <jk:loginMenuBar></jk:loginMenuBar>
   <div class="row">
   <c:if test="${fn:length(users)<=0 }">
    <div class="col-md-12" >
@@ -150,68 +146,70 @@
     </div><!-- end of 文章列表 -->
     </c:if>
   </div><!-- 主题审核列表结束 -->  
-  <!-- 主题分类模态框（Modal） -->
- <div class="modal fade " id="themeModal" tabindex="-1" role="dialog" aria-labelledby="themeModalLabel" aria-hidden="true" data-backdrop="static">
-   <div class="modal-dialog">
-      <div class="modal-content">
-         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"  aria-hidden="true">× </button>
-            <h4 class="modal-title" id="themeModalLabel">主题审核</h4>
-         </div>
-         <div class="modal-body">
-           <form class="form-horizontal">
-			   <div class="form-group">
-			      <label class="col-sm-2 control-label">主题名称</label>
-			      <div class="col-sm-10">
-			        <input class="form-control" id="themeName" type="text" value="" readonly>
-			      </div>
-			   </div>
-			   <div class="form-group">
-			      <label for="keywords" class="col-sm-2 control-label">关键词</label>
-			      <div class="col-sm-10">
-			         <textarea class="form-control" id="keywords" readonly ></textarea>
-			      </div>
-			   </div>
-			   <div class="form-group ">
-			      <label class="col-sm-2 control-label" for="themeDesc">主题描述</label>
-			      <div class="col-sm-10">
-			         <textarea  class="form-control" id="themeDesc" rows="8" readonly></textarea>
-			      </div>
-			   </div>
-			</form>
-         </div>
-         <div class="modal-footer">
-           <form id="reviewForm" method="post" action="">
-		     <input type="hidden" id="themeId" name="themeId" value="">
-		     <div class="form-group">
-		        <label  class="col-sm-2 control-label">审核说明</label>
-		        <div class="col-sm-10">
-		          <textarea class="form-control" id="remark" name="remark" placeholder="请输入审核说明" rows="5" maxLength=600></textarea>
-		        </div>
-		      </div>
-	         <div class=" col-sm-10">
-	           <button type="button" class="btn btn-info" id="accept" style="margin:10px">&nbsp;&nbsp;通过&nbsp;&nbsp;</button>
-	           <button type="button" class="btn btn-warning" id="refuse" style="margin:10px">&nbsp;&nbsp;拒绝&nbsp;&nbsp; </button>
-	         </div>
-		    </form>
-         </div>
-         <script>
-         	$(function(){ 
-		 		$("#accept").click(function(){
-					$("#reviewForm").attr('action','/leyi/${operator.username}/theme_mgr/accept');
-					$("#reviewForm").submit();
-				});
-		 		$("#refuse").click(function(){
-					$("#reviewForm").attr('action','/leyi/${operator.username}/theme_mgr/refuse');
-					$("#reviewForm").submit();
-				});
-	        });
-         </script>
-      </div><!-- /.modal-content -->
-   </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->  
+  <jk:copyRight></jk:copyRight>
 </div>
 
+<!-- 主题分类模态框（Modal） -->
+<div class="modal fade " id="themeModal" tabindex="-1" role="dialog" aria-labelledby="themeModalLabel" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog">
+     <div class="modal-content">
+        <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal"  aria-hidden="true">× </button>
+           <h4 class="modal-title" id="themeModalLabel">主题审核</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+		   <div class="form-group">
+		      <label class="col-sm-2 control-label">主题名称</label>
+		      <div class="col-sm-10">
+		        <input class="form-control" id="themeName" type="text" value="" readonly>
+		      </div>
+		   </div>
+		   <div class="form-group">
+		      <label for="keywords" class="col-sm-2 control-label">关键词</label>
+		      <div class="col-sm-10">
+		         <textarea class="form-control" id="keywords" readonly ></textarea>
+		      </div>
+		   </div>
+		   <div class="form-group ">
+		      <label class="col-sm-2 control-label" for="themeDesc">主题描述</label>
+		      <div class="col-sm-10">
+		         <textarea  class="form-control" id="themeDesc" rows="8" readonly></textarea>
+		      </div>
+		   </div>
+		</form>
+        </div>
+        <div class="modal-footer">
+          <form id="reviewForm" method="post" action="">
+	     <input type="hidden" id="themeId" name="themeId" value="">
+	     <div class="form-group">
+	        <label  class="col-sm-2 control-label">审核说明</label>
+	        <div class="col-sm-10">
+	          <textarea class="form-control" id="remark" name="remark" placeholder="请输入审核说明" rows="5" maxLength=600></textarea>
+	        </div>
+	      </div>
+         <div class=" col-sm-10">
+           <button type="button" class="btn btn-info" id="accept" style="margin:10px">&nbsp;&nbsp;通过&nbsp;&nbsp;</button>
+           <button type="button" class="btn btn-warning" id="refuse" style="margin:10px">&nbsp;&nbsp;拒绝&nbsp;&nbsp; </button>
+         </div>
+	    </form>
+        </div>
+        <script>
+        	$(function(){ 
+	 		$("#accept").click(function(){
+				$("#reviewForm").attr('action','/leyi/${operator.username}/theme_mgr/accept');
+				$("#reviewForm").submit();
+			});
+	 		$("#refuse").click(function(){
+				$("#reviewForm").attr('action','/leyi/${operator.username}/theme_mgr/refuse');
+				$("#reviewForm").submit();
+			});
+        });
+        </script>
+     </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+ </div><!-- /.modal -->  
+  
 <c:if test="${not empty param.error}">
 <!-- 错误提示模态框（Modal） -->
 <div class="modal fade " id="tipModal" tabindex="-1" role="dialog" aria-labelledby="tipTitle" aria-hidden="false" data-backdrop="static">

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="me.jeekhan.leyi.model.ThemeClass,java.util.*,me.jeekhan.leyi.common.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="jk"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -23,13 +24,7 @@
 </div>
 <div class="container">
   <div class="row">
-   <!-- =====================顶部文章=================== -->
-	<ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin:10px 0;">
-	   <c:forEach items="${topThemes}" var="item">
-	       <c:if test="${themeTreeUp[0].id==item.id}"> <li class="active"><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}">${item.name}</a></li> </c:if>
-	       <c:if test="${themeTreeUp[0].id!=item.id}"> <li><a href="/leyi/${operator.username}/article_mgr/theme/${item.id}">${item.name}</a></li> </c:if>	
-       </c:forEach>
-	</ul>
+	<jk:topThemeBar></jk:topThemeBar>	 <!-- 顶部主题-->
   </div>
   
   <div class="row">
@@ -137,6 +132,9 @@
 	</form>
 	
   </div>
+  
+  <jk:copyRight></jk:copyRight>
+  
 </div>
 
 <script>

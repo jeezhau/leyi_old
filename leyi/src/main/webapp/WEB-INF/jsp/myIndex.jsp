@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="jk"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -41,12 +42,9 @@
 	</c:if>
   </div>
   <div class="row">
-<!--=============================左边菜单链接  ===================================--> 
+	<!--====================左边菜单链接  ===================--> 
     <div class="col-md-3" >
-       <div class="row" style="height:250px;padding:0px;border:0px #CECEF6 solid ;border-radius:0px;">
-         <p><img style="margin:0px;" src="/leyi/common/showPic/${userInfo.username}/${userInfo.picture }" width="100%" height="200" alt="Profile Photo" ></p>  
-      	 <p class="text-center"><a href="/leyi/${userInfo.username}/detail"><b>&nbsp;&nbsp;&nbsp;${userInfo.username}</b></a></p>
-      </div>
+      <jk:individualResume></jk:individualResume>
 	  <div class="row light-gray-bg">
 	      <ol class="breadcrumb " style="margin:10px 0;">
 		   <c:forEach items="${themeTreeUp}" var="item">
@@ -66,30 +64,18 @@
     </div>
     <!--======================中间主要内容  ===================--> 
     <div class="col-md-9 light-gray-bg">
-      <!-- =====================顶部主题分类=================== -->
-	  <ul class="nav nav-pills nav-justified" style="background-color:#66ccff;margin-bottom:10px;">
-	   <c:forEach items="${topThemes}" var="item">
-        <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/${userInfo.username}/theme/${item.id}">${item.name}</a></li></c:if>
-        <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/${userInfo.username}/theme/${item.id}">${item.name}</a></li></c:if>
-       </c:forEach>
-	  </ul>
-	<c:forEach items="${articleBriefs}" var="item">	  
+	  <jk:topThemeBar></jk:topThemeBar>	<!-- 顶部主题分类-->
+	  <c:forEach items="${articleBriefs}" var="item">	 <!-- 文章panel -->	  
 	  <div class="panel panel-info" style="margin-bottom:0px;border-radius:0;">
         <div class="panel-heading"><h4 class="panel-title"><a target="_blank" href="/leyi/${userInfo.username}/article/${item.id}">${item.name}</a></h4></div>
 	    <div class="panel-body">${item.brief}</div>
-	  </div> <!-- 文章panel -->
-	 </c:forEach>
+	  </div>
+	  </c:forEach>
     </div>
   </div><!-- end of row -->
-<!--==============================================================================    
-=======================页面底部相关说明 ===================================
-=================================================================================-->  
-  <div class="row">
-   <footer class="text-center">
-      <p> Copyright &copy; 2084 Company Name 
-        </p>
-    </footer>         
-  </div> 
+  
+  <jk:copyRight></jk:copyRight>	<!--页面底部相关说明 --> 
+   
 </div> <!-- end of container -->
  
 </body>
