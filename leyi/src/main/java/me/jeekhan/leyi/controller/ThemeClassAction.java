@@ -1,5 +1,6 @@
 package me.jeekhan.leyi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -53,10 +54,10 @@ public class ThemeClassAction {
 			List<ThemeClass> topThemes = themeClassService.getUserTopThemes(operator.getUserId(),true);
 			map.put("topThemes",topThemes);
 			
-			List<ThemeClass> themeTreeUp = themeClassService.getThemeTreeUp(themeId);
+			List<ThemeClass> themeTreeUp = themeClassService.getThemeTreeUp(currTheme.getLogicId());
 			map.put("themeTreeUp", themeTreeUp);
 			
-			List<ThemeClass> children = themeClassService.getChildThemes(themeId,true);
+			List<ThemeClass> children = themeClassService.getChildThemes(currTheme.getLogicId(),true);
 			
 			map.put("currTheme", currTheme);
 			map.put("children",children);
@@ -99,12 +100,10 @@ public class ThemeClassAction {
 			}
 			return redirectUrl + "?error=" + errors;
 		}
-		theme.setParentId(theme.getId());	//设置父主题
-		theme.setId(null);
 		theme.setUpdateOpr(operator.getUserId());
 		int id = themeClassService.saveThemeClass(theme);
 		if(id>0){
-			return redirectUrl + id;
+			return redirectUrl;
 		}else{
 			String msg = "";
 			switch(id){
@@ -112,7 +111,7 @@ public class ThemeClassAction {
 					msg = "数据不正确！";
 					break;
 				case -2:
-					msg = "顶层主题个数大于6个！";
+					msg = "一级主题个数大于3个！";
 					break;
 				case -3:
 					msg = "存在同层同名的活动主题！";
@@ -204,24 +203,39 @@ public class ThemeClassAction {
 	 * 【权限】
 	 *  1、登录用户
 	 * 【功能说明】
-	 * 	1、默认设置第一个顶层主题为当前主题；
-	 * 	2、设置当前主题的向上主题层次树；
-	 *  3、获取当前主题的所有直接下属主题；
+	 * 	1、取用户的全部主题信息
 	 * @param themeId
 	 * @return
 	 */
 	@RequestMapping(value="/*",method=RequestMethod.GET)
 	public String getUserThemes(@ModelAttribute("operator") Operator operator,Map<String,Object> map){
 		List<ThemeClass> topThemes = themeClassService.getUserTopThemes(operator.getUserId(),true);
-		map.put("topThemes",topThemes);
 		if(topThemes !=null && topThemes.size()>0){
-			ThemeClass currTheme = topThemes.get(0);
-			map.put("currTheme", currTheme);
-			List<ThemeClass> themeTreeUp = themeClassService.getThemeTreeUp(currTheme.getId());
-			map.put("themeTreeUp", themeTreeUp);
-			List<ThemeClass> children = themeClassService.getChildThemes(currTheme.getId(),true);
-			map.put("children",children);
+			for(int i=0;i<topThemes.size();i++){
+				List<ThemeClass> children = themeClassService.getChildThemes(topThemes.get(i).getLogicId(),true);
+				topThemes.get(i).setChildren(children);
+				if(children !=null && children.size()>0){
+					for(int j=0;j<children.size();j++){
+						List<ThemeClass> children2 = themeClassService.getChildThemes(children.get(j).getLogicId(),true);
+						children.get(j).setChildren(children2);
+					}
+				}
+			}
+			if(topThemes.size()<3){
+				if(topThemes.size() == 1){
+					topThemes.add(new ThemeClass("分类名称"));
+					topThemes.add(new ThemeClass("分类名称"));
+				}else{
+					topThemes.add(new ThemeClass("分类名称"));
+				}
+			}
+		}else{
+			topThemes = new ArrayList<ThemeClass>(3);
+			topThemes.add(new ThemeClass("分类名称"));
+			topThemes.add(new ThemeClass("分类名称"));
+			topThemes.add(new ThemeClass("分类名称"));
 		}
+		map.put("topThemes" , topThemes);
 		return "themeClass";
 	}
 	/**

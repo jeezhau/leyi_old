@@ -292,9 +292,9 @@ public class ArticleMgrAction {
 	public String article(@PathVariable("themeId") int themeId,@PathVariable("begin") int begin,@ModelAttribute("operator")Operator operator,Map<String,Object> map){
 		ThemeClass currTheme = themeClassService.getThemeClass(themeId);
 		map.put("currTheme", currTheme);
-		List<ThemeClass> themeTreeUp = themeClassService.getThemeTreeUp(currTheme.getId());
+		List<ThemeClass> themeTreeUp = themeClassService.getThemeTreeUp(currTheme.getLogicId());
 		map.put("themeTreeUp", themeTreeUp);
-		List<ThemeClass> children = themeClassService.getChildThemes(currTheme.getId(),true);
+		List<ThemeClass> children = themeClassService.getChildThemes(currTheme.getLogicId(),true);
 		map.put("children",children);
 		boolean isSelf = false;
 		if(operator.getUserId() == currTheme.getUpdateOpr() ){
@@ -305,7 +305,7 @@ public class ArticleMgrAction {
 			return "redirect:"+begin;
 		}
 		PageCond pageCond = new PageCond(begin);
-		List<ArticleBrief> currArticles = articleService.getArticlesByTheme(currTheme.getId(),isSelf,pageCond);
+		List<ArticleBrief> currArticles = articleService.getArticlesByTheme(currTheme.getLogicId(),isSelf,pageCond);
 		map.put("currArticles", currArticles);
 		map.put("pageCond", pageCond);
 		return "articleMgr";

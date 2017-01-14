@@ -14,17 +14,17 @@ public interface ThemeClassMapper {
 
     ThemeClass selectByPrimaryKey(Integer id);
     
-    ThemeClass selectByNameAndOpr(@Param("name")String name,@Param("parentId")Integer parentId ,@Param("oprId")int oprId);
+    ThemeClass selectByNameAndOpr(@Param("name")String name,@Param("classLvl")int classLvl ,@Param("oprId")int oprId);
 
-    int updateByPrimaryKey(ThemeClass record);
+    int update(ThemeClass record);
     
     List<ThemeClass> selectUserThemes(@Param("userId")int userId,@Param("isSelf")boolean isSelf);
     
-    List<ThemeClass> selectChildThemes(@Param("themeId")int themeId,@Param("isSelf")boolean isSelf);
+    List<ThemeClass> selectChildThemes(@Param("logicId")String logicId,@Param("isSelf")boolean isSelf);
     
     List<ThemeClass> selectUserTopThemes(@Param("userId")int userId,@Param("isSelf")boolean isSelf);
     
-    List<ThemeClass> selectThemeTreeUp(Integer themeId);
+    List<ThemeClass> selectThemeTreeUp(@Param("logicId")String logicId);
     
     int countUserTopTheme(@Param("userId")int userId); 
     

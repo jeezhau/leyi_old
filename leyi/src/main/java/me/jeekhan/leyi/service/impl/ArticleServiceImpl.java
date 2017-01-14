@@ -135,17 +135,17 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 获取指定主题下的所有文章简介信息
 	 */
 	@Override
-	public List<ArticleBrief> getArticlesByTheme(int themeId,boolean isSelf,PageCond pageCond){
+	public List<ArticleBrief> getArticlesByTheme(String logicId,boolean isSelf,PageCond pageCond){
 		if(pageCond.getBegin() < 1){
 			pageCond.setBegin(1);
 		}
 		pageCond.setBegin(pageCond.getBegin()-1);
-		int cnt = articleBriefMapper.countArticlesByTheme(themeId, isSelf, pageCond);
+		int cnt = articleBriefMapper.countArticlesByTheme(logicId, isSelf, pageCond);
 		pageCond.setCount(cnt);
 		if(cnt<1){
 			return null;
 		}
-		List<ArticleBrief> list = articleBriefMapper.selectArticlesByTheme(themeId, isSelf,pageCond);
+		List<ArticleBrief> list = articleBriefMapper.selectArticlesByTheme(logicId, isSelf,pageCond);
 		pageCond.setBegin(pageCond.getBegin()+1);
 		return list;
 	}

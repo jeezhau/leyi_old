@@ -1,8 +1,8 @@
 package me.jeekhan.leyi.model;
 
 import java.util.Date;
+import java.util.List;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
@@ -12,12 +12,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ThemeClass {
+	private List<ThemeClass> children;
     private Integer id;
-
-    private Integer parentId;
+    
+    private Integer classLvl;
+    
+    private String logicId;
     
     @NotEmpty(message="名称：不可为空！")
-    @Size(max=20,message="名称：最大长度为20个字符！")
+    @Size(max=7,message="名称：最大长度为7个字符！")
     private String name;
 
     @NotEmpty(message="关键词：不可为空！")
@@ -36,6 +39,12 @@ public class ThemeClass {
     
     @Null
     private String enabled;
+    
+    public  ThemeClass(){}
+    
+    public  ThemeClass(String name){
+    	this.name = name;
+    }
 
     public Integer getId() {
         return id;
@@ -45,12 +54,12 @@ public class ThemeClass {
         this.id = id;
     }
 
-    public Integer getParentId() {
-        return parentId;
+    public String getLogicId() {
+        return logicId;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setLogicId(String logicId) {
+        this.logicId = logicId;
     }
 
     public String getName() {
@@ -100,7 +109,24 @@ public class ThemeClass {
     public void setEnabled(String enabled) {
         this.enabled = enabled;
     }
-    //返回JSON字符串
+    
+    public Integer getClassLvl() {
+		return classLvl;
+	}
+
+	public void setClassLvl(Integer classLvl) {
+		this.classLvl = classLvl;
+	}
+
+	public List<ThemeClass> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<ThemeClass> children) {
+		this.children = children;
+	}
+
+	//返回JSON字符串
     public String toString(){
     	ObjectMapper mapper = new ObjectMapper();
     	try {

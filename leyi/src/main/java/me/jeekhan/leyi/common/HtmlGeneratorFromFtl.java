@@ -15,12 +15,13 @@ import javax.servlet.ServletContext;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import me.jeekhan.leyi.component.WebContextBean;
 
-public class GenHtmlFromFtl {
+public class HtmlGeneratorFromFtl {
 	private static  Configuration freemarker_cfg = null;
 	private static Configuration getConfig() throws Exception{
 		if(freemarker_cfg == null){
-			String ftlBaseDir = WebContextUtil.getServletContext().getRealPath("WEB-INF/ftl");
+			String ftlBaseDir = WebContextBean.getServletContext().getRealPath("WEB-INF/ftl");
 			File ftlDir = new File(ftlBaseDir);
 			if(!ftlDir.exists()){
 				throw new Exception("模板文件目录不存在！");

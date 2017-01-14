@@ -25,8 +25,8 @@ public interface ArticleBriefMapper {
     List<ArticleBrief> selectArticles(@Param("isSelf")boolean isSelf,@Param("pageCond") PageCond pageCond);
     
     //取指定主题下文章数量及文章信息
-    int countArticlesByTheme(@Param("themeId") int themeId,@Param("isSelf")boolean isSelf,@Param("pageCond") PageCond pageCond);
-    List<ArticleBrief> selectArticlesByTheme(@Param("themeId") int themeId,@Param("isSelf")boolean isSelf,@Param("pageCond") PageCond pageCond);
+    int countArticlesByTheme(@Param("logicId") String logicId,@Param("isSelf")boolean isSelf,@Param("pageCond") PageCond pageCond);
+    List<ArticleBrief> selectArticlesByTheme(@Param("logicId") String logicId,@Param("isSelf")boolean isSelf,@Param("pageCond") PageCond pageCond);
     
     //取最近保存的一条记录
     ArticleBrief selectLatestRecrod(ArticleBrief record);

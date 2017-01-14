@@ -26,7 +26,12 @@
 <div class="container">
   <jk:loginMenuBar></jk:loginMenuBar>
   <div class="row">
-	<jk:topThemeBar></jk:topThemeBar>	<!-- 顶部主题 -->
+	<ul class="nav nav-pills nav-justified nav-xs" style="background-color:#66ccff;margin-bottom:10px;">
+  	 <c:forEach items="${topThemes}" var="item">
+      <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/${userInfo.username}/article_mgr/theme/${item.id}/1">${item.name}</a></li></c:if>
+      <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/${userInfo.username}/article_mgr/theme/${item.id}/1">${item.name}</a></li></c:if>
+     </c:forEach>
+ 	</ul>
   </div>
   
   <div class="row">

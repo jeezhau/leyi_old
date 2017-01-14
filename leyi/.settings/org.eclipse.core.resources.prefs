@@ -1,11 +1,11 @@
 eclipse.preferences.version=1
 encoding//src/main/java/me/jeekhan/leyi/common/FileFilter.java=UTF-8
-encoding//src/main/java/me/jeekhan/leyi/common/GenHtmlFromFtl.java=UTF-8
+encoding//src/main/java/me/jeekhan/leyi/common/HtmlGeneratorFromFtl.java=UTF-8
 encoding//src/main/java/me/jeekhan/leyi/common/PageCond.java=UTF-8
 encoding//src/main/java/me/jeekhan/leyi/common/SendEmailUtil.java=UTF-8
 encoding//src/main/java/me/jeekhan/leyi/common/SunSHAUtils.java=UTF-8
 encoding//src/main/java/me/jeekhan/leyi/common/SysPropUtil.java=UTF-8
-encoding//src/main/java/me/jeekhan/leyi/common/WebContextUtil.java=UTF-8
+encoding//src/main/java/me/jeekhan/leyi/component/WebContextBean.java=UTF-8
 encoding//src/main/java/me/jeekhan/leyi/controller/ArticleMgrAction.java=UTF-8
 encoding//src/main/java/me/jeekhan/leyi/controller/CommonAction.java=UTF-8
 encoding//src/main/java/me/jeekhan/leyi/controller/FreeMarkerTest.java=UTF-8

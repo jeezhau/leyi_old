@@ -80,7 +80,7 @@
   	<include refid="Base_Column_List"/>
   	from tb_article_brief b
   	where b.enabled in ('0'<if test="isSelf" >,'1','R'</if>)
-  	and b.theme_id in (select t1.id from tb_theme_class t1 where FIND_IN_SET(#{themeId,jdbcType=INTEGER},getThemeTreeUp(t1.id))) 
+  	and b.theme_id in (select t1.id from tb_theme_class t1 where t1.logic_id like CONCAT(#{logicId},'%')) 
   	order by (UNIX_TIMESTAMP(b.update_time)/3600/24 + (select count(1) from tb_comments c where c.article_id = b.id and c.enabled=0)) desc
   	limit #{pageCond.begin},#{pageCond.pageSize}
   </select> 
@@ -89,7 +89,7 @@
   	select count(1) CNT
   	from tb_article_brief b
   	where b.enabled in ('0'<if test="isSelf" >,'1','R'</if>)
-  	and b.theme_id in (select t1.id from tb_theme_class t1 where FIND_IN_SET(#{themeId,jdbcType=INTEGER},getThemeTreeUp(t1.id))) 
+  	and b.theme_id in (select t1.id from tb_theme_class t1 where t1.logic_id like CONCAT(#{logicId},'%')) 
   </select>
   
   <!-- 取所有用户文章 -->

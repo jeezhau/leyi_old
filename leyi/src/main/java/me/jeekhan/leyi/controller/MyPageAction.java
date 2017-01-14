@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -69,13 +68,13 @@ public class MyPageAction {
 			List<ThemeClass> topThemes = themeClassService.getUserTopThemes(id,isSelf);
 			map.put("topThemes",topThemes);
 			
-			List<ThemeClass> themeTreeUp = themeClassService.getThemeTreeUp(themeId);
+			List<ThemeClass> themeTreeUp = themeClassService.getThemeTreeUp(currTheme.getLogicId());
 			map.put("themeTreeUp", themeTreeUp);
 			
-			List<ThemeClass> children = themeClassService.getChildThemes(themeId,isSelf);
+			List<ThemeClass> children = themeClassService.getChildThemes(currTheme.getLogicId(),isSelf);
 			map.put("children",children);
 			
-			List<ArticleBrief> articleBriefs = articleService.getArticlesByTheme(themeId,isSelf, new PageCond());
+			List<ArticleBrief> articleBriefs = articleService.getArticlesByTheme(currTheme.getLogicId(),isSelf, new PageCond());
 			map.put("articleBriefs",articleBriefs);
 			return "myIndex";
 		}else{

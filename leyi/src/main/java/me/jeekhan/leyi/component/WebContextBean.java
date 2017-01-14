@@ -1,4 +1,4 @@
-package me.jeekhan.leyi.common;
+package me.jeekhan.leyi.component;
 
 import javax.servlet.ServletContext;
 
@@ -10,7 +10,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 
 @Component
-public class WebContextUtil implements ApplicationContextAware {
+public class WebContextBean implements ApplicationContextAware {
 
 	private static ApplicationContext applicationContext; // Spring应用上下文环境
 
@@ -21,7 +21,7 @@ public class WebContextUtil implements ApplicationContextAware {
 	 * 通过传递applicationContext参数初始化成员变量applicationContext
 	 */
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		WebContextUtil.applicationContext = applicationContext;
+		WebContextBean.applicationContext = applicationContext;
 	}
 
 	public static ApplicationContext getApplicationContext() {

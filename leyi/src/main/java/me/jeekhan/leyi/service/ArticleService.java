@@ -73,11 +73,11 @@ public interface ArticleService {
 	
 	/**
 	 * 分页查询显示指定主题下的所有文章信息，按更新时间，评论数量降序排列
-	 * @param themeId
+	 * @param logicId
 	 * @param isSelf 是否包含审核中的记录
 	 * @return
 	 */
-	public List<ArticleBrief> getArticlesByTheme(int themeId,boolean isSelf,PageCond pageCond);
+	public List<ArticleBrief> getArticlesByTheme(String logicId,boolean isSelf,PageCond pageCond);
 	
 	/**
 	 * 取最新最热门的文章20条

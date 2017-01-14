@@ -28,7 +28,7 @@ public interface ThemeClassService {
 	 * @return
 	 */
 	public ThemeClass getThemeClass(int themeClassId);
-	public ThemeClass getThemeClass(String themeName,int parentId,int userId);
+	public ThemeClass getThemeClass(String themeName,int classLvl,int userId);
 	/**
 	 * 获取指定用户所有的主题分类
 	 * @return
@@ -45,13 +45,13 @@ public interface ThemeClassService {
 	 * 获取指定主题下的所有的子主题分类
 	 * @return
 	 */
-	public List<ThemeClass> getChildThemes(int parentId,boolean isSlef);
+	public List<ThemeClass> getChildThemes(String logcicId,boolean isSlef);
 	/**
 	 * 向上获取主题分类属
 	 * @param themeId
 	 * @return
 	 */
-	public List<ThemeClass> getThemeTreeUp(int themeId);
+	public List<ThemeClass> getThemeTreeUp(String logicId);
 	
 	
 	/**
