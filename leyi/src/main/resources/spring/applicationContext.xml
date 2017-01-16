@@ -28,20 +28,18 @@
 	</context:component-scan>
 
 	<!-- 引入配置文件 -->  
-	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
-		<property name="location"  value="classpath:jdbc.properties" /> 
-	</bean>
+    <bean id="propertyConfigurer" class="me.jeekhan.leyi.common.EncryptPropertyConfigurer" p:location="classpath:/jdbc.properties"></bean>
 	<!--数据源配置-->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">  
-		<property name="driverClassName"  value="${leyi.driver}" /> 
-		<property name="url" value="${leyi.url}" />  
-		<property name="username" value="${leyi.username}" />
-		<property name="password" value="${leyi.password}" />
-		<property name="initialSize"  value="${leyi.initialSize}"></property> 
-		<property name="maxActive"  value="${leyi.maxActive}"></property> 
-		<property name="maxIdle"  value="${leyi.maxIdle}"></property> 
-		<property name="minIdle"  value="${leyi.minIdle}"></property> 
-		<property name="maxWait"  value="${leyi.maxWait}"></property> 
+		<property name="driverClassName"  value="${jdbc.driver}" /> 
+		<property name="url" value="${jdbc.url}" />  
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="initialSize"  value="${jdbc.initialSize}"></property> 
+		<property name="maxActive"  value="${jdbc.maxActive}"></property> 
+		<property name="maxIdle"  value="${jdbc.maxIdle}"></property> 
+		<property name="minIdle"  value="${jdbc.minIdle}"></property> 
+		<property name="maxWait"  value="${jdbc.maxWait}"></property> 
 	</bean>  
 	<!-- spring和MyBatis整合--> 
 	<bean id="sqlSessionFactory"  class="org.mybatis.spring.SqlSessionFactoryBean">
