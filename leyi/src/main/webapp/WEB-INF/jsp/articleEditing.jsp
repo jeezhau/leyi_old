@@ -24,7 +24,7 @@
 </div>
 <div class="container">
   <div class="row">
-	<jk:topThemeBar></jk:topThemeBar>	 <!-- 顶部主题-->
+	  <jk:loginMenuBar></jk:loginMenuBar>
   </div>
   
   <div class="row">

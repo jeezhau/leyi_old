@@ -36,7 +36,7 @@ public class MyPageAction {
 	 * 		所有人
 	 * 【功能说明】
 	 * 		1.取作者信息；
-	 * 		2.取作者的顶层主题信息；
+	 * 		2.取作者的主题信息；
 	 * 		3.取当前主题、向上的主题树、直接下属主题；
 	 * 		4.取当前主题下的文章；
 	 * @param themeId
@@ -49,6 +49,7 @@ public class MyPageAction {
 			Operator operator,Map<String,Object> map){
 		UserFullInfo userInfo = userService.getUserFullInfo(username);
 		ThemeClass currTheme = themeClassService.getThemeClass(themeId);
+		
 		if(userInfo != null && currTheme != null && userInfo.getId() == currTheme.getUpdateOpr()){
 			boolean isSelf = false;
 			if(operator.getUserId() == currTheme.getUpdateOpr() ){ //作者自己

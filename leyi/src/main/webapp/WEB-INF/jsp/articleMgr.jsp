@@ -36,7 +36,7 @@
   
   <div class="row">
 	<!-- 左面主题 -->
-    <div class="col-md-4" >
+    <div class="col-xs-4" >
       <div class="panel panel-info">
    	    <div class="panel-heading" style="margin:0">
           <ol class="breadcrumb" style="margin:0;">
@@ -61,7 +61,7 @@
   	  </div>
     </div><!-- end of 左面主题 -->
     <!-- 右面文章列表 -->
-    <div class="col-md-8" >
+    <div class="col-xs-8" >
       <div class="panel panel-info">
         <div class="panel-heading" style="margin:0">
 	     	<a href="/leyi/${operator.username}/article_mgr/editing" onclick="if('${currTheme.id}') { return true;} else { alert('请先选择主题！');}" target="_blank">新增文章</a>

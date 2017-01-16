@@ -26,13 +26,10 @@
 <div class="container">
   <jk:loginMenuBar></jk:loginMenuBar>
   <div class="row">
-     <div class="col-md-3" >
-       <jk:individualResume></jk:individualResume>
-	 </div>
    <!--======================中间主要内容  ===================--> 
-    <div class="col-md-9 light-gray-bg">
+    <div class="col-sm-9 light-gray-bg">
 	  <div class="panel panel-info">
-        <div class="panel-heading text-center"><h3 class="panel-title">个人详情</h3></div>
+        <div class="panel-heading text-center"><h3 class="panel-title">个人信息</h3></div>
 	    <div class="panel-body">
 		  <div class="row">
 		  	<div class="col-sm-6 "> 用户名：${userInfo.username} </div>
@@ -98,6 +95,9 @@
 	    </div>
 	  </div> <!-- panel -->
     </div>
+    <div class="col-sm-3 hidden-xs" >
+       <jk:individualResume></jk:individualResume>
+	 </div>
   </div><!-- end of row -->
   <jk:copyRight></jk:copyRight>
 </div>

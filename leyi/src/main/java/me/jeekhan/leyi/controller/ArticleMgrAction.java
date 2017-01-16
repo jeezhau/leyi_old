@@ -150,7 +150,7 @@ public class ArticleMgrAction {
 			articleContent.setArticleId(id);
 			articleService.saveArticleContent(articleContent);
 		}
-		return "redirect:/"+operator.getUsername()+"/article_mgr/theme/" + themeId;
+		return "redirect:/"+operator.getUsername()+"/article_mgr/theme/" + themeId + "/1";
 	}
 	/**
 	 * 保存文章编辑
@@ -206,7 +206,7 @@ public class ArticleMgrAction {
 		}else{
 			articleService.deleteArticle(articleId);
 		}
-		return redirectUrl + old.getThemeId();
+		return redirectUrl + old.getThemeId() + "/1";
 	}
 	/**
 	 * 文章审核：通过

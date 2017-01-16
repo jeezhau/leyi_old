@@ -22,8 +22,6 @@ public class LogInterceptor extends HandlerInterceptorAdapter{
         String url = requestUri.substring(contextPath.length());  
         
         log.info("requestUri:"+requestUri);    
-        log.info("contextPath:"+contextPath);    
-        log.info("url:"+url);  
 //		Enumeration<String> attrs = request.getAttributeNames();
 //		System.out.println("===========属性：==============");
 //		while(attrs.hasMoreElements()){

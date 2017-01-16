@@ -25,12 +25,8 @@
 <div class="container">
   <jk:loginMenuBar></jk:loginMenuBar>
   <div class="row">
-   <!-- 左侧边栏 -->
-     <div class="col-md-3" >
-       <jk:individualResume></jk:individualResume>
-	</div>
    <!--======================中间主要内容  ===================--> 
-    <div class="col-md-9 light-gray-bg">
+    <div class="col-sm-9 light-gray-bg">
 	  <jk:topThemeBar></jk:topThemeBar><!-- 顶部主题分类 -->
 	  <div class="panel panel-info">
         <div class="panel-heading text-center"><h3 class="panel-title">${brief.name}</h3></div>
@@ -100,6 +96,10 @@
 	    </div>
 	  </div> <!-- 文章panel -->
     </div>
+     <!-- 左侧边栏 -->
+     <div class="col-sm-3 hidden-xs" >
+       <jk:individualResume></jk:individualResume>
+	</div>
   </div><!-- end of row -->
   
 </div>

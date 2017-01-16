@@ -12,10 +12,7 @@
   <meta name="author" content="jeekhan">
 
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/templatemo-style.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">  
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">  
 <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
@@ -42,9 +39,18 @@
 	</c:if>
   </div>
   <div class="row">
-	<!--====================左边菜单链接  ===================--> 
-    <div class="col-md-3" >
-      <jk:individualResume></jk:individualResume>
+    <!--======================中间主要内容  ===================--> 
+    <div class="col-xs-9 light-gray-bg">
+	  <jk:topThemeBar></jk:topThemeBar>	<!-- 顶部主题分类-->
+	  <c:forEach items="${articleBriefs}" var="item">	 <!-- 文章panel -->	  
+	  <div class="panel panel-info" style="margin-bottom:0px;border-radius:0;">
+        <div class="panel-heading"><h4 class="panel-title"><a target="_blank" href="/leyi/${userInfo.username}/article/${item.id}">${item.name}</a></h4></div>
+	    <div class="panel-body">${item.brief}</div>
+	  </div>
+	  </c:forEach>
+    </div>
+    <!--====================右边菜单链接  ===================--> 
+    <div class="col-xs-3" >
 	  <div class="row light-gray-bg">
 	      <ol class="breadcrumb " style="margin:10px 0;">
 		   <c:forEach items="${themeTreeUp}" var="item">
@@ -55,22 +61,12 @@
 	      <nav class="navbar navbar-info "  role="navigation">          
 	        <ul class="nav nav-tabs nav-stacked">
 	         <c:forEach items="${children}" var="item">
-	          <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/${userInfo.username}/theme/${item.id}">${item.name}</a></li></c:if>
-	          <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/${userInfo.username}/theme/${item.id}">${item.name}</a></li></c:if>
+	          <c:if test="${currTheme.id==item.id}"> <li class="active"><a href="/leyi/${userInfo.username}/theme/${item.id}"> > ${item.name}</a></li></c:if>
+	          <c:if test="${currTheme.id!=item.id}"> <li><a href="/leyi/${userInfo.username}/theme/${item.id}"> > ${item.name}</a></li></c:if>
 	         </c:forEach>
 			</ul>
 	      </nav> 
       </div>       
-    </div>
-    <!--======================中间主要内容  ===================--> 
-    <div class="col-md-9 light-gray-bg">
-	  <jk:topThemeBar></jk:topThemeBar>	<!-- 顶部主题分类-->
-	  <c:forEach items="${articleBriefs}" var="item">	 <!-- 文章panel -->	  
-	  <div class="panel panel-info" style="margin-bottom:0px;border-radius:0;">
-        <div class="panel-heading"><h4 class="panel-title"><a target="_blank" href="/leyi/${userInfo.username}/article/${item.id}">${item.name}</a></h4></div>
-	    <div class="panel-body">${item.brief}</div>
-	  </div>
-	  </c:forEach>
     </div>
   </div><!-- end of row -->
   
