@@ -55,7 +55,13 @@ public class ThemeClassServiceImpl implements ThemeClassService {
 			}else{//新增
 				themeClassMapper.insert(themeClass);
 				ThemeClass lastest = themeClassMapper.selectByNameAndOpr(themeClass.getName(),themeClass.getClassLvl(),themeClass.getUpdateOpr());
-				lastest.setLogicId(lastest.getLogicId() + "_" + lastest.getId());
+				String logicId = "";
+				if(lastest.getLogicId() == null){
+					logicId = lastest.getId().toString();
+				}else{
+					logicId = lastest.getLogicId() + "_" + lastest.getId().toString();
+				}
+				lastest.setLogicId(logicId);
 				themeClassMapper.update(lastest);
 				return lastest.getId();
 			}

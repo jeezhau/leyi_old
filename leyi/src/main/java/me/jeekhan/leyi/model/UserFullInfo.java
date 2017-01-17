@@ -59,6 +59,10 @@ public class UserFullInfo {
     private String enabled;
     
     private String picture;
+    
+    @NotNull(message="邀请码不可为空！")
+    @Size(min=6,max=20,message="长度为6-255个字符！")
+    private String inviteCode;
 
     public Integer getId() {
         return id;
@@ -171,7 +175,16 @@ public class UserFullInfo {
     public void setPicture(String picture) {
         this.picture = picture;
     }
-    //返回JSON字符串
+    
+    public String getInviteCode() {
+		return inviteCode;
+	}
+
+	public void setInviteCode(String inviteCode) {
+		this.inviteCode = inviteCode;
+	}
+
+	//返回JSON字符串
     public String toString(){
     	ObjectMapper mapper = new ObjectMapper();
     	try {

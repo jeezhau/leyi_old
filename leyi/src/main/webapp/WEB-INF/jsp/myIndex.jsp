@@ -25,6 +25,7 @@
   <div class="row">
   <c:if test="${not empty operator.userId and operator.userId > 0}">
   	<ul class="nav nav-tabs pull-right" >
+  	 <li><a href="/leyi/${userInfo.username}/detail">个人信息</a></li>
   	 <li><a href="/leyi/${operator.username }/theme_mgr/" >分类管理</a></li>
      <li><a href="/leyi/${operator.username }/article_mgr/" >文章管理</a></li>
      <li><a href="/leyi/${operator.username }/review" >信息审核</a></li>
@@ -34,7 +35,6 @@
    <c:if test="${empty operator.userId or operator.userId < 1}">
     <ul class="nav nav-tabs pull-right" >
      <li><a href="/leyi/login.jsp" target="_blank">登录</a></li>
-     <li><a href="/leyi/register"  target="_blank">注册</a></li>
 	</ul>
 	</c:if>
   </div>

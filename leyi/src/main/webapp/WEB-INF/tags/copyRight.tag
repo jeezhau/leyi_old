@@ -5,7 +5,7 @@
   <div class="row">
    &nbsp;<p>&nbsp;<p>
    <footer class="text-center">
-      <p> Copyright &copy; 2084 Company Name</p>
+      
     </footer> 
     &nbsp;<p>&nbsp;<p>      
   </div> 

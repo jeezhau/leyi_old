@@ -24,7 +24,7 @@ public abstract class DesUtils {
 	
 	public static final String BC_CIPHER_ALGORITHM = "DESede/ECB/PKCS7Padding";
 	
-	private static String HEX_KEY = "c10b5797a83be0a702753d61f2f41a4a7c7f3ecb804fea49"; //默认密钥
+	private static String HEX_KEY = "c10b5797a83be0a702753d61f2f41a4a7c7f3ecb804fea49"; //默认密钥(16进制)
 	
 	public static byte[] initKey() throws Exception{
 		KeyGenerator keyGen = KeyGenerator.getInstance(KYE_ALGORITHM, "SunJCE");
@@ -124,16 +124,15 @@ public abstract class DesUtils {
 	 * @throws Exception
 	 */
 	public static String decryptHex(String data) throws Exception{
-		byte[] input = data.getBytes("utf-8");
-		byte[] keyCode = HEX_KEY.getBytes("utf-8");
+		byte[] input = Hex.decodeHex(data.toCharArray());
+		byte[] keyCode = Hex.decodeHex(HEX_KEY.toCharArray());
 		byte[] buf = decrypt(input,keyCode);
-		String str = Hex.encodeHexString(buf);
+		String str = new String(buf,"utf-8");
 		return str;
 	}
 	
 	public static void main(String[] args) throws Exception{
-		
-		
+
 	}
 	
 }

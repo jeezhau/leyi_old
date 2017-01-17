@@ -23,4 +23,5 @@ public interface UserFullInfoMapper {
     List<UserFullInfo> selectUsers4Review();
     
     int countUsers4Review();
+    
 }

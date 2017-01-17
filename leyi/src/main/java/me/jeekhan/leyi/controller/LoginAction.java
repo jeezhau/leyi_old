@@ -25,8 +25,10 @@ import org.springframework.web.multipart.MultipartFile;
 import me.jeekhan.leyi.common.SysPropUtil;
 import me.jeekhan.leyi.dto.Operator;
 import me.jeekhan.leyi.model.ArticleBrief;
+import me.jeekhan.leyi.model.InviteInfo;
 import me.jeekhan.leyi.model.UserFullInfo;
 import me.jeekhan.leyi.service.ArticleService;
+import me.jeekhan.leyi.service.InviteInfoService;
 import me.jeekhan.leyi.service.UserService;
 
 @Controller
@@ -36,7 +38,8 @@ public class LoginAction {
 	private UserService userService;
 	@Autowired
 	private ArticleService articleService;
-	
+	@Autowired
+	private InviteInfoService inviteInfoService;
 	/**
 	 * 用户登录
 	 * 【权限】
@@ -89,7 +92,7 @@ public class LoginAction {
 	/**
 	 * 用户注册
 	 * 【权限】
-	 * 		所用人
+	 * 		受邀请人
 	 * 【功能说明】
 	 * 		1、验证用户名或邮箱唯一；
 	 * 		2、注册成功重定向至个人主页，否则返回注册页面并显示相关错误信息；
@@ -104,7 +107,7 @@ public class LoginAction {
 	 * @throws IOException
 	 */
 	@RequestMapping(value="/addUser",method=RequestMethod.POST)
-	public String register(@Valid UserFullInfo userInfo,BindingResult result,@RequestParam(value="picFile",required=false)MultipartFile file,
+	public String addUser(@Valid UserFullInfo userInfo,BindingResult result,@RequestParam(value="picFile",required=false)MultipartFile file,
 			Map<String,Object>map,HttpServletRequest request) throws NoSuchAlgorithmException, IOException{
 		if(result.hasErrors()){
 			List<ObjectError> list = result.getAllErrors();
@@ -115,11 +118,19 @@ public class LoginAction {
 			
 			return "register";
 		}
+		//文件重命名
 		String fileName = "";
 		if(!file.isEmpty()){
 			fileName = java.util.UUID.randomUUID().toString() + "." + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.')+1);
 			userInfo.setPicture(fileName);
 		}
+		//邀请码验证
+		InviteInfo inviteInfo = inviteInfoService.get(userInfo.getInviteCode());
+		if(inviteInfo == null || "1".equals(inviteInfo.getStatus())){
+			map.put("inviteCode", "邀请码不正确或已被使用");
+			return "register";
+		}
+		//数据保存
 		int id = userService.saveUser(userInfo);
 		if(id<=0){
 			if(id == -1){
@@ -130,6 +141,7 @@ public class LoginAction {
 			}
 			return "register";
 		}
+		//文件保存
 		if(!file.isEmpty()){
 			String path = SysPropUtil.getParam("DIR_USER_UPLOAD") + userInfo.getUsername() + "/";  
 			File dir = new File(path);
@@ -146,6 +158,7 @@ public class LoginAction {
 			}
 			out.close();
 		}
+		//更新登录信息
 		Operator operator = new Operator();
 		operator.setLevel(1);
 		operator.setUserId(id);
@@ -170,6 +183,9 @@ public class LoginAction {
 		Operator operator = (Operator) map.get("operator");
 		if(operator == null || operator.getUserId()<1){
 			UserFullInfo userInfo = userService.getIndexShowUser();
+			if(userInfo == null){
+				return "register";
+			}
 			map.put("userInfo", userInfo);
 		}
 		List<ArticleBrief> hotnew = articleService.getHotNewArticles();
@@ -182,14 +198,22 @@ public class LoginAction {
 	 * 	1、所用人
 	 * 【功能说明】
 	 * 	1、用户注册初始化；
+	 *  2、验证邀请码是否合规；不合规直接跳转至主页
+	 *  
 	 * 【输入输出】
+	 * @param code 邀请码
 	 * @param map
 	 * @return	目标页面
 	 */
-	@RequestMapping(value="/register")
-	public String register(Map<String,Object>map){
-
-		return "register";
+	@RequestMapping(value="/register",params="code")
+	public String register(@RequestParam("code") String code ,Map<String,Object>map){
+		InviteInfo info = inviteInfoService.get(code);
+		if(info != null){
+			map.put("code", code);
+			return "register";
+		}else{
+			return "redirect:/";
+		}
 	}
 
 }

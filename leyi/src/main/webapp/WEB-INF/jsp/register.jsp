@@ -36,6 +36,7 @@
 	  <div class="form-group">
 	    <label for="username" class="col-sm-2 control-label">用户名<span style="color:red">*</span></label>
 	    <div class="col-sm-5">
+	      <input type="hidden" name="inviteCode" >
 	      <input type="text" class="form-control" id="username" name="username" pattern="\w{3,20}" title="3-20个字符组成" maxLength=20 value="${param.username}" required placeholder="请输入用户名（3-50个字符）">
 	      <c:if test="${not empty username}">
 	      <div class="alert alert-warning alert-dismissable">${username}

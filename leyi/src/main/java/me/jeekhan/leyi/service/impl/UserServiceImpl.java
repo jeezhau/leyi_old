@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import me.jeekhan.leyi.common.SunSHAUtils;
+import me.jeekhan.leyi.dao.InviteInfoMapper;
 import me.jeekhan.leyi.dao.ReviewInfoMapper;
 import me.jeekhan.leyi.dao.UserBaseInfoMapper;
 import me.jeekhan.leyi.dao.UserFullInfoMapper;
+import me.jeekhan.leyi.model.InviteInfo;
 import me.jeekhan.leyi.model.ReviewInfo;
 import me.jeekhan.leyi.model.UserBaseInfo;
 import me.jeekhan.leyi.model.UserFullInfo;
@@ -25,6 +27,9 @@ public class UserServiceImpl implements UserService{
 	private UserFullInfoMapper userFullInfoMapper;
 	@Autowired
 	private ReviewInfoMapper reviewInfoMapper;
+	@Autowired
+	private InviteInfoMapper inviteInfoMapper;
+	
 	/**
 	 * 提取用户基本信息
 	 * @param	用户ID
@@ -82,6 +87,11 @@ public class UserServiceImpl implements UserService{
 		if(userFullInfo == null){
 			return 0;
 		}
+		String inviteCode = userFullInfo.getInviteCode();
+		InviteInfo inviteInfo = inviteInfoMapper.selectByPrimaryKey(inviteCode);
+		inviteInfo.setStatus("1");
+		inviteInfo.setUseTime(new Date());
+		
 		userFullInfo.setEnabled("1");
 		userFullInfo.setRegistTime(new Date());
 		userFullInfo.setUpdateTime(new Date());
@@ -95,6 +105,7 @@ public class UserServiceImpl implements UserService{
 			if(info2!=null){
 				return -2;
 			}
+			inviteInfoMapper.insert(inviteInfo);
 			userFullInfoMapper.insert(userFullInfo);
 			return userFullInfoMapper.selectByName(userFullInfo.getUsername()).getId();
 		}else{

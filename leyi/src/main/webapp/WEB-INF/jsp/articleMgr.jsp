@@ -64,7 +64,7 @@
     <div class="col-xs-8" >
       <div class="panel panel-info">
         <div class="panel-heading" style="margin:0">
-	     	<a href="/leyi/${operator.username}/article_mgr/editing" onclick="if('${currTheme.id}') { return true;} else { alert('请先选择主题！');}" target="_blank">新增文章</a>
+	     	<a href="/leyi/${operator.username}/article_mgr/editing" onclick="if('${currTheme.id}') { return true;} else { alert('请先选择主题！'); return false;}" target="_blank">新增文章</a>
         </div>
         <table class="table table-striped  table-bordered table-hover ">
           <thead>

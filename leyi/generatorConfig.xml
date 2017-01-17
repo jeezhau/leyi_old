@@ -21,6 +21,6 @@
         <!-- 生成DAO的包名和位置-->  
         <javaClientGenerator type="XMLMAPPER" targetPackage="me.jeekhan.leyi.dao" targetProject="leyi/src/main/java" />  
 
-        <table tableName="tb_mail_send_info" domainObjectName="MailSendInfo" />
+        <table tableName="tb_invite_info" domainObjectName="InviteInfo" />
     </context>
 </generatorConfiguration>

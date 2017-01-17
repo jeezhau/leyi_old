@@ -5,7 +5,6 @@
    <c:if test="${empty operator.userId or operator.userId < 1}">
   	<ul class="nav nav-tabs pull-right" >
      <li><a href="login.jsp">登录</a></li>
-     <li><a href="/leyi/register"  target="_blank">注册</a></li>
 	</ul>
 	</c:if>
 	<c:if test="${not empty operator.userId and operator.userId > 0}">

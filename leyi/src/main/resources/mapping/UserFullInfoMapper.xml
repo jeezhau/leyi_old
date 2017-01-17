@@ -16,11 +16,12 @@
     <result column="regist_time" property="registTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="enabled" property="enabled" jdbcType="CHAR" />
+    <result column="invite_code" property="inviteCode" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="Base_Column_List" >
     id, username, email, birthday, sex, passwd, city, favourite, profession, introduce, picture, regist_time, 
-    update_time, enabled
+    update_time, enabled,invite_code
   </sql>
 
 
@@ -50,104 +51,12 @@
       birthday, sex, passwd, city, 
       favourite, profession, introduce, 
       regist_time, update_time, enabled, 
-      picture)
+      picture,invite_code)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{birthday,jdbcType=DATE}, #{sex,jdbcType=CHAR}, #{passwd,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
       #{favourite,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, 
       #{registTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{enabled,jdbcType=CHAR}, 
-      #{picture,jdbcType=VARCHAR})
-  </insert>
-  
-  <insert id="insertSelective" parameterType="me.jeekhan.leyi.model.UserFullInfo" >
-    insert into tb_user_full_info
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="username != null" >
-        username,
-      </if>
-      <if test="email != null" >
-        email,
-      </if>
-      <if test="birthday != null" >
-        birthday,
-      </if>
-      <if test="sex != null" >
-        sex,
-      </if>
-      <if test="passwd != null" >
-        passwd,
-      </if>
-      <if test="city != null" >
-        city,
-      </if>
-      <if test="favourite != null" >
-        favourite,
-      </if>
-      <if test="profession != null" >
-        profession,
-      </if>
-      <if test="introduce != null" >
-        introduce,
-      </if>
-      <if test="registTime != null" >
-        regist_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-      <if test="enabled != null" >
-        enabled,
-      </if>
-      <if test="picture != null" >
-        picture,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="username != null" >
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null" >
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="birthday != null" >
-        #{birthday,jdbcType=DATE},
-      </if>
-      <if test="sex != null" >
-        #{sex,jdbcType=CHAR},
-      </if>
-      <if test="passwd != null" >
-        #{passwd,jdbcType=VARCHAR},
-      </if>
-      <if test="city != null" >
-        #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="favourite != null" >
-        #{favourite,jdbcType=VARCHAR},
-      </if>
-      <if test="profession != null" >
-        #{profession,jdbcType=VARCHAR},
-      </if>
-      <if test="introduce != null" >
-        #{introduce,jdbcType=VARCHAR},
-      </if>
-      <if test="registTime != null" >
-        #{registTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="enabled != null" >
-        #{enabled,jdbcType=CHAR},
-      </if>
-      <if test="picture != null" >
-        #{picture,jdbcType=VARCHAR},
-      </if>
-    </trim>
+      #{picture,jdbcType=VARCHAR},#{inviteCode,jdbcType=VARCHAR})
   </insert>
   
   <update id="updateByPrimaryKeySelective" parameterType="me.jeekhan.leyi.model.UserFullInfo" >
@@ -192,6 +101,9 @@
       <if test="picture != null" >
         picture = #{picture,jdbcType=VARCHAR},
       </if>
+      <if test="inviteCode != null" >
+        invite_code = #{inviteCode,jdbcType=VARCHAR},
+      </if>      
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -210,7 +122,8 @@
       picture = #{picture,jdbcType=VARCHAR},
       regist_time = #{registTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      enabled = #{enabled,jdbcType=CHAR}
+      enabled = #{enabled,jdbcType=CHAR},
+      invite_code = #{inviteCode,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   
@@ -235,7 +148,8 @@
   	select count(1) CNT 
   	from tb_user_full_info t 
   	where t.enabled = '1' 
-  </select>		
-  		
+  </select>	
+  
+  
 </mapper>
 

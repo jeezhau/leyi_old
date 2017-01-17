@@ -41,7 +41,7 @@ public class UserMgrAction {
 	 * @return
 	 */
 	@RequestMapping(value="/{mode}/{userId}",method=RequestMethod.GET)
-	public String showArticle(@PathVariable("mode")String mode,@PathVariable("userId")Integer userId,Map<String,Object> map){
+	public String showUser(@PathVariable("mode")String mode,@PathVariable("userId")Integer userId,Map<String,Object> map){
 		UserFullInfo userInfo = userService.getUserFullInfo(userId);
 		if(("detail".equals(mode) || "review".equals(mode)) && userInfo != null){
 			map.put("mode", mode);
