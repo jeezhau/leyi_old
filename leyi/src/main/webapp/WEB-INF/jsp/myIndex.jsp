@@ -25,7 +25,7 @@
   <div class="row">
   <c:if test="${not empty operator.userId and operator.userId > 0}">
   	<ul class="nav nav-tabs pull-right" >
-  	 <li><a href="/leyi/${userInfo.username}/detail">个人信息</a></li>
+  	 <li><a href="/leyi/${userInfo.username}/user_mgr/edit">个人信息</a></li>
   	 <li><a href="/leyi/${operator.username }/theme_mgr/" >分类管理</a></li>
      <li><a href="/leyi/${operator.username }/article_mgr/" >文章管理</a></li>
      <li><a href="/leyi/${operator.username }/review" >信息审核</a></li>

@@ -20,15 +20,13 @@ public class UserFullInfo {
     @Size(min=3,max=50,message="长度为3-50个字符！")	
     private String username;
     
-    @NotNull(message="不可为空！")
     @Size(max=100,message="最长100个字符！")
     @Email
     //@Pattern(regexp="^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$")
     private String email;
     
-    @Past(message="不可大于当前日期！")
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date birthday;
+    @Pattern(regexp="\\d{4}-\\d{2}-\\d{2}",message="格式为：yyyy-MM-dd")
+    private String birthday;
     
     @Pattern(regexp="^[0-3]$",message="值只可为【0-男，1-女，2-其他】！")
     private String sex;
@@ -88,11 +86,11 @@ public class UserFullInfo {
         this.email = email;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 

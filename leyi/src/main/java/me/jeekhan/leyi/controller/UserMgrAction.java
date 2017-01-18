@@ -1,16 +1,27 @@
 package me.jeekhan.leyi.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Map;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
+import me.jeekhan.leyi.common.SunSHAUtils;
 import me.jeekhan.leyi.dto.Operator;
+import me.jeekhan.leyi.model.InviteInfo;
 import me.jeekhan.leyi.model.ReviewInfo;
 import me.jeekhan.leyi.model.UserFullInfo;
 import me.jeekhan.leyi.service.UserService;
@@ -130,4 +141,92 @@ public class UserMgrAction {
 		
 		return "redirect:/"+operator.getUsername()+ "/review/";
 	}
+	/**
+	 * 展示用户编辑页面
+	 * @param operator
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value="/edit")
+	public String edit(@ModelAttribute("operator")Operator operator,Map<String,Object> map){
+		int userId = operator.getUserId();
+		UserFullInfo userInfo = userService.getUserFullInfo(userId);
+		map.put("userInfo", userInfo);
+		return "userEdit";
+	}
+	
+	/**
+	 * 保存用户基本信息编辑
+	 * @param userInfo
+	 * @param operator
+	 * @param result
+	 * @param map
+	 * @return
+	 * @throws UnsupportedEncodingException 
+	 * @throws NoSuchAlgorithmException 
+	 */
+	@RequestMapping(value="/editBasic",method=RequestMethod.POST)
+	public String editUser(@Valid UserFullInfo userInfo,BindingResult result,@ModelAttribute("operator")Operator operator,Map<String,Object> map) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+		int userId = operator.getUserId();
+		UserFullInfo oldInfo = userService.getUserFullInfo(userId);
+		if(operator == null || operator.getUserId() != userInfo.getId() || oldInfo == null){ //无权限
+			return "userEdit" + "?error=您无权限执行该操作！";
+		}
+		if(result.hasErrors()){
+			List<ObjectError> list = result.getAllErrors();
+			for(ObjectError e :list){
+				String filed = e.getCodes()[0].substring(e.getCodes()[0].lastIndexOf('.')+1);
+				map.put(filed, e.getDefaultMessage());
+			}
+			userInfo.setPicture(oldInfo.getPicture());
+			map.put("userInfo", userInfo);
+			return "userEdit";
+		}
+		//数据保存
+		userInfo.setPasswd(oldInfo.getPasswd());
+		userInfo.setInviteCode(oldInfo.getInviteCode());
+		userInfo.setPicture(oldInfo.getPicture());
+		int id = userService.saveUser(userInfo);
+		if(id<=0){
+			if(id == -1){
+				map.put("username", "该用户名已被使用");
+			}
+			if(id == -2){
+				map.put("email", "该邮箱已被使用");
+			}
+			return "userEdit";
+		}
+		return "redirect:/"+operator.getUsername()+ "/detail";
+	}
+	
+	@RequestMapping(value="/editPwd",method=RequestMethod.POST)
+	public String editPwd(int userId,String old_passwd,String new_passwd,@ModelAttribute("operator")Operator operator) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+		UserFullInfo oldInfo = userService.getUserFullInfo(userId);
+		if(operator == null || operator.getUserId() != userId || oldInfo == null){ //无权限
+			return "userEdit" + "?error=您无权限执行该操作！";
+		}
+		//数据保存
+		String oldPwd = SunSHAUtils.encodeSHA512Hex(old_passwd);
+		String newPwd = SunSHAUtils.encodeSHA512Hex(new_passwd);
+		if(!oldPwd.equals(oldInfo.getPasswd())){
+			return "userEdit" + "?error=原密码不正确！";
+		}
+		oldInfo.setPasswd(newPwd);
+		userService.saveUser(oldInfo);
+		return "redirect:/"+operator.getUsername()+ "/detail";
+	}
+	/**
+	 * 保存用户图片编辑
+	 * @param file
+	 * @param operator
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value="/editPic")
+	public String editUser(@RequestParam(value="picFile") MultipartFile file,@ModelAttribute("operator")Operator operator,Map<String,Object> map){
+		
+		return "userEdit";
+	}
+	
+	
 }

@@ -37,12 +37,12 @@
 		  </div> 
 		  <div class="row">
 		    <hr>
-		    <div class="col-sm-6 "> 生日：<fmt:formatDate value="${userInfo.birthday }" pattern="yyyy-MM-dd"/></div>
+		    <div class="col-sm-6 "> 生日：${userInfo.birthday }</div>
 		    <div class="col-sm-6 "> 性别： 
 		     <c:choose>
 		     	<c:when test="${userInfo.sex == 0}">男</c:when>
 		     	<c:when test="${userInfo.sex == 1}">女</c:when>
-		     	<c:when test="${userInfo.sex == 2}">其他</c:when>
+		     	<c:when test="${userInfo.sex == 2}">保密</c:when>
 		     </c:choose>   
 		     </div>
 		   </div>

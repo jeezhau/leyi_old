@@ -87,28 +87,28 @@ public class UserServiceImpl implements UserService{
 		if(userFullInfo == null){
 			return 0;
 		}
-		String inviteCode = userFullInfo.getInviteCode();
-		InviteInfo inviteInfo = inviteInfoMapper.selectByPrimaryKey(inviteCode);
-		inviteInfo.setStatus("1");
-		inviteInfo.setUseTime(new Date());
-		
 		userFullInfo.setEnabled("1");
-		userFullInfo.setRegistTime(new Date());
-		userFullInfo.setUpdateTime(new Date());
-		userFullInfo.setPasswd(SunSHAUtils.encodeSHA512Hex(userFullInfo.getPasswd()));
-		if(userFullInfo.getId() == null){
-			UserFullInfo info1 = userFullInfoMapper.selectByName(userFullInfo.getUsername());
-			UserFullInfo info2 = userFullInfoMapper.selectByName(userFullInfo.getEmail());
-			if(info1!=null ){
-				return -1;
-			}
-			if(info2!=null){
-				return -2;
-			}
+		UserFullInfo info1 = userFullInfoMapper.selectByName(userFullInfo.getUsername());
+		UserFullInfo info2 = userFullInfoMapper.selectByName(userFullInfo.getEmail());
+		if(info1!=null && info1.getId() != userFullInfo.getId()){
+			return -1;
+		}
+		if(info2!=null && info1.getId() != userFullInfo.getId()){
+			return -2;
+		}
+		if(userFullInfo.getId() == null){//新增
+			String inviteCode = userFullInfo.getInviteCode();
+			InviteInfo inviteInfo = inviteInfoMapper.selectByPrimaryKey(inviteCode);
+			inviteInfo.setStatus("1");
+			inviteInfo.setUseTime(new Date());
+			userFullInfo.setPasswd(SunSHAUtils.encodeSHA512Hex(userFullInfo.getPasswd()));
+			userFullInfo.setRegistTime(new Date());
+			userFullInfo.setUpdateTime(new Date());
 			inviteInfoMapper.insert(inviteInfo);
 			userFullInfoMapper.insert(userFullInfo);
 			return userFullInfoMapper.selectByName(userFullInfo.getUsername()).getId();
-		}else{
+		}else{	//修改
+			userFullInfo.setUpdateTime(new Date());
 			userFullInfoMapper.updateByPrimaryKey(userFullInfo);
 			return userFullInfo.getId();
 		}
