@@ -115,7 +115,7 @@
         <label class="col-sm-2 control-label">内容<span style="color:red">*</span></label>
         <div class="col-sm-10">
           <div id="hidden-Content" style="display:none">${content.content }</div>
-          <textarea class="form-control" id="content" name="content" maxLength=10240 required></textarea>
+          <textarea class="form-control" id="content" name="content" maxLength=10100 required></textarea>
           <c:if test="${not empty valid.content}">
 	      <div class="alert alert-warning alert-dismissable">${valid.content}
 	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>

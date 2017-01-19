@@ -16,6 +16,10 @@ public class InviteInfoServiceImpl implements InviteInfoService{
 	public InviteInfo get(String inviteCode){
 		return inviteInfoMapper.selectByPrimaryKey(inviteCode);
 	}
+	
+	public InviteInfo get(int userId){
+		return inviteInfoMapper.selectByUserId(userId);
+	}
 
 	@Override
 	public int insert(InviteInfo inviteInfo) {

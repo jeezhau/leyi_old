@@ -29,10 +29,20 @@
 
 </div>
 <div class="container" > 
-  
-   <div class="row" style="border:1px solid black;margin:0">
+<jk:loginMenuBar></jk:loginMenuBar>
+<div class="row">
+  <div class="col-sm-3">
+  <ul class="nav nav-pills nav-stacked">
+	  <li id="ln_editBasic" onclick="$(this).addClass('active'); $(this).siblings().removeClass('active');$('[id^=edit]').hide();$('#editBasic').show(); "><a href="#">用户基本信息变更</a></li>
+	  <li id="ln_editPwd" onclick="$(this).addClass('active'); $(this).siblings().removeClass('active');$('[id^=edit]').hide();$('#editPwd').show(); "><a href="#">密码变更</a></li>
+	  <li id="ln_editPic" onclick="$(this).addClass('active'); $(this).siblings().removeClass('active');$('[id^=edit]').hide();$('#editPic').show(); "><a href="#">个人照片变更</a></li>
+	  <li id="ln_editOther" onclick="$(this).addClass('active'); $(this).siblings().removeClass('active');$('[id^=edit]').hide();$('#editOther').show(); "><a href="#">其他信息</a></li>
+  </ul>
+  </div>
+  <div class="col-sm-9">
+   <div class="row" id="editBasic" style="display:none">
     <h3 style="text-align:center;margin:20px 0 ">用户基本信息</h3>
-	<form class="form-horizontal" id="registerForm" action="editBasic" method ="post" autocomplete="on" role="form" >
+	<form class="form-horizontal" id="basicForm" action="editBasic" method ="post" autocomplete="on" role="form" >
 	  <div class="form-group">
 	    <label for="username" class="col-xs-2 control-label">用户名<span style="color:red">*</span></label>
 	    <div class="col-xs-5">
@@ -127,7 +137,7 @@
       </div>
       </c:if>
       <div class="form-group">
-         <div class="col-sm-offset-5 col-sm-10">
+         <div class="col-sm-offset-4 col-sm-10">
            <button type="submit" class="btn btn-info" id="save" style="margin:20px">&nbsp;&nbsp;提 交&nbsp;&nbsp;</button>
            <button type="button" class="btn btn-warning" id="reset" style="margin:20px">&nbsp;&nbsp;重 置&nbsp;&nbsp; </button>
          </div>
@@ -136,12 +146,12 @@
   </div>
   
   
-  <div class="row" style="border:1px solid black;margin:0">
+  <div class="row" style="display:none" id="editPwd">
     <h3 style="text-align:center;margin:20px 0 ">密码变更</h3>
-	<form class="form-horizontal" id="registerForm" action="editPwd" method ="post" autocomplete="on" role="form" >
+	<form class="form-horizontal" id="pwdForm" action="editPwd" method ="post" autocomplete="on" role="form" >
 	  <div class="form-group">
 	    <input type="hidden" name="userId" value="${userInfo.id }">
-	    <label for="password" class="col-xs-2 control-label">原密码<span style="color:red">*</span></label>
+	    <label for="old_password" class="col-xs-2 control-label">原密码<span style="color:red">*</span></label>
 	    <div class="col-xs-3">
 	      <input class="form-control" type="password" id="old_password" name="old_passwd" title="6-20个字符，最好包含大小字符，数字和符号" pattern="\w{6,20}" maxLength=20 required autocomplete="off" placeholder="请输入密码">
 	      <c:if test="${not empty passwd}">
@@ -167,7 +177,7 @@
 	    </div>
 	  </div>
       <div class="form-group">
-         <div class="col-sm-offset-5 col-sm-10">
+         <div class="col-sm-offset-4 col-sm-10">
            <button type="submit" class="btn btn-info" id="save" style="margin:20px" onclick="return checkPwdSame()">&nbsp;&nbsp;提 交&nbsp;&nbsp;</button>
            <button type="button" class="btn btn-warning" id="reset" style="margin:20px">&nbsp;&nbsp;重 置&nbsp;&nbsp; </button>
          </div>
@@ -175,32 +185,53 @@
 	</form>
   </div>
   
-  <div class="row" style="border:1px solid black;margin:0">
+  <div class="row" style="display:none" id="editPic">
     <h3 style="text-align:center;margin:20px 0 ">个人照片</h3>
-	<form class="form-horizontal" id="registerForm" action="editPic" method ="post" autocomplete="on" enctype="multipart/form-data" role="form" >
+	<form class="form-horizontal" id="picForm" action="editPic" method ="post" autocomplete="on" enctype="multipart/form-data" role="form" >
 		<div class="thumbnail">
 		   <img src="/leyi/common/showPic/${userInfo.username}/${userInfo.picture }" alt="惹人靓照">
 		</div>
 	  <div class="form-group">
-        <label for="introduce" class="col-xs-2 control-label">照片</label>
+	    <input type="hidden" name="userId" value="${userInfo.id }">
+        <label for="picFile" class="col-xs-2 control-label">照片</label>
         <div class="col-xs-5">
           <input id="picFile"  type="file" name="picFile" type="file" accept="image/*" class="file-loading">
         </div>
       </div>
       <div class="form-group">
-         <div class="col-sm-offset-5 col-sm-10">
+         <div class="col-sm-offset-4 col-sm-10">
            <button type="submit" class="btn btn-info" id="save" style="margin:20px">&nbsp;&nbsp;提 交&nbsp;&nbsp;</button>
            <button type="button" class="btn btn-warning" id="reset" style="margin:20px">&nbsp;&nbsp;重 置&nbsp;&nbsp; </button>
          </div>
       </div>
 	</form>
   </div>
-   <jk:copyRight></jk:copyRight>	<!--页面底部相关说明 --> 
-
+  
+  <div class="row" style="display:none" id="editOther">
+    <h3 style="text-align:center;margin:20px 0 ">其他信息</h3>
+	<form class="form-horizontal" id="otherForm" action="editPic" method ="post" autocomplete="on" role="form" >
+	  <div class="form-group">
+        <label for="introduce" class="col-xs-2 control-label">邀请码</label>
+        <div class="col-xs-6">
+          <input class="form-control" type="text" name="inviteCode" value="${inviteInfo.inviteCode}" readonly>
+        </div>
+      </div>
+	  <div class="form-group">
+        <label for="introduce" class="col-xs-2 control-label">注册地址</label>
+        <div class="col-xs-6">
+          <input class="form-control" type="text" name="inviteCode" value="http://www.jeekhan.me/leyi/register?inviteCode=${inviteInfo.inviteCode}" readonly>
+        </div>
+      </div>
+	</form>
+  </div>
+  <jk:copyRight></jk:copyRight>	<!--页面底部相关说明 -->
+ </div> 
 </div>
-<c:if test="${not empty param.error}">
+</div>
+
+<c:if test="${not empty error}">
 <!-- 错误提示模态框（Modal） -->
-<div class="modal fade " id="tipModal" tabindex="-1" role="dialog" aria-labelledby="tipTitle" aria-hidden="false" data-backdrop="static">
+<div class="modal fade " id="tipModal" tabindex="-1" role="dialog" aria-labelledby="tipTitle" aria-hidden="true" data-backdrop="static">
    <div class="modal-dialog">
       <div class="modal-content">
          <div class="modal-header">
@@ -208,7 +239,7 @@
             <h4 class="modal-title" id="tipTitle">提示信息</h4>
          </div>
          <div class="modal-body">
-           ${param.error}
+           ${error}
          </div>
          <div class="modal-footer">
          	<div style="margin-left:50px">
@@ -218,35 +249,44 @@
       </div><!-- /.modal-content -->
    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script>
+$('#tipModal').modal('show')
+</script>
 </c:if>
 <script>
-$(document).on('ready', function() {
-		$('#sex').val('${userInfo.sex}');		
-	    $("#picFile").fileinput({
-	    	language: 'zh', //设置语言
-	        uploadUrl: '', //上传的地址
-	        showUpload: false, //是否显示上传按钮
-	        previewFileType: "image",
-	        browseClass: "btn btn-success",
-	        browseLabel: "Pick Image",
-	        browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
-	        removeClass: "btn btn-danger",
-	        removeLabel: "Delete",
-	        removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i> ",
-	        uploadClass: "btn btn-info",
-	        uploadLabel: "Upload",
-	        uploadIcon: "<i class=\"glyphicon glyphicon-upload\"></i> "
-	    });
-	});
 
-	function checkPwdSame(){
-		if($('#password').val() === $('#re-password').val()){
-			return true;
-		}else{
-			alert('确认密码与密码不一致！');
-			return false;
-		}
+$(document).on('ready', function() {
+	var mode = "${mode}";
+	if(mode == ''){
+		mode = 'editBasic';
 	}
+	$('#ln_'+mode).click();
+	$('#sex').val('${userInfo.sex}');		
+    $("#picFile").fileinput({
+    	language: 'zh', //设置语言
+        uploadUrl: '', //上传的地址
+        showUpload: false, //是否显示上传按钮
+        previewFileType: "image",
+        browseClass: "btn btn-success",
+        browseLabel: "Pick Image",
+        browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
+        removeClass: "btn btn-danger",
+        removeLabel: "Delete",
+        removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i> ",
+        uploadClass: "btn btn-info",
+        uploadLabel: "Upload",
+        uploadIcon: "<i class=\"glyphicon glyphicon-upload\"></i> "
+    });
+});
+
+function checkPwdSame(){
+	if($('#password').val() === $('#re-password').val()){
+		return true;
+	}else{
+		alert('确认密码与密码不一致！');
+		return false;
+	}
+}
 
 </script>
 

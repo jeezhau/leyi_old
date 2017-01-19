@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ArticleContent {
     private Integer articleId;
     
-    @Size(max=10240)
+    @Size(max=102400,message="最长为10240个字符")
     private String content;
 
     public Integer getArticleId() {

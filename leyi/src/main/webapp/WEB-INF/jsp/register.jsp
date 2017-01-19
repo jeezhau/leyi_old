@@ -34,6 +34,17 @@
   <div class="row">
 	<form class="form-horizontal" id="registerForm" action="addUser" method ="post" autocomplete="on" enctype="multipart/form-data" role="form" >
 	  <div class="form-group">
+	    <label for="inviteCode" class="col-xs-2 control-label">邀请码<span style="color:red">*</span></label>
+	    <div class="col-xs-5">
+	      <input type="text" class="form-control" id="inviteCode" name="inviteCode" title="邀请码" value="${param.inviteCode}" required readonly>
+	      <c:if test="${not empty inviteCode}">
+	      <div class="alert alert-warning alert-dismissable">${inviteCode}
+	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
+	      </div>
+	      </c:if>
+	    </div>
+	  </div>
+	  <div class="form-group">
 	    <label for="username" class="col-xs-2 control-label">用户名<span style="color:red">*</span></label>
 	    <div class="col-xs-5">
 	      <input type="hidden" name="inviteCode" >
@@ -76,7 +87,7 @@
 	  <div class="form-group">
         <label for="age" class="col-xs-2 control-label">生日</label>
         <div class="col-xs-3">
-          <input class="form-control" type="date" id="birthday" name="birthday" placeholder="请输入年龄">
+          <input class="form-control" type="date" id="birthday" name="birthday" placeholder="请输入年龄" value="${param.birthday }">
           <c:if test="${not empty birthday}">
 	      <div class="alert alert-warning alert-dismissable">${birthday}
 	        <button type="button" class="close" data-dismiss="alert"  aria-hidden="true"> &times;</button>
@@ -102,7 +113,7 @@
       <div class="form-group">
         <label for="city" class="col-xs-2 control-label">所在城市</label>
         <div class="col-xs-3">
-          <input class="form-control" id="city" name="city" maxLength=50 placeholder="请输入城市" >
+          <input class="form-control" id="city" name="city" maxLength=50 placeholder="请输入城市" value="${param.city }">
         </div>
         <c:if test="${not empty city}">
 	      <div class="alert alert-warning alert-dismissable">${city}
@@ -113,7 +124,7 @@
       <div class="form-group">
         <label for="favourite" class="col-xs-2 control-label">兴趣爱好</label>
         <div class="col-xs-5">
-          <input class="form-control" id="favourite" name="favourite"  maxLength=100  placeholder="请输入兴趣爱好" >
+          <input class="form-control" id="favourite" name="favourite"  maxLength=100  placeholder="请输入兴趣爱好" value="${param.favourite }">
         </div>
         <c:if test="${not empty favourite}">
 	      <div class="alert alert-warning alert-dismissable">${favourite}
@@ -124,7 +135,7 @@
       <div class="form-group">
         <label for="profession" class="col-xs-2 control-label">职业</label>
         <div class="col-xs-5">
-          <input class="form-control" id="profession" name="profession"  maxLength=100   placeholder="请输入职业" >
+          <input class="form-control" id="profession" name="profession"  maxLength=100   placeholder="请输入职业" value="${param.profession }">
         </div>
         <c:if test="${not empty profession}">
 	    <div class="alert alert-warning alert-dismissable">${profession}
@@ -135,7 +146,7 @@
       <div class="form-group">
         <label for="introduce" class="col-xs-2 control-label">个人简介<span style="color:red">*</span></label>
         <div class="col-xs-8">
-          <textarea class="form-control" id="introduce" name="introduce"  maxLength=600 rows=5 required ></textarea>
+          <textarea class="form-control" id="introduce" name="introduce"  maxLength=600 rows=5 required >${param.introduce }</textarea>
         </div>
       </div>
       <c:if test="${not empty introduce}">
@@ -183,31 +194,32 @@
 </c:if>
 <script>
 $(document).on('ready', function() {
-	    $("#picFile").fileinput({
-	    	language: 'zh', //设置语言
-	        uploadUrl: '', //上传的地址
-	        showUpload: false, //是否显示上传按钮
-	        previewFileType: "image",
-	        browseClass: "btn btn-success",
-	        browseLabel: "Pick Image",
-	        browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
-	        removeClass: "btn btn-danger",
-	        removeLabel: "Delete",
-	        removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i> ",
-	        uploadClass: "btn btn-info",
-	        uploadLabel: "Upload",
-	        uploadIcon: "<i class=\"glyphicon glyphicon-upload\"></i> "
-	    });
-	});
+	$('#sex').val('${param.sex}');
+    $("#picFile").fileinput({
+    	language: 'zh', //设置语言
+        uploadUrl: '', //上传的地址
+        showUpload: false, //是否显示上传按钮
+        previewFileType: "image",
+        browseClass: "btn btn-success",
+        browseLabel: "Pick Image",
+        browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
+        removeClass: "btn btn-danger",
+        removeLabel: "Delete",
+        removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i> ",
+        uploadClass: "btn btn-info",
+        uploadLabel: "Upload",
+        uploadIcon: "<i class=\"glyphicon glyphicon-upload\"></i> "
+    });
+});
 
-	function checkPwdSame(){
-		if($('#password').val() === $('#re-password').val()){
-			return true;
-		}else{
-			alert('确认密码与密码不一致！');
-			return false;
-		}
+function checkPwdSame(){
+	if($('#password').val() === $('#re-password').val()){
+		return true;
+	}else{
+		alert('确认密码与密码不一致！');
+		return false;
 	}
+}
 
 </script>
 

@@ -21,5 +21,12 @@ public interface InviteInfoService {
 	 * @param inviteInfo
 	 */
 	public int update(InviteInfo inviteInfo);
+	
+	/**
+	 * 获取用户最新一条邀请信息
+	 * @param userId
+	 * @return
+	 */
+	public InviteInfo get(int userId);
 
 }

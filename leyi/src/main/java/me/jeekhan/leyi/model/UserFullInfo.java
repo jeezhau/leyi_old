@@ -4,12 +4,10 @@ import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -59,7 +57,6 @@ public class UserFullInfo {
     private String picture;
     
     @NotNull(message="邀请码不可为空！")
-    @Size(min=6,max=20,message="长度为6-255个字符！")
     private String inviteCode;
 
     public Integer getId() {

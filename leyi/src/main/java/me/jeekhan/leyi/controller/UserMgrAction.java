@@ -1,5 +1,10 @@
 package me.jeekhan.leyi.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -19,11 +24,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import me.jeekhan.leyi.common.FileFilter;
 import me.jeekhan.leyi.common.SunSHAUtils;
+import me.jeekhan.leyi.common.SysPropUtil;
 import me.jeekhan.leyi.dto.Operator;
 import me.jeekhan.leyi.model.InviteInfo;
 import me.jeekhan.leyi.model.ReviewInfo;
 import me.jeekhan.leyi.model.UserFullInfo;
+import me.jeekhan.leyi.service.InviteInfoService;
 import me.jeekhan.leyi.service.UserService;
 
 /**
@@ -37,7 +45,8 @@ import me.jeekhan.leyi.service.UserService;
 public class UserMgrAction {
 	@Autowired
 	private UserService userService;
-	
+	@Autowired
+	private InviteInfoService inviteInfoService;
 	/**
 	 * 显示用户详细信息
 	 * 【权限】
@@ -151,7 +160,9 @@ public class UserMgrAction {
 	public String edit(@ModelAttribute("operator")Operator operator,Map<String,Object> map){
 		int userId = operator.getUserId();
 		UserFullInfo userInfo = userService.getUserFullInfo(userId);
+		InviteInfo info = inviteInfoService.get(userId);
 		map.put("userInfo", userInfo);
+		map.put("inviteInfo", info);
 		return "userEdit";
 	}
 	
@@ -169,8 +180,13 @@ public class UserMgrAction {
 	public String editUser(@Valid UserFullInfo userInfo,BindingResult result,@ModelAttribute("operator")Operator operator,Map<String,Object> map) throws NoSuchAlgorithmException, UnsupportedEncodingException{
 		int userId = operator.getUserId();
 		UserFullInfo oldInfo = userService.getUserFullInfo(userId);
+		InviteInfo info = inviteInfoService.get(userId);
+		map.put("userInfo", userInfo);
+		map.put("inviteInfo", info);
 		if(operator == null || operator.getUserId() != userInfo.getId() || oldInfo == null){ //无权限
-			return "userEdit" + "?error=您无权限执行该操作！";
+			map.put("mode","editBasic");
+			map.put("error","您无权限执行该操作！");
+			return "userEdit";
 		}
 		if(result.hasErrors()){
 			List<ObjectError> list = result.getAllErrors();
@@ -179,7 +195,7 @@ public class UserMgrAction {
 				map.put(filed, e.getDefaultMessage());
 			}
 			userInfo.setPicture(oldInfo.getPicture());
-			map.put("userInfo", userInfo);
+			map.put("mode","editBasic");
 			return "userEdit";
 		}
 		//数据保存
@@ -194,22 +210,41 @@ public class UserMgrAction {
 			if(id == -2){
 				map.put("email", "该邮箱已被使用");
 			}
+			map.put("mode","editBasic");
 			return "userEdit";
 		}
 		return "redirect:/"+operator.getUsername()+ "/detail";
 	}
 	
+	/**
+	 * 修改密码
+	 * @param userId
+	 * @param old_passwd
+	 * @param new_passwd
+	 * @param operator
+	 * @param map
+	 * @return
+	 * @throws NoSuchAlgorithmException
+	 * @throws UnsupportedEncodingException
+	 */
 	@RequestMapping(value="/editPwd",method=RequestMethod.POST)
-	public String editPwd(int userId,String old_passwd,String new_passwd,@ModelAttribute("operator")Operator operator) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+	public String editPwd(int userId,String old_passwd,String new_passwd,@ModelAttribute("operator")Operator operator,Map<String,Object> map) throws NoSuchAlgorithmException, UnsupportedEncodingException{
 		UserFullInfo oldInfo = userService.getUserFullInfo(userId);
+		InviteInfo info = inviteInfoService.get(userId);
+		map.put("userInfo", oldInfo);
+		map.put("inviteInfo", info);
 		if(operator == null || operator.getUserId() != userId || oldInfo == null){ //无权限
-			return "userEdit" + "?error=您无权限执行该操作！";
+			map.put("mode","editPwd");
+			map.put("error","您无权限执行该操作！");
+			return "userEdit";
 		}
 		//数据保存
 		String oldPwd = SunSHAUtils.encodeSHA512Hex(old_passwd);
 		String newPwd = SunSHAUtils.encodeSHA512Hex(new_passwd);
 		if(!oldPwd.equals(oldInfo.getPasswd())){
-			return "userEdit" + "?error=原密码不正确！";
+			map.put("mode","editPwd");
+			map.put("error","原密码不正确！");
+			return "userEdit";
 		}
 		oldInfo.setPasswd(newPwd);
 		userService.saveUser(oldInfo);
@@ -221,11 +256,52 @@ public class UserMgrAction {
 	 * @param operator
 	 * @param map
 	 * @return
+	 * @throws IOException 
+	 * @throws NoSuchAlgorithmException 
 	 */
-	@RequestMapping(value="/editPic")
-	public String editUser(@RequestParam(value="picFile") MultipartFile file,@ModelAttribute("operator")Operator operator,Map<String,Object> map){
-		
-		return "userEdit";
+	@RequestMapping(value="/editPic",method=RequestMethod.POST)
+	public String editUser(int userId, MultipartFile picFile,@ModelAttribute("operator")Operator operator,Map<String,Object> map) throws IOException, NoSuchAlgorithmException{
+		UserFullInfo oldInfo = userService.getUserFullInfo(userId);
+		InviteInfo info = inviteInfoService.get(userId);
+		map.put("userInfo", oldInfo);
+		map.put("inviteInfo", info);
+		if(operator == null || operator.getUserId() != userId || oldInfo == null){ //无权限
+			map.put("error","您无权限执行该操作！");
+			map.put("mode","editPic");
+			return "userEdit";
+		}
+		//文件保存
+		String path = SysPropUtil.getParam("DIR_USER_UPLOAD") + oldInfo.getUsername() + "/";  
+		File dir = new File(path);
+		if(!dir.exists()){
+			dir.mkdirs();
+		}
+		String picName = oldInfo.getPicture();
+		if(picName == null || picName.length()<1){
+			picName = java.util.UUID.randomUUID().toString();
+		}
+		//删除旧的图像
+		File[] files = dir.listFiles(new FileFilter(picName));
+		if(files != null && files.length>0){
+			for(File file:files){
+				file.delete();
+			}
+		}
+		String fileName = picName + picFile.getOriginalFilename().substring(picFile.getOriginalFilename().lastIndexOf('.'));
+		if(!picFile.isEmpty()){
+			oldInfo.setPicture(fileName);
+			FileOutputStream out = new FileOutputStream(path + fileName);
+			InputStream in = picFile.getInputStream();
+			byte[] buf = new byte[1024];
+			int n = 0;
+			while((n=in.read(buf))>0){
+				out.write(buf, 0, n);
+			}
+			out.close();
+			oldInfo.setPicture(fileName);
+			userService.saveUser(oldInfo);
+		}
+		return "redirect:/"+operator.getUsername()+ "/detail";
 	}
 	
 	

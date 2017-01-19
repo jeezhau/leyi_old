@@ -97,17 +97,30 @@ public class UserServiceImpl implements UserService{
 			return -2;
 		}
 		if(userFullInfo.getId() == null){//新增
+			userFullInfo.setPasswd(SunSHAUtils.encodeSHA512Hex(userFullInfo.getPasswd()));
+			userFullInfo.setRegistTime(new Date());
+			userFullInfo.setUpdateTime(new Date());
+			userFullInfoMapper.insert(userFullInfo);
+			int userId= userFullInfoMapper.selectByName(userFullInfo.getUsername()).getId();
+			//修改邀请码的使用状态
 			String inviteCode = userFullInfo.getInviteCode();
 			InviteInfo inviteInfo = inviteInfoMapper.selectByPrimaryKey(inviteCode);
 			inviteInfo.setStatus("1");
 			inviteInfo.setUseTime(new Date());
-			userFullInfo.setPasswd(SunSHAUtils.encodeSHA512Hex(userFullInfo.getPasswd()));
-			userFullInfo.setRegistTime(new Date());
-			userFullInfo.setUpdateTime(new Date());
-			inviteInfoMapper.insert(inviteInfo);
-			userFullInfoMapper.insert(userFullInfo);
-			return userFullInfoMapper.selectByName(userFullInfo.getUsername()).getId();
+			inviteInfoMapper.updateByPrimaryKey(inviteInfo);
+			//为用户补充一个邀请码
+			InviteInfo Invite = new InviteInfo();
+			Invite.setCrtTime(new Date());
+			Invite.setCrtUser(inviteInfo.getCrtUser());
+			inviteInfoMapper.insert(Invite);
+			//为新增用户添加一个邀请码
+			InviteInfo newInvite = new InviteInfo();
+			newInvite.setCrtTime(new Date());
+			newInvite.setCrtUser(userId);
+			inviteInfoMapper.insert(newInvite);
+			return userId;
 		}else{	//修改
+			userFullInfo.setRegistTime(info1.getRegistTime());
 			userFullInfo.setUpdateTime(new Date());
 			userFullInfoMapper.updateByPrimaryKey(userFullInfo);
 			return userFullInfo.getId();

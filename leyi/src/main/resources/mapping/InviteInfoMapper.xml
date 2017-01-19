@@ -212,7 +212,7 @@
   </update>
   
   <!--获取指定用户的最新一条邀请信息-->
-  <select id="selectUsersLatestInviteCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
   	 select 
      <include refid="Base_Column_List"/>
      from tb_invite_info i

@@ -119,12 +119,13 @@ public class LoginAction {
 			return "register";
 		}
 		//文件重命名
-		String fileName = "";
-		if(!file.isEmpty()){
+		String fileName = null;
+		if(file != null && !file.isEmpty()){
 			fileName = java.util.UUID.randomUUID().toString() + "." + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.')+1);
 			userInfo.setPicture(fileName);
 		}
 		//邀请码验证
+		userInfo.setInviteCode(userInfo.getInviteCode().replace(",", ""));
 		InviteInfo inviteInfo = inviteInfoService.get(userInfo.getInviteCode());
 		if(inviteInfo == null || "1".equals(inviteInfo.getStatus())){
 			map.put("inviteCode", "邀请码不正确或已被使用");
@@ -142,7 +143,7 @@ public class LoginAction {
 			return "register";
 		}
 		//文件保存
-		if(!file.isEmpty()){
+		if(file != null && !file.isEmpty()){
 			String path = SysPropUtil.getParam("DIR_USER_UPLOAD") + userInfo.getUsername() + "/";  
 			File dir = new File(path);
 			if(!dir.exists()){
@@ -205,11 +206,11 @@ public class LoginAction {
 	 * @param map
 	 * @return	目标页面
 	 */
-	@RequestMapping(value="/register",params="code")
-	public String register(@RequestParam("code") String code ,Map<String,Object>map){
+	@RequestMapping(value="/register",params="inviteCode")
+	public String register(@RequestParam("inviteCode") String code ,Map<String,Object>map){
 		InviteInfo info = inviteInfoService.get(code);
 		if(info != null){
-			map.put("code", code);
+			//map.put("inviteCode", code);
 			return "register";
 		}else{
 			return "redirect:/";
