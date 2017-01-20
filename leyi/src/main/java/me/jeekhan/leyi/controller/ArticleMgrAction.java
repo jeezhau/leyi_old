@@ -131,12 +131,12 @@ public class ArticleMgrAction {
 			List<ObjectError> list = result.getAllErrors();
 			for(ObjectError e :list){
 				String field = e.getCodes()[0].substring(e.getCodes()[0].lastIndexOf('.')+1);
-				map.put("valid."+field, e.getDefaultMessage());
+				map.put("valid_"+field, e.getDefaultMessage());
 			}
 			return "articleEditing";
 		}
 		if(content.length()>10240){
-			map.put("content", "内容：最大长度为10K个字符！");
+			map.put("valid_content", "内容：最大长度为10K个字符！");
 			return "articleEditing";
 		}
 		ThemeClass theme = (ThemeClass) map.get("currTheme");
@@ -189,7 +189,7 @@ public class ArticleMgrAction {
 			articleContent.setContent(content);
 			articleContent.setArticleId(id);
 			articleService.saveArticleInfo(old, articleContent);
-			return redirectUrl + old.getThemeId();
+			return redirectUrl + old.getThemeId() + "/1";
 		}
 	}
 	/**

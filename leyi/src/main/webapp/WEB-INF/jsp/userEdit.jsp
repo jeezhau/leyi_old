@@ -13,7 +13,7 @@
   <title>用户信息编辑</title>
   <meta name="description" content="">
   <meta name="author" content="jeekhan">
-
+  <link rel="shortcut icon" href="/leyi/images/leyi.ico" type="image/x-icon" />
   <link rel="stylesheet" href="/leyi/bootstrap-3.3.5/css/bootstrap.min.css">  
   <link rel="stylesheet" href="/leyi/bootstrap-3.3.5/css/fileinput.min.css">  
   <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -219,7 +219,7 @@
 	  <div class="form-group">
         <label for="introduce" class="col-xs-2 control-label">注册地址</label>
         <div class="col-xs-6">
-          <input class="form-control" type="text" name="inviteCode" value="http://www.jeekhan.me/leyi/register?inviteCode=${inviteInfo.inviteCode}" readonly>
+          <input class="form-control" type="text" name="inviteCode" value="http://m.jeekhan.me/leyi/register?inviteCode=${inviteInfo.inviteCode}" readonly>
         </div>
       </div>
 	</form>

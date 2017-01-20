@@ -10,7 +10,7 @@
   <title>${userInfo.username}的主页</title>
   <meta name="description" content="">
   <meta name="author" content="jeekhan">
-
+  <link rel="shortcut icon" href="/leyi/images/leyi.ico" type="image/x-icon" />
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">  
 <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>

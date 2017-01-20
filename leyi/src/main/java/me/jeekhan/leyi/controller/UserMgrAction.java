@@ -270,7 +270,7 @@ public class UserMgrAction {
 			map.put("mode","editPic");
 			return "userEdit";
 		}
-		//文件保存
+		//文件处理
 		String path = SysPropUtil.getParam("DIR_USER_UPLOAD") + oldInfo.getUsername() + "/";  
 		File dir = new File(path);
 		if(!dir.exists()){
@@ -278,7 +278,7 @@ public class UserMgrAction {
 		}
 		String picName = oldInfo.getPicture();
 		if(picName == null || picName.length()<1){
-			picName = java.util.UUID.randomUUID().toString();
+			picName = java.util.UUID.randomUUID().toString() + picFile.getOriginalFilename().substring(picFile.getOriginalFilename().lastIndexOf('.'));
 		}
 		//删除旧的图像
 		File[] files = dir.listFiles(new FileFilter(picName));
@@ -287,7 +287,7 @@ public class UserMgrAction {
 				file.delete();
 			}
 		}
-		String fileName = picName + picFile.getOriginalFilename().substring(picFile.getOriginalFilename().lastIndexOf('.'));
+		String fileName = picName ;
 		if(!picFile.isEmpty()){
 			oldInfo.setPicture(fileName);
 			FileOutputStream out = new FileOutputStream(path + fileName);

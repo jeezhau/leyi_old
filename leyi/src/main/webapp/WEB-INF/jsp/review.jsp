@@ -13,7 +13,7 @@
   <title>信息审核</title>
   <meta name="description" content="">
   <meta name="author" content="jeekhan">
-
+  <link rel="shortcut icon" href="/leyi/images/leyi.ico" type="image/x-icon" />
   <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">  
   <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
